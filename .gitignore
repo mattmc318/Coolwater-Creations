@@ -1,0 +1,9 @@
+activate
+auth
+db.sqlite3
+.env
+media/products/*
+*.pyc
+staticfiles
+.vscode
+

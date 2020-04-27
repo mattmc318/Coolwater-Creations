@@ -1,0 +1,37 @@
+<div class="modal fade" id="sign-in" tabindex="-1" role="dialog" aria-labelledby="sign-in" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Sign In</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="{% url 'users:login' %}" method="POST">
+        <div class="modal-body">
+          {% csrf_token %}
+          <input type="text" name="email" placeholder="Email" class="form-control">
+          <input type="password" name="password" placeholder="Password" class="form-control">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <input type="submit" class="btn btn-primary" value="Login">
+        </div>
+      </form>
+      <!-- <form action="{# url 'users:register' #}" method="POST">
+        <div class="modal-body">
+          {% csrf_token %}
+          <input type="text" name="first_name" placeholder="First Name" class="form-control">
+          <input type="text" name="last_name" placeholder="Last Name" class="form-control">
+          <input type="text" name="email" placeholder="Email" class="form-control">
+          <input type="password" name="password" placeholder="Password" class="form-control">
+          <input type="password" name="confirm_password" placeholder="Confirm Password" class="form-control">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <input type="submit" class="btn btn-primary" value="Register">
+        </div>
+      </form> -->
+    </div>
+  </div>
+</div>

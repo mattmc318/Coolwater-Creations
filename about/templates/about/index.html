@@ -1,0 +1,75 @@
+{% extends 'about/base.html' %}
+{% block content %}
+<div class="scroll-to-top">
+  <span class="fa-stack">
+    <i class="fas fa-circle fa-stack-2x"></i>
+    <i class="fas fa-arrow-up fa-stack-1x fa-inverse"></i>
+  </span>
+</div>
+<div class="container">
+  <h1>About</h1>
+  <ul class="tabs tabs-3">
+    <li class="center" id="tabs-bio" data-href="#bio">Bio</li>
+    <li class="center" id="tabs-updates" data-href="#updates">Updates</li>
+    <li class="center" id="tabs-contact" data-href="#contact">Contact</li>
+  </ul>
+  <div id="page">
+    <div id="bio">
+      <h3 class="quote center">Live in the sunshine, swim the cool water, breathe the wild air.</h3>
+      <p>The cool water is what unites us. This simple belief is what fuels my creations. The idea that the piece of driftwood I hold in my hands could have come from any distant shore is a very powerful one, only shadowed by the fact that soon what I have created could be in your hands.</p>
+      <p>Creative energy has been a part of me forever. It has spiraled into a passion, an obsession if you will&hellip;. What started as my downtime, my hobby, has become a quest for that funky piece of driftwood that would fit perfectly with that gorgeous glass bead, or that beautifully weathered beach glass.</p>
+      <p>Hours out scouring the beach, hours spent hunched over still drying wood, patiently combing thru the little treasures looking for the perfect piece. Hours loving the time spent creating something that will become someone's cherished possession.</p>
+      <p>All of the wood and beach glass I use is handpicked off my favorite beach in Glenn, MI. The beads come from where I find them, the flea market, garage sales or the vast internet.</p>
+      <p>Each art piece creates itself, be it a Mobile, Driftbird or Creature, with each bead strung into place by hand, each piece fitted together like an organic work of art, all in the interest of being one of a kind, unique, and individual.</p>
+      <p>This is Coolwater Creations. I hope you love each piece as much as I loved creating it.</p>
+    </div>
+    <div id="updates">
+      {% if person.is_superuser == True %}
+      <form method=POST action="{% url 'about:create_post' %}">
+        {% csrf_token %}
+        <input class="form-control" type="text" name="title" placeholder="Title">
+        <textarea class="form-control" name="body" placeholder="Body" rows="5"></textarea>
+        <input class="btn btn-primary form-control" type="submit" value="Post">
+      </form>
+      {% endif %}
+      {% if posts %}
+      <ul>
+        {% for post in posts %}
+        <li>
+          {% if person.is_superuser == True %}
+          <form method="POST" action="{% url 'about:edit_post' %}">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ post.id }}">
+            <input class="form-control" type="text" name="title" placeholder="Title" value="{{ post.title }}">
+            <textarea class="form-control" name="body" placeholder="Body" rows="5">{{ post.body }}</textarea>
+            <input class="btn btn-secondary form-control" type="submit" value="Edit">
+          </form>
+          <form method="POST" action="{% url 'about:delete_post' %}">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ post.id }}">
+            <input class="btn btn-danger form-control" type="submit" value="Delete">
+          </form>
+          {% else %}
+          <h3>{{ post.title }}</h3>
+          {{ post.body|linebreaks }}
+          {% if post.date_created|date:"M d, Y" == post.date_updated|date:"M d, Y" %}
+          <p class="date">Posted: {{ post.date_created|date:"M d, Y" }}</p>
+          {% else %}
+          <p class="date">Posted: {{ post.date_created|date:"M d, Y" }} Edited: {{ post.date_updated|date:"M d, Y" }}</p>
+          {% endif %}
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="center italics">Sorry! There are no updates at this time. Please check again later.</p>
+      {% endif %}
+    </div>
+    <div id="contact">
+      <h3 class="center"><i class="fas fa-phone" aria-hidden="true"></i> <a href="tel:+1-269-251-0267">+1 (269) 251-0267</a></h3>
+      <h3 class="center"><i class="fa fa-envelope" aria-hidden="true"></i> <a href="mailto:michaele@coolwatercreations.com">michaele@coolwatercreations.com</a></h3>
+    </div>
+  </div>
+</div>
+<div class="scroll-to-top-placeholder"></div>
+{% endblock %}

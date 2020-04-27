@@ -1,0 +1,59 @@
+{% extends 'gallery/base.html' %}
+{% block content %}
+<div class="container">
+  {% if messages %}
+  {% for message in messages %}
+  {% if message.tags == 'error' %}
+  <div class="alert alert-danger" role="alert">
+    <a href="#" class="close float-right" data-dismiss="alert" aria-label="close" title="close">&times;</a>
+    <p>{{ message }}</p>
+  </div>
+  {% elif message.tags == 'success' %}
+  <div class="alert alert-success" role="alert">
+    <a href="#" class="close float-right" data-dismiss="alert" aria-label="close" title="close">&times;</a>
+    <p>{{ message }}</p>
+  </div>
+  {% endif %}
+  {% endfor %}
+  {% endif %}
+  <h1>New Product</h1>
+  <a class="btn btn-light" href="{% url 'gallery:index' %}">Back to Gallery</a>
+  <form method="POST" action="{% url 'gallery:upload' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% if 'new_product' in request.session %}
+    <input class="form-control" type="text" name="title" placeholder="Title" value="{{ request.session.new_product.title }}">
+    <input class="form-control" type="text" name="price" placeholder="Price" value="{{ request.session.new_product.price }}">
+    <div class="row">
+    <input class="form-control col-4" type="text" name="width" placeholder="Width" value="{{ request.session.new_product.width }}">
+    <input class="form-control col-4" type="text" name="length" placeholder="Length" value="{{ request.session.new_product.length }}">
+    <input class="form-control col-4" type="text" name="height" placeholder="Height" value="{{ request.session.new_product.height }}">
+    </div>
+    <textarea class="form-control" name="description" rows="5" placeholder="Description">{{ request.session.new_product.description }}</textarea>
+    <input class="form-control" type="file" name="image" accept="image/*">
+    <div class="form-control">
+    {% if request.session.new_product.archive %}
+    <input type="checkbox" name="archive" value="True" checked>
+    {% else %}
+    <input type="checkbox" name="archive" value="True">
+    {% endif %}
+    <label for="archive">Archive</label>
+    </div>
+    {% else %}
+    <input class="form-control" type="text" name="title" placeholder="Title">
+    <input class="form-control" type="text" name="price" placeholder="Price">
+    <div class="row">
+    <input class="form-control col-4" type="text" name="width" placeholder="Width">
+    <input class="form-control col-4" type="text" name="length" placeholder="Length">
+    <input class="form-control col-4" type="text" name="height" placeholder="Height">
+    </div>
+    <textarea class="form-control" name="description" rows="5" placeholder="Description"></textarea>
+    <input class="form-control" type="file" name="image" accept="image/*">
+    <div class="form-control">
+    <input type="checkbox" name="archive" value="True">
+    <label for="archive">Archive</label>
+    </div>
+    {% endif %}
+    <input class="form-control btn-primary" type="submit">
+  </form>
+</div>
+{% endblock %}
