@@ -1,0 +1,37 @@
+{% extends 'gallery/base.html' %}
+{% block content %}
+<div class="container">
+	<h1>Shopping Cart</h1>
+	{% if not products %}
+	<p>Your cart is currently empty. To add an item, please return to the gallery page, click or tap on the product(s) you would like to add, and select "Add to Cart."</p>
+	{% endif %}
+	<a class="btn btn-light" href="{% url 'gallery:index' %}">Back to Gallery</a>
+	{% if products %}
+	<ul>
+		{% for product in products %}
+		<li class="product">
+			<div class="img-container">
+				<a href="{% url 'gallery:product_page' %}?id={{ product.id }}">
+					<img src="{{ product.image.url }}.gallery.jpg" alt="{{ product.name }}">
+				</a>
+			</div>
+			<div class="name-price-container">
+				<span>
+					<a href="{% url 'gallery:product_page' %}?id={{ product.id }}">{{ product.name }}</a>
+				</span>
+				<span>${{ product.price_per_unit }}</span>
+			</div>
+			<div class="btn-container">
+				<form method="POST" action="{% url 'gallery:remove_cart' %}">
+					{% csrf_token %}
+					<input type="hidden" name="id" value="{{ product.id }}">
+					<input type="submit" class="btn btn-light" value="Remove">
+				</form>
+			</div>
+		</li>
+		{% endfor %}
+	</ul>
+	<a class="btn btn-primary" href="{% url 'gallery:checkout' %}">Proceed to Checkout</a>
+	{% endif %}
+</div>
+{% endblock %}

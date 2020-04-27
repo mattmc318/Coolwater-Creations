@@ -1,0 +1,88 @@
+.center {
+  text-align: center;
+}
+
+.italics {
+  font-style: italic;
+}
+
+.nav-placeholder {
+  height: 5.5rem;
+}
+
+.scroll-to-top {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 1rem;
+  font-size: 1.5rem;
+  color: #343a40;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.tabs {
+  color: black;
+  margin-bottom: 2rem;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.tabs li {
+  border-radius: 4px;
+  background-color: #ced4da;
+  padding: 0.5rem;
+}
+
+.tabs li:hover {
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.tabs .active {
+  background-color: #007bff;
+  color: white;
+}
+
+#page > div {
+  display: none;
+}
+
+.quote {
+  color: #ac5a49;
+  margin-bottom: 2rem;
+}
+
+.date {
+  color: #717477;
+  font-style: italic;
+  font-size: 0.75em;
+}
+
+#updates br {
+  line-height: 2em;
+}
+
+#updates .btn-secondary {
+  margin: 0;
+}
+
+.scroll-to-top-placeholder {
+  height: 5rem;
+}
+
+@media (max-width: 768px) {
+  .nav-placeholder {
+    height: 79px;
+  }
+
+  #contact h3 {
+    font-size: 0.9rem;
+  }
+}

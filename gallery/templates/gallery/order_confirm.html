@@ -1,0 +1,109 @@
+{% extends 'gallery/base.html' %}
+{% block content %}
+<div class="container">
+  <h1>Thank you for your order!</h1>
+  <p>Your order is currently being processed, and we will contact you once it ships.</p>
+  <h5>Order Summary</h5>
+  <ul>
+    {% for product in products %}
+    <li class="row product">
+      <div class="name-price-container-checkout">
+        <span>{{ product.name }}</span>
+        <span>${{ product.price_per_unit }}</span>
+      </div>
+    </li>
+    {% endfor %}
+    <li class="row total">
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <span>Subtotal</span>
+            </td>
+            <td>
+              <span>${{ subtotal }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>Shipping</span>
+            </td>
+            <td>
+              <span>${{ shipping }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>Tax (0.000%)</span>
+            </td>
+            <td>
+              <span>${{ tax }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>Total</span>
+            </td>
+            <td>
+              <span>${{ total }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </li>
+  </ul>
+  <h5>Shipping Address</h5>
+  <div class="shipping-confirm">
+    <div class="edit">
+      <a href="{% url 'gallery:checkout' %}">Edit</a>
+    </div>
+    <table>
+      <tbody>
+        <tr>
+          <td>Name</td>
+          <td>{{ shipping_address.recipientName }}</td>
+        </tr>
+        <tr>
+          <td>Address</td>
+          <td>{{ shipping_address.line1 }}</td>
+        </tr>
+        {% if shipping_address.line2 %}
+        <tr>
+          <td></td>
+          <td>{{ shipping_address.line2 }}</td>
+        </tr>
+        {% endif %}
+        <tr>
+          <td>City</td>
+          <td>{{ shipping_address.city }}</td>
+        </tr>
+        {% if shipping_address.state %}
+        <tr>
+          <td>State/Province</td>
+          <td>{{ shipping_address.state }}</td>
+        </tr>
+        {% endif %}
+        {% if shipping_address.postalCode %}
+        <tr>
+          <td>Zip Code</td>
+          <td>{{ shipping_address.postalCode }}</td>
+        </tr>
+        {% endif %}
+        <tr>
+          <td>Country Code</td>
+          <td>{{ shipping_address.countryCode }}</td>
+        </tr>
+        <tr>
+          <td>Phone</td>
+          <td>{{ shipping_address.phone }}</td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td>{{ shipping_address.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% include 'home/footer.html' %}
+{% endblock %}

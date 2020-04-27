@@ -1,0 +1,13 @@
+{% for product in products %}
+<li class="gallery-item">
+    <div class="gallery-content">
+        <a href="{% url 'gallery:product_page' %}?id={{ product.id }}">
+            <img src="{{ product.image.url }}.gallery.jpg" alt="product">
+        </a>
+        <a href="{% url 'gallery:product_page' %}?id={{ product.id }}">
+            <h3>{{ product.name }}</h3>
+            <h5>${{ product.price_per_unit }}</h5>
+        </a>
+    </div>
+</li>
+{% endfor %}
