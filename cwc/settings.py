@@ -28,16 +28,14 @@ SECRET_KEY = content[:-1]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-if DEBUG:
-    ALLOWED_HOSTS = [
-        '10.0.0.100',
-    ]
-else:
-    ALLOWED_HOSTS = [
-        'localhost',
+ALLOWED_HOSTS = [
+    'localhost',
+]
+
+if not DEBUG:
+    ALLOWED_HOSTS += [
         'coolwatercreations.com',
         'www.coolwatercreations.com',
-        '104.248.48.77',
     ]
 
 # Application definition
