@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // update filters' text
-    var $filters = $('ul.filters > li');
+    let $filters = $('ul.filters > li');
 
     function updateGalleryFilters() {
         $filters.each(function () {
@@ -54,11 +54,11 @@ $(document).ready(function () {
     };
 
     // infinite scrolling and scroll to top
-    var galleryPage = archivePage = 2;
-    var galleryEmpty = archiveEmpty = false;
-    var $scrollToTop = $('.scroll-to-top');
-    var $lastGallery;
-    var $lastArchive;
+    let galleryPage = archivePage = 2;
+    let galleryEmpty = archiveEmpty = false;
+    let $scrollToTop = $('.scroll-to-top');
+    let $lastGallery;
+    let $lastArchive;
 
     $(window).on('resize scroll', function () {
         // infinite scrolling
@@ -80,7 +80,7 @@ $(document).ready(function () {
     });
 
     // retrieve filtered data
-    var beforeAjaxPosition;
+    let beforeAjaxPosition;
     function getGalleryFiltered() {
         let data = {
             page: galleryPage++,
@@ -164,9 +164,9 @@ $(document).ready(function () {
     });
 
     // define tabs behavior
-    var $tabs = $('ul.tabs');
-    var $tabsChildren = $('ul.tabs > li');
-    var $activeTab = $('ul.tabs > li.active');
+    let $tabs = $('ul.tabs');
+    let $tabsChildren = $('ul.tabs > li');
+    let $activeTab = $('ul.tabs > li.active');
 
     $($activeTab.data('href')).show();
 
@@ -213,8 +213,8 @@ $(document).ready(function () {
     });
 
     $tabsChildren.on('touchend', function (event) {
-        var changes = event.changedTouches[0];
-        var $endElement = $(document.elementFromPoint(changes.pageX, changes.pageY));
+        let changes = event.changedTouches[0];
+        let $endElement = $(document.elementFromPoint(changes.pageX, changes.pageY));
 
         if ($endElement.parent('.tabs').length) {
             tabsChildrenClick($(this));
@@ -248,15 +248,15 @@ $(document).ready(function () {
     });
 
     // define filters behavior
-    var visible = false;
-    var $filtersButton = $('div.filters-button');
-    var $dropdown = $('div.filters-dropdown');
+    let visible = false;
+    let $filtersButton = $('div.filters-button');
+    let $dropdown = $('div.filters-dropdown');
 
     $filtersButton.on('click touchend', function (event) {
         event.preventDefault();
         event.stopPropagation();
 
-        var endPosition = $(window).scrollTop();
+        let endPosition = $(window).scrollTop();
 
         if (event.type === 'click' ||
             (event.type === 'touchend' && startPosition === endPosition)) {
@@ -282,7 +282,7 @@ $(document).ready(function () {
         event.preventDefault();
         event.stopPropagation();
 
-        var endPosition = $(window).scrollTop();
+        let endPosition = $(window).scrollTop();
         galleryPage = archivePage = 1;
         galleryEmpty = archiveEmpty = false;
 
@@ -301,7 +301,7 @@ $(document).ready(function () {
     });
 
     // define select all/none behavior
-    var $filterControl = $('ul.filter-control > li');
+    let $filterControl = $('ul.filter-control > li');
 
     function filterControlClick($filterControl) {
         galleryPage = archivePage = 1;
@@ -324,7 +324,7 @@ $(document).ready(function () {
         event.preventDefault();
         event.stopPropagation();
 
-        var endPosition = $(window).scrollTop();
+        let endPosition = $(window).scrollTop();
 
         if (event.type === 'click' ||
             (event.type === 'touchend' && startPosition === endPosition)) {

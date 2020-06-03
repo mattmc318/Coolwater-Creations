@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var table = $('.orders').DataTable();
+    let table = $('.orders').DataTable();
 
     $('.orders tbody tr').click(function (e) {
         if (e.target.type == "checkbox") {
