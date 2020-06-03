@@ -20,10 +20,10 @@ $(document).ready(function () {
     }
 
     // infinite scrolling and scroll to top
-    var updatesPage = 2;
-    var updatesEmpty = false;
-    var $scrollToTop = $('.scroll-to-top');
-    var $lastUpdate;
+    let updatesPage = 2;
+    let updatesEmpty = false;
+    let $scrollToTop = $('.scroll-to-top');
+    let $lastUpdate;
 
     $(window).on('resize scroll', function () {
         // infinite scrolling
@@ -56,7 +56,7 @@ $(document).ready(function () {
     };
 
     // retrieve data
-    var beforeAjaxPosition;
+    let beforeAjaxPosition;
     function getPosts() {
         let data = {
             page: updatesPage++,
@@ -89,9 +89,9 @@ $(document).ready(function () {
     });
 
     // define tabs behavior
-    var $activeTab = $('ul.tabs > li.active');
-    var $tabs = $('ul.tabs');
-    var $tabsChildren = $('ul.tabs > li');
+    let $activeTab = $('ul.tabs > li.active');
+    let $tabs = $('ul.tabs');
+    let $tabsChildren = $('ul.tabs > li');
 
     $tabsChildren.on('click touchstart', function (event) {
         event.preventDefault();
@@ -114,8 +114,8 @@ $(document).ready(function () {
     });
 
     $tabsChildren.on('touchend', function (event) {
-        var changes = event.changedTouches[0];
-        var $endElement = $(document.elementFromPoint(changes.pageX, changes.pageY));
+        let changes = event.changedTouches[0];
+        let $endElement = $(document.elementFromPoint(changes.pageX, changes.pageY));
 
         if ($endElement.parent('.tabs').length) {
             $tabsChildren
