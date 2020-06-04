@@ -2,8 +2,9 @@ activate
 auth
 db.sqlite3
 .env
-media/products/*
+/lib
+media
+node_modules
 *.pyc
 staticfiles
 .vscode
-
