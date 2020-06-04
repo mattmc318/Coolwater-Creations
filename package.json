@@ -1,0 +1,13 @@
+{
+  "name": "cwc",
+  "description": "An e-commerce site for beach-made art",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mattmc318/Coolwater-Creations.git"
+  },
+  "dependencies": {
+    "bootstrap": "^4.5.0",
+    "jquery": "^3.5.1"
+  }
+}
