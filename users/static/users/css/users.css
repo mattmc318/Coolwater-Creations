@@ -9967,6 +9967,8 @@ h3, h4, h5 {
 }
 .logo svg {
   font-size: 35px;
+  -webkit-filter: drop-shadow(2px 2px 8px black);
+  -filter: drop-shadow(2px 2px 8px black);
 }
 
 .content, #about, #contact {
@@ -10042,17 +10044,6 @@ h3, h4, h5 {
   margin: 0;
 }
 
-.navbar {
-  margin-bottom: 2rem;
-}
-
-.nav-link {
-  cursor: pointer;
-}
-.nav-link:hover {
-  color: white !important;
-}
-
 @media (max-width: 767.98px) {
   .menu .menu-item {
     width: 75px;
@@ -10089,6 +10080,12 @@ h3, h4, h5 {
 
   #contact {
     padding-top: 0;
+  }
+}
+@media (min-width: 1200px) {
+  .menu .menu-item svg {
+    -webkit-filter: drop-shadow(2px 2px 8px black);
+    -filter: drop-shadow(2px 2px 8px black);
   }
 }
 .footer {
