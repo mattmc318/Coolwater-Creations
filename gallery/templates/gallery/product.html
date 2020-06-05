@@ -25,23 +25,23 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item center">
+                <li class="nav-item text-center">
                     <a class="nav-link" href="{% url 'users:index' %}">Home</a>
                 </li>
-                <li class="nav-item center">
+                <li class="nav-item text-center">
                     <a class="nav-link" href="{% url 'gallery:index' %}">Gallery</a>
                 </li>
-                <li class="nav-item center">
+                <li class="nav-item text-center">
                     <a class="nav-link" href="{% url 'about:index' %}">About</a>
                 </li>
-                <li class="nav-item center">
+                <li class="nav-item text-center">
                     {% if request.session.cart %}
                     <a class="nav-link" href="{% url 'gallery:cart' %}">Shopping Cart ({{ request.session.cart|length }})</a>
                     {% else %}
                     <a class="nav-link" href="{% url 'gallery:cart' %}">Shopping Cart</a>
                     {% endif %}
                 </li>
-                <li class="nav-item center">
+                <li class="nav-item text-center">
                     {% if person == None %}
                     <a class="nav-link modal-trigger" data-toggle="modal" data-target="#sign-in" title="Sign In">Admin Login</a>{% else %}
                     <a class="nav-link" href="{% url 'users:logout' %}" title="Sign Out">Log Out</a>

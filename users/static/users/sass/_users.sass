@@ -1,0 +1,149 @@
+h1, h2, p
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif
+
+h3, h4, h5
+  font-family: 'Merienda One', Helvetica, Arial, sans-serif
+
+.center
+  text-align: center
+
+.cover
+  height: 100vh
+
+.divider
+  height: 50vh
+
+.parallax
+  background-image: url('/static/users/img/dragon.jpg')
+  background-attachment: fixed
+  background-position: center
+  background-repeat: no-repeat
+  background-size: cover
+
+.logo
+  position: absolute
+  bottom: 0
+  left: 0
+  width: 100%
+  text-align: center
+  z-index: 1
+  background-color: transparent
+  color: white
+  text-shadow: 2px 2px 8px black
+  padding: 18px
+  font-size: 25px
+  letter-spacing: 6px
+  cursor: pointer
+
+  h1
+    font-family: 'Merienda One', Helvetica, Arial, sans-serif
+
+  svg
+    font-size: 35px
+
+.content, #about, #contact
+  padding: 2rem 0
+
+.menu
+  display: flex
+  box-sizing: border-box
+
+  > div
+    display: flex
+    flex: 1 0 auto
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    text-align: center
+
+  a
+    display: inline-block
+    color: black
+
+  .menu-item
+    width: 150px
+    height: 150px
+    border-radius: 100%
+    line-height: 150px
+    text-align: center
+
+    svg
+      color: white
+      font-size: 50pt
+      transform: translate(1px, 20px)
+
+  h4
+    margin: 1rem 0 0 0
+
+#contact
+  text-align: center
+
+#about
+  background: #f8f9fa7f
+
+.banner
+  display: none
+  z-index: 1
+  background-color: #23bef7
+  background: linear-gradient(to bottom right, #a92ff57f, #23bef77f)
+  color: white
+  position: fixed
+  top: 0px
+  right: 0px
+  left: 0px
+  padding: 1rem 0
+
+  a
+    color: white
+    text-decoration: underline
+
+#close
+  position: fixed
+  font-size: 2rem
+  right: 0.5rem
+  top: -0.5rem
+  cursor: pointer
+
+.banner p
+  margin: 0
+
+.navbar
+  margin-bottom: 2rem
+
+.nav-link
+  cursor: pointer
+
+  &:hover
+    color: white !important
+
+@include media-breakpoint-down(sm)
+  .menu
+    .menu-item
+      width: 75px
+      height: 75px
+      line-height: 75px
+      font-size: 12pt
+
+      svg
+        font-size: 25pt
+        transform: translate(1px, 8px)
+
+    h4
+      font-size: 1em
+
+  #contact h3, .navbar-brand
+    font-size: 0.9em
+@include media-breakpoint-down(lg)
+  .cover
+    background-image: url("/static/users/img/dragon_mobile.jpg")
+    background-position: center
+    background-attachment: unset
+
+  .menu-item
+    background-image: linear-gradient(#8386f1, #82dcfd) !important
+
+  .divider
+    display: none
+
+  #contact
+    padding-top: 0
