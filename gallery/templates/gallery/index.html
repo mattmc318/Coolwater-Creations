@@ -1,4 +1,10 @@
 {% extends 'gallery/base.html' %}
+
+{% block head %}{% load static %}
+<script src="{% static 'gallery/js/index.min.js' %}"></script>
+<!-- <script src="{% static 'gallery/js/index.js' %}"></script> -->
+{% endblock %}
+
 {% block content %}
 <div class="scroll-to-top">
   <span class="fa-stack">
@@ -25,8 +31,10 @@
   <h1>Gallery</h1>
   {% if person %}
   {% if person.is_superuser == True %}
-  <a class="btn btn-light" href="{% url 'gallery:new_product' %}">Add a New Product</a>
-  <a class="btn btn-light" href="{% url 'gallery:orders' %}">View Orders</a>
+  <div class="btn-container">
+    <a class="btn btn-light" href="{% url 'gallery:new_product' %}">Add a New Product</a>
+    <a class="btn btn-light" href="{% url 'gallery:orders' %}">View Orders</a>
+  </div>
   {% endif %}
   {% endif %}
   <ul class="tabs tabs-2">
