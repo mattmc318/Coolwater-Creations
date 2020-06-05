@@ -21,7 +21,7 @@
 				</span>
 				<span>${{ product.price_per_unit }}</span>
 			</div>
-			<div class="btn-container">
+			<div class="btn-container remove-cart">
 				<form method="POST" action="{% url 'gallery:remove_cart' %}">
 					{% csrf_token %}
 					<input type="hidden" name="id" value="{{ product.id }}">
