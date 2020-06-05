@@ -10160,15 +10160,6 @@ form {
   margin: 0;
 }
 
-.product {
-  display: flex;
-  margin-top: 0.5rem;
-  padding: 1rem;
-  background-color: white;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-}
-
 .total {
   margin-top: 0.5rem;
   padding: 1rem;
@@ -10281,21 +10272,34 @@ input[type=checkbox] + p {
   text-align: center;
 }
 
+.product {
+  height: 96px;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
 .product .img-container {
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: unset;
-  height: 128px;
-  width: 128px;
+  height: 64px;
+  width: 64px;
 }
 .product .img-container img {
   display: block;
-  max-height: 128px;
-  max-width: 128px;
+  max-height: 64px;
+  max-width: 64px;
   width: auto;
   height: auto;
   border: 1px solid #343a40;
+}
+.product form input[type=submit] {
+  margin-bottom: 0;
 }
 
 .name-price-container {
@@ -10394,17 +10398,6 @@ input[type=checkbox] + p {
   text-align: center;
 }
 
-.btn-container {
-  height: 130px;
-  line-height: 126px;
-  min-width: 0;
-  white-space: nowrap;
-}
-.btn-container .btn {
-  margin: 0;
-  display: inline-block;
-}
-
 #wait {
   display: none;
   position: absolute;
@@ -10438,31 +10431,20 @@ input[type=checkbox] + p {
     text-align: center;
   }
 
-  .container > .btn {
-    margin: 0 50% 1rem 50%;
-    transform: translateX(-50%);
+  .btn-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-grow: 0;
+    padding: 0 0.25rem;
+    margin-bottom: 0.75rem;
+  }
+  .btn-container > .btn {
+    margin: 0 2px 0.25rem 2px;
   }
 
   .gallery-content h3 {
     margin-top: 0.5rem;
-  }
-
-  .product .img-container {
-    height: 64px;
-    width: 64px;
-  }
-  .product .img-container img {
-    max-width: 64px;
-    max-height: 64px;
-  }
-
-  .btn-container {
-    height: 66px;
-    line-height: 62px;
-    flex-shrink: 0;
-  }
-  .btn-container * {
-    flex-shrink: 0;
   }
 
   .shipping-confirm {
@@ -10473,6 +10455,18 @@ input[type=checkbox] + p {
   #gallery > ul, #archive > ul {
     grid-template-columns: 337px 337px;
     grid-template-columns: calc((720px - 3rem)/2 + 1px) calc((720px - 3rem)/2 + 1px);
+  }
+
+  .product {
+    height: 160px;
+  }
+  .product .img-container {
+    height: 128px;
+    width: 128px;
+  }
+  .product .img-container img {
+    max-width: 128px;
+    max-height: 128px;
   }
 }
 @media (min-width: 992px) {

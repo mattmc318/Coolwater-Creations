@@ -21,13 +21,11 @@
 				</span>
 				<span>${{ product.price_per_unit }}</span>
 			</div>
-			<div class="btn-container remove-cart">
-				<form method="POST" action="{% url 'gallery:remove_cart' %}">
-					{% csrf_token %}
-					<input type="hidden" name="id" value="{{ product.id }}">
-					<input type="submit" class="btn btn-light" value="Remove">
-				</form>
-			</div>
+			<form method="POST" action="{% url 'gallery:remove_cart' %}">
+				{% csrf_token %}
+				<input type="hidden" name="id" value="{{ product.id }}">
+				<input type="submit" class="btn btn-light" value="Remove">
+			</form>
 		</li>
 		{% endfor %}
 	</ul>
