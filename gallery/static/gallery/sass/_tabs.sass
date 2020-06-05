@@ -1,0 +1,30 @@
+.tabs
+  display: grid
+  gap: 0.25rem
+  margin-bottom: 0.25rem
+  color: black
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+  &-2
+    grid-template-columns: 49.8% 49.8%
+    grid-template-columns: calc((100% - 0.25rem)/2) calc((100% - 0.25rem)/2)
+
+  &-3
+    grid-template-columns: 33% 33% 33%
+    grid-template-columns: calc((100% - 0.5rem)/3) calc((100% - 0.5rem)/3) calc((100% - 0.5rem)/3)
+
+  li
+    cursor: pointer
+    border-radius: 4px
+    background-color: #ced4da
+    padding: 0.5rem
+    touch-action: none
+
+    &:hover, &.active
+      background-color: #007bff
+      color: white

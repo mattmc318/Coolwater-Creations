@@ -1,0 +1,476 @@
+h1, h3, .navbar-brand
+  font-family: 'Merienda One', Helvetica, Arial, sans-serif
+
+h1
+  margin-bottom: 1rem
+
+.alert p
+  margin-bottom: 0
+
+ul
+  padding-left: 0
+
+  li
+    list-style: none
+
+    img
+      width: 100%
+
+.scroll-to-top, .tabs, .filters, .filter-control
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+.scroll-to-top
+  display: none
+  position: fixed
+  bottom: 0
+  right: 0
+  padding: 1rem
+  font-size: 1.5rem
+  color: #343a40
+  cursor: pointer
+  touch-action: none
+
+.filters-dropdown
+  display: none
+  margin-top: 1rem
+
+.filters-button
+  background-color: #ced4da
+  width: 100%
+  border-radius: 4px
+  margin-bottom: 1rem
+  line-height: 2.5rem
+  text-align: center
+  cursor: pointer
+
+.filters-button:hover
+  background-color: #007bff
+  color: white
+
+.filters
+  margin-bottom: 0
+
+.filter-control
+  margin-bottom: 0.5rem
+  cursor: pointer
+
+.filters, .filter-control
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  padding: 0 0.25rem
+  justify-content: center
+  touch-action: none
+
+.filters li
+  cursor: pointer
+  line-height: 0.75em
+  flex-basis: auto
+  margin: 0 0.25rem 0.5rem 0.25rem
+  padding: 0.5rem 1rem
+  text-align: center
+  background-color: #ced4da
+  border-radius: 1rem
+  touch-action: none
+
+.filter-control li
+  line-height: 0.75em
+  flex-basis: auto
+  margin: 0 0.25rem 0.5rem 0.25rem
+  padding: 0.5rem 1rem
+  text-align: center
+  background-color: #ced4da
+  border-radius: 1rem
+  touch-action: none
+
+.filters
+  .hover, li.active
+    background-color: #007bff
+    color: white
+
+.filter-control li.active
+  background-color: #007bff
+  color: white
+
+#gallery > ul h3, #archive > ul h3
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif
+  font-weight: bold
+
+#gallery, #archive
+  display: none
+
+#gallery > ul, #archive > ul
+  display: grid
+  grid-template-columns: 100%
+  gap: 1rem
+
+#gallery > p, #archive > p
+  text-align: center
+  font-style: italic
+  width: 100%
+
+.gallery-item
+  align-self: center
+
+  h3
+    line-height: 1.4
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+
+  a
+    color: #212529
+    text-decoration: none
+
+    &:hover
+      color: #212529
+      text-decoration: none
+
+.gallery-content
+  padding: 1rem
+  background-color: white
+  border: 1px solid #ced4da
+
+  img
+    border: 1px solid #343a40
+
+  h3
+    margin-top: 1rem
+
+.product-image
+  margin-bottom: 1rem
+  box-shadow: 0px 4px 8px grey
+
+form
+  display: inline
+
+.btn
+  margin-bottom: 1rem
+
+.btn-light
+  background-color: white
+  border: 1px solid #ced4da
+
+.img
+  img
+    width: 100%
+
+  p
+    text-align: center
+
+.row
+  margin: 0
+
+.product
+  display: flex
+  margin-top: 0.5rem
+  padding: 1rem
+  background-color: white
+  border: 1px solid #ced4da
+  border-radius: 4px
+
+.total
+  margin-top: 0.5rem
+  padding: 1rem
+  background-color: white
+  border: 1px solid #ced4da
+  border-radius: 4px
+
+  h5
+    margin: 0
+
+  table
+    width: 100%
+
+  tr
+    &:nth-last-child(n+3)
+      border-bottom: 1px solid #ced4da
+
+    &:last-child
+      border-top: 3px double #ced4da
+
+  td
+    margin: 0.5rem 0
+
+    &:last-child
+      float: right
+
+.subtle
+  color: #9a9da0
+  font-size: 0.9em
+  font-style: italic
+
+input
+  &[name="width"]
+    border-top-right-radius: 0
+    border-bottom-right-radius: 0
+
+  &[name="length"]
+    border-top-right-radius: 0
+    border-bottom-right-radius: 0
+    border-top-left-radius: 0
+    border-bottom-left-radius: 0
+
+  &[name="height"]
+    border-top-left-radius: 0
+    border-bottom-left-radius: 0
+
+.shipping
+  input
+    &[name="recipientName"], &[name="line2"]
+      margin-bottom: 1rem
+
+  select[name="countryCode"]
+    margin-bottom: 1rem
+
+  input
+    &[name="email"]
+      margin-bottom: 1rem
+
+    &[name="line2"]
+      margin-top: -1px
+      border-top-left-radius: 0
+      border-top-right-radius: 0
+
+  select[name="state"]
+    margin-top: -1px
+    border-top-left-radius: 0
+    border-top-right-radius: 0
+
+  input
+    &[name="postalCode"], &[name="postalCodeExt"]
+      margin-top: -1px
+      border-top-left-radius: 0
+      border-top-right-radius: 0
+
+  select[name="countryCode"]
+    margin-top: -1px
+    border-top-left-radius: 0
+    border-top-right-radius: 0
+
+  input
+    &[name="email"]
+      margin-top: -1px
+      border-top-left-radius: 0
+      border-top-right-radius: 0
+
+    &[name="line1"], &[name="city"]
+      border-bottom-left-radius: 0
+      border-bottom-right-radius: 0
+
+  select[name="state"]
+    border-bottom-left-radius: 0
+    border-bottom-right-radius: 0
+
+  input
+    &[name="postalCode"], &[name="postalCodeExt"], &[name="phone"]
+      border-bottom-left-radius: 0
+      border-bottom-right-radius: 0
+
+    &[type="checkbox"]
+      height: 1.5rem
+
+input[type="checkbox"] + p
+  margin-left: 0.5rem
+  cursor: default
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+.center
+  text-align: center
+
+.product .img-container
+  display: flex
+  justify-content: center
+  align-items: center
+  box-sizing: unset
+  height: 128px
+  width: 128px
+
+  img
+    display: block
+    max-height: 128px
+    max-width: 128px
+    width: auto
+    height: auto
+    border: 1px solid #343a40
+
+.name-price-container
+  margin: 0 1rem
+  display: flex
+  flex: 1 1 auto
+  flex-direction: column
+  justify-content: center
+  min-width: 0
+
+  span
+    display: block
+
+  a
+    display: block
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    color: #212529
+
+    &:hover
+      color: #212529
+
+.name-price-container-checkout
+  position: relative
+  width: 100%
+
+  span
+    margin: 0
+    height: 1em
+    line-height: 1em
+    white-space: nowrap
+
+    &:first-of-type
+      float: left
+
+    &:last-of-type
+      float: right
+
+.shipping-confirm
+  position: relative
+  width: 100%
+  margin-bottom: 1rem
+  padding: 1rem
+  background-color: white
+  border: 1px solid #ced4da
+  border-radius: 4px
+
+  .edit
+    position: absolute
+    top: 0
+    right: 0
+    background-color: #f8f9fa
+    border-bottom: 1px solid #ced4da
+    border-left: 1px solid #ced4da
+    border-top-right-radius: 4px
+    padding: 0 1em
+
+  table
+    width: 100%
+
+  tr
+    white-space: nowrap
+
+  td
+    width: 50%
+    display: inline-block
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+
+    &:first-child
+      text-align: right
+      padding-right: 1rem
+      font-style: italic
+
+.orders
+  width: 100%
+  background-color: white
+
+  .right
+    text-align: right
+
+.orders-row:hover
+  background-color: #007bff !important
+  color: white
+  cursor: pointer
+
+.orders td:last-of-type
+  width: 50px
+  text-align: center
+
+.btn-container
+  height: 130px
+  line-height: 126px
+  min-width: 0
+  white-space: nowrap
+
+  .btn
+    margin: 0
+    display: inline-block
+
+#wait
+  display: none
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  z-index: 999
+  background-color: black
+  background-color: rgba(0, 0, 0, 0.75)
+  background: -webkit-radial-gradient(50% 50%, ellipse closest-corner, rgba(0, 0, 0, 1) 1%, rgba(0, 0, 0, 0.75) 100%)
+  background: -moz-radial-gradient(50% 50%, ellipse closest-corner, rgba(0, 0, 0, 1) 1%, rgba(0, 0, 0, 0.75) 100%)
+  background: -ms-radial-gradient(50% 50%, ellipse closest-corner, rgba(0, 0, 0, 1) 1%, rgba(0, 0, 0, 0.75) 100%)
+  background: radial-gradient(50% 50%, ellipse closest-corner, rgba(0, 0, 0, 1) 1%, rgba(0, 0, 0, 0.75) 100%)
+  color: white
+
+  p
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+
+@include media-breakpoint-down(sm)
+  html, body
+    overflow-x: hidden
+
+  h1
+    line-height: normal
+    text-align: center
+
+  .container > .btn
+    margin: 0 50% 1rem 50%
+    transform: translateX(-50%)
+
+  .gallery-content h3
+    margin-top: 0.5rem
+
+  .product .img-container
+    height: 64px
+    width: 64px
+
+    img
+      max-width: 64px
+      max-height: 64px
+
+  .btn-container
+    height: 66px
+    line-height: 62px
+    flex-shrink: 0
+
+    *
+      flex-shrink: 0
+
+  .shipping-confirm
+    padding-top: 24px
+
+@include media-breakpoint-up(md)
+  #gallery > ul, #archive > ul
+    grid-template-columns: 337px 337px
+    grid-template-columns: calc((720px - 3rem)/2 + 1px) calc((720px - 3rem)/2 + 1px)
+
+@include media-breakpoint-up(lg)
+  #gallery > ul, #archive > ul
+    grid-template-columns: 299.67px 299.67px 299.67px
+    grid-template-columns: calc((960px - 4rem)/3 + 1px) calc((960px - 4rem)/3 + 1px) calc((960px - 4rem)/3 + 1px)
+
+@include media-breakpoint-up(xl)
+  #gallery > ul, #archive > ul
+    grid-template-columns: 209.4px 209.4px 209.4px 209.4px 209.4px
+    grid-template-columns: calc((1140px - 6rem + 3px)/5) calc((1140px - 6rem + 3px)/5) calc((1140px - 6rem + 3px)/5) calc((1140px - 6rem + 3px)/5) calc((1140px - 6rem + 3px)/5)

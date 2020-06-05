@@ -1,0 +1,31 @@
+nav
+  .navbar
+    margin-bottom: 2rem
+    box-shadow: 0px 4px 8px grey
+
+    &-brand
+      font-family: 'Merienda One', Helvetica, sans-serif
+
+  .nav-link
+    cursor: pointer
+
+    &:hover
+      color: white !important
+
+.nav-placeholder
+  height: 5.5rem
+
+@include media-breakpoint-down(sm)
+  nav
+    .navbar
+      &-brand
+        font-size: 0.9em
+
+      &-nav .nav-link
+        background-color: #666a6d
+        border-radius: 4px
+        margin-top: 0.5rem
+        color: white !important
+
+  .nav-placeholder
+    height: 79px
