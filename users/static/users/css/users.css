@@ -9936,7 +9936,7 @@ h3, h4, h5 {
 }
 
 .divider {
-  height: 50vh;
+  height: calc(100vh - 147.867px - 258.8px - 71px);
 }
 
 .parallax {
@@ -10092,7 +10092,7 @@ h3, h4, h5 {
   }
 }
 .footer {
-  padding: 1rem 0;
+  padding: 12px 0 9px 0;
   background-color: #202020;
   color: white;
 }
