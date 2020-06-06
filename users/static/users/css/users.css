@@ -10071,6 +10071,7 @@ h3, h4, h5 {
   }
 
   .menu-item {
+    background-attachment: unset;
     background-image: linear-gradient(#8386f1, #82dcfd) !important;
   }
 
