@@ -96,7 +96,12 @@ h3, h4, h5
 
   a
     color: white
-    text-decoration: underline
+
+    &:not(#close)
+      text-decoration: underline
+
+  p
+    margin: 0
 
 #close
   position: fixed
@@ -104,9 +109,6 @@ h3, h4, h5
   right: 0.5rem
   top: -0.5rem
   cursor: pointer
-
-.banner p
-  margin: 0
 
 @include media-breakpoint-down(sm)
   .menu
