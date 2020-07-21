@@ -1,3 +1,17 @@
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">{% load static %}
+{% if stage == 'development' %}
+<script src="{% static 'lib/dataTables-1.10.21/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'lib/dataTables-1.10.21/dataTables.bootstrap4.min.js' %}"></script>
+</script>
+{% else %}
+<script
+  src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"
+  integrity="sha384-RxzVJNpULMjRDJ3nd+aAVYb11VBDmhgIonMdvYdLxYvylOdEl6pprk4R4PK0t3xG"
+  crossorigin="anonymous">
+</script>
+<script
+  src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"
+  integrity="sha384-XS84aqWsn4cbfnAhdoO7kFSYtPxyAx70hgIXAzIzEtzPI1WL5g99awOOAhsmnetW"
+  crossorigin="anonymous">
+</script>
+{% endif %}

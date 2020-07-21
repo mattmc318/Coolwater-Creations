@@ -8,10 +8,10 @@
 paypal.Button.render({
   braintree: braintree,
   client: {
-  production: '{{ production_token }}',
-  sandbox: '{{ sandbox_token }}'
+    production: '{{ production_token }}',
+    sandbox: '{{ sandbox_token }}'
   },
-  env: '{% if DEBUG %}sandbox{% else %}production{% endif %}',
+  env: '{% if stage == "development" %}sandbox{% else %}production{% endif %}',
   commit: true,
   style: {
   layout: 'vertical',

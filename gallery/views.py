@@ -6,7 +6,6 @@ import base64
 import requests
 import json
 import braintree
-#import taxjar
 
 import cwc.settings
 
@@ -25,9 +24,6 @@ SANDBOX_GATEWAY = braintree.BraintreeGateway(
 PRODUCTION_GATEWAY = braintree.BraintreeGateway(
     access_token=cwc.settings.BRAINTREE_ACCESS_TOKEN_PRODUCTION)
 
-# TAXJAR_API_KEY = os.environ.get('TAXJAR_API_KEY')
-# client = taxjar.Client(api_key=TAXJAR_API_KEY)
-
 MAILGUN_API_KEY = cwc.settings.MAILGUN_API_KEY
 
 PRODUCTS_PER_PAGE = cwc.settings.PRODUCTS_PER_PAGE
@@ -39,8 +35,6 @@ def index(request):
     products_paginator = Paginator(products, PRODUCTS_PER_PAGE)
     archive_paginator = Paginator(archive, PRODUCTS_PER_PAGE)
     filters = Product.objects.get_filters()
-
-    # messages.error(request, 'We are currently experiencing technical difficulties with our checkout system. If you would like to make a purchase, please contact Michaele at +1 (269) 251-0267 or michaele@coolwatercreations.com.')
 
     context = {
         'products': products_paginator.page(1).object_list,
@@ -174,14 +168,6 @@ def review(request):
     products = Product.objects.get_cart(request)
     subtotal = Decimal(0.00)
 
-    # postalCode = '{}-{}'.format(shipping_address['postalCode'], shipping_address['postalCodeExt']) if shipping_address['countryCode'] == 'US' else shipping_address['postalCode']
-    # rates = client.rates_for_location(postalCode, {
-    #     'street': shipping_address['line1'],
-    #     'city': shipping_address['city'],
-    #     'state': shipping_address['state'],
-    #     'country': shipping_address['countryCode'],
-    # })
-    # tax_rate = rates['combined_rate']
     tax_rate = 0
 
     for product in products:
@@ -192,7 +178,6 @@ def review(request):
     total = subtotal + shipping + tax
 
     context = {
-        'DEBUG': cwc.settings.DEBUG,
         'shipping_address': shipping_address,
         'products': products,
         'subtotal': subtotal,
@@ -472,7 +457,7 @@ def order_confirm(
     )
 
 def on_authorize(request):
-    if cwc.settings.DEBUG:
+    if cwc.settings.STAGE == 'development':
         result = SANDBOX_GATEWAY.transaction.sale({
             "amount": request.POST["sale_amount"],
             "payment_method_nonce": request.POST["payment_method_nonce"],

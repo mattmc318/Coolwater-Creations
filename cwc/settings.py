@@ -16,6 +16,27 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+# Retrieve production stage environment variable
+class MissingEnvironmentVariable(Exception):
+    pass
+
+class InvalidEnvironmentVariable(Exception):
+    pass
+
+try:
+    STAGE = os.environ['STAGE']
+except KeyError:
+    raise MissingEnvironmentVariable('Environment variable STAGE is not defined.')
+
+# SECURITY WARNING: don't run with debug turned on in production!
+if STAGE == 'development' or STAGE == 'staging':
+    DEBUG = True
+elif STAGE == 'production':
+    DEBUG = False
+else:
+    raise InvalidEnvironmentVariable('The value of environment variable STAGE is not valid.')
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -25,18 +46,20 @@ with open(SECRET_KEY_FILE, 'r', encoding='utf8') as f:
     content = f.readline()
 SECRET_KEY = content[:-1]
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = [
-    'localhost',
-]
-
-if not DEBUG:
-    ALLOWED_HOSTS += [
+if STAGE == 'development':
+    ALLOWED_HOSTS = [
+        'localhost',
+    ]
+elif STAGE == 'staging':
+    ALLOWED_HOSTS = [
+        'staging.coolwatercreations.com',
+    ]
+elif STAGE == 'production':
+    ALLOWED_HOSTS = [
         'coolwatercreations.com',
         'www.coolwatercreations.com',
     ]
+
 
 # Application definition
 
@@ -78,6 +101,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cwc.context_processors.stage',
             ],
         },
     },
@@ -89,7 +113,7 @@ WSGI_APPLICATION = 'cwc.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-if DEBUG:
+if STAGE == 'development':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -97,12 +121,17 @@ if DEBUG:
         }
     }
 else:
+    PGPASSWORD_FILE = '%s/auth/.pgpass' % BASE_DIR
+    with open(PGPASSWORD_FILE, 'r', encoding='utf8') as f:
+        content = f.readline()
+    PGPASSWORD = content[12:-1]
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'cwc',
             'USER': 'cwc',
-            'PASSWORD': os.environ.get('DB_PASSWORD'),
+            'PASSWORD': PGPASSWORD,
             'HOST': 'localhost',
             'PORT': '',
         }

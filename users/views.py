@@ -30,18 +30,6 @@ def login(request):
     request.session['id'] = response
     return redirect('gallery:index')
 
-# def register(request):
-#     valid, response = Person.objects.login_register(request, 'register')
-#
-#     if not valid:
-#         for error in response:
-#             messages.error(request, error)
-#         return redirect('gallery:index')
-#
-#     messages.success(request, 'You have successfully created an account.')
-#     request.session['id'] = response
-#     return redirect('gallery:index')
-
 def logout(request):
     del request.session['id']
 
