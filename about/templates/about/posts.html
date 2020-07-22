@@ -6,12 +6,12 @@
         <input type="hidden" name="id" value="{{ post.id }}">
         <input class="form-control" type="text" name="title" placeholder="Title" value="{{ post.title }}">
         <textarea class="form-control" name="body" placeholder="Body" rows="5">{{ post.body }}</textarea>
-        <input class="btn btn-secondary form-control" type="submit" value="Edit">
+        <input class="btn btn-secondary form-control" type="submit" value="Edit Post">
     </form>
     <form method="POST" action="{% url 'about:delete_post' %}">
         {% csrf_token %}
         <input type="hidden" name="id" value="{{ post.id }}">
-        <input class="btn btn-danger form-control" type="submit" value="Delete">
+        <input class="btn btn-danger form-control" type="submit" value="Delete Post">
     </form>
     {% else %}
     <h3>{{ post.title }}</h3>

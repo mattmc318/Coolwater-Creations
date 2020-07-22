@@ -37,7 +37,7 @@ class PersonManager(UserManager):
         # checks if user is logging in
         elif action == 'login':
             if not EMAIL_REGEX.match(request.POST['email']):
-                errors.append('Please enter a valid email.')
+                errors.append('The email and password combination you entered does not exist in our database. Please try again.')
 
         """
         Login/Register

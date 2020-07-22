@@ -2,10 +2,13 @@
 
 ## High Priorities
 
-- Messages
-  - Change invalid email/password verbiage
-- Change Submit verbiage (i.e. Submit Query on New Product page)
-- FancyBox image product page
+- FancyBox (image product page)
+- Form margins
+  - New product
+  - Existing product
+  - About > Updates
+- Add transitions to DataTables
+- Add typeface to Terms/Privacy nav
 
 ## Low Priorities
 
