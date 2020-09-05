@@ -7,13 +7,12 @@
     "url": "git@github.com:mattmc318/Coolwater-Creations.git"
   },
   "dependencies": {
-    "bootstrap": "^4.5.0",
-    "braces": "^3.0.2",
+    "bootstrap": "^4.5.2",
     "fontawesome": "^5.6.3",
     "jquery": "^3.5.1",
-    "lodash": "^4.17.19",
-    "node": "^14.5.0",
-    "popper": "^1.0.1",
-    "popper.js": "^1.16.1"
+    "lodash": "^4.17.20",
+    "micromatch": "^4.0.2",
+    "node": "^14.8.0",
+    "popper": "^1.0.1"
   }
 }
