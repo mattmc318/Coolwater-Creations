@@ -9915,8 +9915,14 @@ h3 {
 }
 
 html, body {
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: #e1f4fc;
+}
+
+.fa-external-link-alt {
+  vertical-align: baseline;
+  margin-left: 0.5em;
 }
 
 .scroll-to-top {
@@ -10548,7 +10554,7 @@ nav .nav-link:hover {
 
 .footer {
   padding: 12px 0 9px 0;
-  background-color: #202020;
+  background-color: rgba(32, 32, 32, 0.9);
   color: white;
 }
 .footer p {
@@ -10567,7 +10573,6 @@ nav .nav-link:hover {
   color: #00ffff;
   font-size: 0.5em;
 }
-
 .footer-list {
   max-width: 17rem;
   position: relative;
@@ -10589,7 +10594,7 @@ nav .nav-link:hover {
   margin: 0.25em 0;
   padding: 0 0.5rem;
   text-align: center;
-  border-left: 1px solid white;
+  border-left: 1px solid rgba(68, 68, 68, 0.9);
 }
 
 @media (min-width: 442px) {

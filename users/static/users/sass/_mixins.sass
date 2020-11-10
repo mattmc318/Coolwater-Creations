@@ -1,3 +1,27 @@
 @mixin filter($args...)
   -webkit-filter: $args
-  -filter: $args
+  filter: $args
+
+@mixin bg($size)
+  background-attachment: fixed
+  background-position: center
+  background-repeat: no-repeat
+  -webkit-background-size: $size
+  -moz-background-size: $size
+  -o-background-size: $size
+  background-size: $size
+
+@mixin transition($property, $duration: .15s, $behavior: ease-in-out)
+  -webkit-transition: $property $duration $behavior
+  -moz-transition: $property $duration $behavior
+  -o-transition: $property $duration $behavior
+  transition: $property $duration $behavior
+
+@mixin linear-gradient($args...)
+  background: -webkit-linear-gradient($args)
+  background: -moz-linear-gradient($args)
+  background: -o-linear-gradient($args)
+  background: linear-gradient($args)
+
+@mixin outline($color)
+  text-shadow: 0px 1px $color, 1px 0px $color, 0px -1px $color, -1px 0px $color

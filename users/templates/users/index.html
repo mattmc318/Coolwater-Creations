@@ -1,50 +1,53 @@
-{% extends 'users/base.html' %}
-{% block content %}
-<div class="cover parallax">
-</div>
-<div class="logo">
-  <h1>Coolwater Creations</h1>
-  <p>
+{% extends 'users/base.html' %} {% block content %}
+<div class="bg landscape"></div>
+<a href="javascript:void(0);" class="logo" tabindex="1">
+  <h1 class="text-center">Coolwater Creations</h1>
+  <p class="text-center">
     <i class="fas fa-chevron-down"></i>
   </p>
-</div>
-<div class="content">
-  <div class="container">
-    <div class="menu">
-      <div>
+</a>
+<!-- <div class="cover"></div> -->
+<section class="content">
+  <div class="content-container">
+    <ul>
+      <li>
         <a href="{% url 'gallery:index' %}">
-          <div class="menu-item parallax">
-            <i class="fas fa-shopping-cart"></i>
-          </div>
-          <h4>Gallery</h4>
+          <button tabindex="-1">
+            <i class="fas fa-shopping-cart fa-4x"></i>
+          </button>
+          <label>Gallery</label>
         </a>
-      </div>
-      <div>
+      </li>
+      <li>
         <a href="{% url 'about:index' %}">
-          <div class="menu-item parallax">
-            <i class="fas fa-info"></i>
-          </div>
-          <h4>About</h4>
+          <button tabindex="-1">
+            <i class="fas fa-info fa-4x"></i>
+          </button>
+          <label>About</label>
         </a>
-      </div>
-      <div>
+      </li>
+      <li>
         <a href="{% url 'about:index' %}#contact">
-          <div class="menu-item parallax">
-            <i class="fas fa-mobile-alt"></i>
-          </div>
-          <h4>Contact</h4>
+          <button tabindex="-1">
+            <i class="fas fa-mobile-alt fa-4x"></i>
+          </button>
+          <label>Contact</label>
         </a>
-      </div>
-    </div>
+      </li>
+    </ul>
   </div>
-</div>
-<div class="divider parallax">
-</div>
+</section>
 {% include 'users/footer.html' %}
 <div class="banner">
-  <div class="container">
-    <a id="close">&times;</a>
-    <p>This site uses cookies for essential functions, such as tracking items in your shopping cart. By continuing, you agree to our <a href="{% url 'users:privacy' %}">Privacy Policy</a>.</p>
+  <div class="banner-relative">
+    <div class="container">
+      <a class="close">&times;</a>
+      <p>
+        This site uses cookies for essential functions, such as tracking items
+        in your shopping cart. By continuing, you agree to our
+        <a href="{% url 'users:privacy' %}">Privacy Policy</a>.
+      </p>
+    </div>
   </div>
 </div>
 {% endblock %}

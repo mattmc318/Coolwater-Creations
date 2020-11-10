@@ -9915,8 +9915,18 @@ h3 {
 }
 
 html, body {
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: #e1f4fc;
+}
+
+.fa-external-link-alt {
+  vertical-align: baseline;
+  margin-left: 0.5em;
+}
+
+html, body {
+  background-color: unset;
 }
 
 h1, h2, p {
@@ -9931,80 +9941,157 @@ h3, h4, h5 {
   text-align: center;
 }
 
-.cover {
+.bg {
+  z-index: -3;
+}
+.bg, .bg::before, .bg::after {
+  width: 100vw;
   height: 100vh;
+  position: fixed;
 }
-
-.divider {
-  height: calc(100vh - 147.867px - 258.8px - 72px);
+.bg::before, .bg::after {
+  content: "";
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
 }
-
-.parallax {
-  background-image: url("/static/users/img/dragon.jpg");
+.bg::before {
+  z-index: -2;
+  transform: scale(1.2);
+  -webkit-filter: blur(4px);
+  filter: blur(4px);
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
+}
+.bg::after {
+  z-index: -1;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+}
+.bg.landscape::before, .bg.landscape::after {
+  background-image: url("/static/users/img/dragon_landscape.jpg");
+}
+.bg.portrait::before, .bg.portrait::after {
+  background-image: url("/static/users/img/dragon_portrait.jpg");
 }
 
 .logo {
-  position: absolute;
-  bottom: 0;
+  position: fixed;
+  top: 0;
   left: 0;
-  width: 100%;
-  text-align: center;
+  right: 0;
   z-index: 1;
-  background-color: transparent;
-  color: white;
   text-shadow: 2px 2px 8px black;
-  padding: 18px;
-  font-size: 25px;
+  padding: 1rem 1rem 7px 1rem;
   letter-spacing: 6px;
   cursor: pointer;
+}
+.logo, .logo:hover {
+  color: white;
 }
 .logo h1 {
   font-family: "Merienda One", Helvetica, Arial, sans-serif;
 }
-.logo svg {
+.logo p {
+  margin: 0;
+}
+.logo p svg {
   font-size: 35px;
-  -webkit-filter: drop-shadow(2px 2px 8px black);
-  -filter: drop-shadow(2px 2px 8px black);
+  -webkit-filter: drop-shadow(2px 2px 8px #000);
+  filter: drop-shadow(2px 2px 8px #000);
 }
 
-.content, #about, #contact {
+#about, #contact {
   padding: 2rem 0;
 }
 
-.menu {
+.content {
   display: flex;
-  box-sizing: border-box;
+  align-content: center;
+  padding-top: 100vh;
 }
-.menu > div {
+.content-container {
   display: flex;
-  flex: 1 0 auto;
-  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  padding: 0 1rem;
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.content-container ul {
+  display: flex;
+  justify-content: space-evenly;
+  align-content: center;
+  gap: 1rem;
+  width: 100%;
+  margin: 0;
+}
+.content-container ul li {
+  display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  flex: 1 1 150px;
 }
-.menu a {
-  display: inline-block;
-  color: black;
-}
-.menu .menu-item {
-  width: 150px;
-  height: 150px;
-  border-radius: 100%;
-  line-height: 150px;
-  text-align: center;
-}
-.menu .menu-item svg {
+.content-container ul li a {
+  color: #f19883;
   color: white;
-  font-size: 50pt;
-  transform: translate(1px, 20px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
 }
-.menu h4 {
-  margin: 1rem 0 0 0;
+.content-container ul li a * {
+  cursor: pointer;
+}
+.content-container ul li a:hover button, .content-container ul li a:focus button {
+  background-color: #8bd4f3;
+}
+.content-container ul li a:hover label, .content-container ul li a:focus label {
+  text-decoration: underline;
+  background-color: #99a878;
+}
+.content-container ul li a button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0.25rem solid white;
+  border-radius: 100%;
+  padding: 0;
+  background-color: rgba(139, 212, 243, 0.75);
+  -webkit-transition: background-color 0.3s ease-in-out;
+  -moz-transition: background-color 0.3s ease-in-out;
+  -o-transition: background-color 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
+}
+.content-container ul li a button i, .content-container ul li a button svg {
+  color: white;
+}
+.content-container ul li a label {
+  font-family: "Merienda One", Helvetica, Arial, sans-serif;
+  font-size: 1.5rem;
+  color: white;
+  margin: 0;
+  padding: 0 0.5rem;
+  background-color: rgba(153, 168, 120, 0.75);
+  border-radius: 0.5rem;
+  -webkit-transition: background-color 0.3s ease-in-out;
+  -moz-transition: background-color 0.3s ease-in-out;
+  -o-transition: background-color 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 }
 
 #contact {
@@ -10019,80 +10106,40 @@ h3, h4, h5 {
   display: none;
   z-index: 1;
   background-color: #23bef7;
-  background: linear-gradient(to bottom right, #a92ff57f, #23bef77f);
   color: white;
   position: fixed;
-  top: 0px;
   right: 0px;
+  bottom: 0px;
   left: 0px;
   padding: 1rem 0;
+  background: -webkit-linear-gradient(to bottom right, #a92ff5, #23bef7);
+  background: -moz-linear-gradient(to bottom right, #a92ff5, #23bef7);
+  background: -o-linear-gradient(to bottom right, #a92ff5, #23bef7);
+  background: linear-gradient(to bottom right, #a92ff5, #23bef7);
 }
-.banner a {
+.banner-relative {
+  position: relative;
+}
+.banner-relative .container a {
   color: white;
 }
-.banner a:not(#close) {
+.banner-relative .container a:not(.close) {
   text-decoration: underline;
 }
-.banner p {
+.banner-relative .container p {
   margin: 0;
 }
-
-#close {
-  position: fixed;
+.banner-relative .container .close {
+  position: absolute;
   font-size: 2rem;
   right: 0.5rem;
   top: -0.5rem;
   cursor: pointer;
 }
 
-@media (max-width: 767.98px) {
-  .menu .menu-item {
-    width: 75px;
-    height: 75px;
-    line-height: 75px;
-    font-size: 12pt;
-  }
-  .menu .menu-item svg {
-    font-size: 25pt;
-    transform: translate(1px, 8px);
-  }
-  .menu h4 {
-    font-size: 1em;
-  }
-
-  #contact h3, .navbar-brand {
-    font-size: 0.9em;
-  }
-}
-@media (max-width: 1199.98px) {
-  .cover {
-    background-image: url("/static/users/img/dragon_mobile.jpg");
-    background-position: center;
-    background-attachment: unset;
-  }
-
-  .menu-item {
-    background-attachment: unset;
-    background-image: linear-gradient(#8386f1, #82dcfd) !important;
-  }
-
-  .divider {
-    display: none;
-  }
-
-  #contact {
-    padding-top: 0;
-  }
-}
-@media (min-width: 1200px) {
-  .menu .menu-item svg {
-    -webkit-filter: drop-shadow(2px 2px 8px black);
-    -filter: drop-shadow(2px 2px 8px black);
-  }
-}
 .footer {
   padding: 12px 0 9px 0;
-  background-color: #202020;
+  background-color: rgba(32, 32, 32, 0.9);
   color: white;
 }
 .footer p {
@@ -10111,7 +10158,6 @@ h3, h4, h5 {
   color: #00ffff;
   font-size: 0.5em;
 }
-
 .footer-list {
   max-width: 17rem;
   position: relative;
@@ -10133,7 +10179,7 @@ h3, h4, h5 {
   margin: 0.25em 0;
   padding: 0 0.5rem;
   text-align: center;
-  border-left: 1px solid white;
+  border-left: 1px solid rgba(68, 68, 68, 0.9);
 }
 
 @media (min-width: 442px) {

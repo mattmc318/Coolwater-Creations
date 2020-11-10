@@ -1,48 +1,41 @@
-var COVERS = ['dragon.jpg'];
+// Cookies! Adapted from code found on W3Schools
+function setCookie(name, value) {
+  const date = new Date();
+  date.setTime(date.getTime() + 365 * 24 * 60 * 60 * 1000);
+  const expires = 'expires=' + date.toUTCString();
 
-function setCookie(cname, cvalue) {
-  let d = new Date();
-  d.setTime(d.getTime() + (365*24*60*60*1000));
-  let expires = 'expires='+ d.toUTCString();
-  document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/;SameSite=Strict';
+  document.cookie = `${name}=${value};${expires};path=/;SameSite=Strict;`;
 }
 
-function getCookie(cname) {
-  let name = cname + '=';
-  let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
-  for (let i = 0; i <ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
+function getCookie(name) {
+  const _name = name + '=';
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const cookieArray = decodedCookie.split(';');
+
+  for (let i = 0; i < cookieArray.length; i++) {
+    let cookie = cookieArray[i];
+    while (cookie.charAt(0) == ' ') {
+      cookie = cookie.substring(1);
     }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
+    if (cookie.indexOf(_name) == 0) {
+      return cookie.substring(_name.length, cookie.length);
     }
   }
+
   return '';
 }
 
-$(document).ready(function () {
-  function setBackgroundImage(image) {
-    $('.parallax').css('background-image', `url('/static/users/img/${image}')`);
-  }
+$(() => {
+  // Update background and blurred container
+  const landscape = true;
+  const portrait = false;
+  let currentBackground = landscape;
+  const changeBackground = () => {
+    $('.bg').toggleClass('landscape').toggleClass('portrait');
+    currentBackground = !currentBackground;
+  };
 
-  function updateBackgroundImage() {
-    let cover = getCookie('cover');
-
-    if (cover === '') {
-      setCookie('cover', 0);
-    } else {
-      setCookie('cover', (eval(cover) + 1) % COVERS.length);
-    }
-
-    cover = getCookie('cover');
-    if ($(window).width() > 1183) {
-      setBackgroundImage(COVERS[cover]);
-    }
-  }
-
+  // GDPR banner
   let gdpr = getCookie('gdpr');
 
   if (gdpr === '') {
@@ -55,50 +48,121 @@ $(document).ready(function () {
     $('.banner').hide();
   }
 
-  updateBackgroundImage();
+  // Define useful DOM elements and constants
+  const $logo = $('.logo');
+  const $content = $('.content');
+  const $container = $content.children('.content-container');
+  const $ul = $container.children('ul');
+  const $li = $ul.children('li');
+  const $anchors = $li.children('a');
+  const $buttons = $anchors.children('button');
+  const $icons = $buttons.children('svg');
+  const $label = $anchors.children('label');
+  const $footer = $('footer');
 
-  let vw = Math.max(
-    document.documentElement.clientWidth || 0,
-    window.innerWidth || 0
-  ),
-  vh = Math.max(
-    document.documentElement.clientHeight || 0,
-    window.innerHeight || 0
-  ),
-  bottomOffset = $(document).height() - vh;
+  // const containerPadding = 16;
+  const initButtonDiameter = 150;
+  const aGap = 16;
+  const initButtonBorderWidth = 4;
 
-  $('.logo').click(function (e) {
-    e.preventDefault();
+  let windowDims = {
+    width: $(window).width(),
+    height: $(window).height(),
+  };
 
-    $('html, body').animate({
-      'scrollTop': bottomOffset,
-    }, 1000);
+  // Click-to-scroll logo
+  const logoCallback = () => {
+    // console.log($content.outerHeight(), $footer.outerHeight());
+    const scrollTo = Math.ceil(windowDims.height - $logo.outerHeight());
+
+    $('html').animate({ scrollTop: scrollTo }, 1000);
+  };
+
+  $logo.on('click', (event) => {
+    event.preventDefault();
+    logoCallback();
   });
 
-  $(window).on('resize orientationchange', function () {
-    vw = Math.max(
-      document.documentElement.clientWidth || 0,
-      window.innerWidth || 0
-    ),
-    vh = Math.max(
-      document.documentElement.clientHeight || 0,
-      window.innerHeight || 0
-    ),
-    bottomOffset = $(document).height() - vh;
+  // Calculate size and layout of various elements when page dimensions change
+  const update = () => {
+    // Window dimensions
+    windowDims = {
+      width: $(window).width(),
+      height: $(window).height(),
+    };
 
-    if ($(window).width() <= 1183) {
-      $('menu-item').removeClass('parallax');
-      setBackgroundImage('dragon_mobile.jpg');
+    // .logo
+    const $h1 = $logo.children('h1');
+    if (windowDims.width < 358) {
+      $h1.css({ 'letter-spacing': 'normal', 'font-size': '1.75rem' });
+    } else if (windowDims.width < 439) {
+      $h1.css({ 'letter-spacing': 'normal', 'font-size': '2.0rem' });
+    } else if (windowDims.width < 553) {
+      $h1.css({ 'letter-spacing': 'normal', 'font-size': '2.5rem' });
     } else {
-      $('menu-item').addClass('parallax');
-      let cover = getCookie('cover');
-      setBackgroundImage(COVERS[cover]);
+      $h1.css({ 'letter-spacing': '6px', 'font-size': '2.5rem' });
     }
-  });
 
-  $('#close').click(function (e) {
-    e.preventDefault();
-    $('.banner').hide();
+    // .content
+    const logoHeight = $logo.outerHeight();
+    const footerHeight = $footer.outerHeight();
+    const contentHeight = 2 * windowDims.height - logoHeight - footerHeight;
+    const contentPaddingBottom = logoHeight - footerHeight;
+
+    const labelHeight = Math.max(
+      ...$label.map(function () {
+        return $(this).outerHeight();
+      }),
+    );
+
+    if (windowDims.width > windowDims.height) {
+      $ul.css({ 'flex-direction': 'row' });
+      if (currentBackground === portrait) {
+        changeBackground();
+      }
+    } else {
+      $ul.css({ 'flex-direction': 'column' });
+      if (currentBackground === landscape) {
+        changeBackground();
+      }
+    }
+
+    $content.css({
+      height: `${contentHeight}px`,
+      'padding-bottom': `${contentPaddingBottom}px`,
+    });
+    $buttons.hide();
+
+    const diameter = Math.min(
+      initButtonDiameter,
+      $li.first().width() - 2 * initButtonBorderWidth,
+      $li.first().height() - aGap - labelHeight - 2 * initButtonBorderWidth,
+    );
+
+    const scale = 4 * diameter / initButtonDiameter;
+    if (scale < 1) {
+      $buttons.hide();
+    } else {
+      $buttons.show();
+
+      $buttons.css({
+        height: `${diameter}px`,
+        width: `${diameter}px`,
+        'border-width': `${Math.ceil(scale)}px`,
+      });
+
+      $icons.css({ 'font-size': `${scale}em` });
+    }
+  };
+
+  $(window).on('resize orientationchange', update);
+  update();
+
+  // Dismiss banner and remember clicked state for next visit
+  const $banner = $('.banner');
+  $banner.on('click', '.close', function (event) {
+    event.preventDefault();
+    $banner.hide();
     setCookie('gdpr', 'true');
   });
 });

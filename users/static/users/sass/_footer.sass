@@ -1,6 +1,7 @@
+$alpha: .9
 .footer
   padding: 12px 0 9px 0
-  background-color: #202020
+  background-color: rgba(32, 32, 32, $alpha)
   color: white
 
   p
@@ -19,28 +20,28 @@
     color: #00ffff
     font-size: .5em
 
-.footer-list
-  max-width: 17rem
-  position: relative
-  margin: auto
-  overflow: hidden
+  &-list
+    max-width: 17rem
+    position: relative
+    margin: auto
+    overflow: hidden
 
-  ul
-    display: flex
-    flex-direction: row
-    flex-wrap: wrap
-    justify-content: space-between
-    margin: 0 0 0.5em -1px
-    list-style: none
-    padding-left: 0
+    ul
+      display: flex
+      flex-direction: row
+      flex-wrap: wrap
+      justify-content: space-between
+      margin: 0 0 0.5em -1px
+      list-style: none
+      padding-left: 0
 
-    li
-      line-height: 0.75em
-      flex: 1 0 auto
-      margin: 0.25em 0
-      padding: 0 0.5rem
-      text-align: center
-      border-left: 1px solid white
+      li
+        line-height: 0.75em
+        flex: 1 0 auto
+        margin: 0.25em 0
+        padding: 0 0.5rem
+        text-align: center
+        border-left: 1px solid rgb(68, 68, 68, $alpha)
 
 @media (min-width: 442px)
   .footer-list
