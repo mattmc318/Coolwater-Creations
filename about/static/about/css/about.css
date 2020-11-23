@@ -9915,7 +9915,7 @@ h3 {
 }
 
 html, body {
-  height: 100%;
+  height: 100vh;
   background-color: #e1f4fc;
 }
 
