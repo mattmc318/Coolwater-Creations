@@ -7,7 +7,7 @@
 	{% endif %}
 	<a class="btn btn-light" href="{% url 'gallery:index' %}">Back to Gallery</a>
 	{% if products %}
-	<ul>
+	<ul class="cart">
 		{% for product in products %}
 		<li class="product">
 			<div class="img-container">

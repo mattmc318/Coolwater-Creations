@@ -10273,7 +10273,6 @@ input[type=checkbox] + p {
 }
 
 .product {
-  height: 96px;
   margin-top: 0.5rem;
   padding: 1rem;
   display: flex;
@@ -10281,6 +10280,9 @@ input[type=checkbox] + p {
   background-color: white;
   border: 1px solid #ced4da;
   border-radius: 4px;
+}
+.cart .product {
+  height: 6rem;
 }
 .product .img-container {
   display: flex;
@@ -10457,14 +10459,14 @@ input[type=checkbox] + p {
     grid-template-columns: calc((720px - 3rem)/2 + 1px) calc((720px - 3rem)/2 + 1px);
   }
 
-  .product {
+  .cart .product {
     height: 160px;
   }
-  .product .img-container {
+  .cart .product .img-container {
     height: 128px;
     width: 128px;
   }
-  .product .img-container img {
+  .cart .product .img-container img {
     max-width: 128px;
     max-height: 128px;
   }

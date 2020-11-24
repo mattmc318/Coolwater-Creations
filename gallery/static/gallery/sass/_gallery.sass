@@ -281,7 +281,6 @@ input[type="checkbox"] + p
   text-align: center
 
 .product
-  height: 64px + 32px
   margin-top: 0.5rem
   padding: 1rem
   display: flex
@@ -289,6 +288,9 @@ input[type="checkbox"] + p
   background-color: white
   border: 1px solid #ced4da
   border-radius: 4px
+
+  .cart &
+    height: 6rem
 
   .img-container
     display: flex
@@ -451,7 +453,7 @@ input[type="checkbox"] + p
     grid-template-columns: 337px 337px
     grid-template-columns: calc((720px - 3rem)/2 + 1px) calc((720px - 3rem)/2 + 1px)
 
-  .product
+  .cart .product
     height: 128px + 32px
 
     .img-container
