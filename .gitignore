@@ -4,6 +4,7 @@ db.sqlite3
 .env
 /lib
 media
+.node_modules
 node_modules
 *.pyc
 staticfiles
