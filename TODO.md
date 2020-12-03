@@ -4,14 +4,12 @@
 
 - FancyBox (image product page)
 - Form margins
-  - New product
-  - Existing product
   - About > Updates
-- Add transitions to DataTables
 - Add typeface to Terms/Privacy nav
 
 ## Low Priorities
 
+- Add transitions to DataTables
 - Cache libraries
 - Convert includes to blocks
   - DataTables code

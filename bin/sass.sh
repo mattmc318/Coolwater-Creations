@@ -24,6 +24,7 @@ declare -a args=(
 )
 
 declare -a path=(
+  "users/static/lib/sass"
   "node_modules/bootstrap/scss"
   "users/static/users/sass"
   "gallery/static/gallery/sass"

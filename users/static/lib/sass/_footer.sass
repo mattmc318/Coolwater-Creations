@@ -1,7 +1,10 @@
-$alpha: .9
 .footer
+  &.translucent
+    --alpha: .9
+
+  --alpha: 1
   padding: 12px 0 9px 0
-  background-color: rgba(32, 32, 32, $alpha)
+  background-color: rgba(32, 32, 32, var(--alpha))
   color: white
 
   p
@@ -41,7 +44,7 @@ $alpha: .9
         margin: 0.25em 0
         padding: 0 0.5rem
         text-align: center
-        border-left: 1px solid rgb(68, 68, 68, $alpha)
+        border-left: 1px solid rgb(68, 68, 68, var(--alpha))
 
 @media (min-width: 442px)
   .footer-list

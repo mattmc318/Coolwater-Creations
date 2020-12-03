@@ -11,6 +11,6 @@
   <script src="{% static 'users/js/users.js' %}"></script>
 </head>
 
-<body>{% block content %}{% endblock %}</body>
+<body{% if homepage %} class="homepage"{% endif %}>{% block content %}{% endblock %}</body>
 
 </html>

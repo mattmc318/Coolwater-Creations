@@ -9,7 +9,10 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 
 def index(request):
-    return render(request, 'users/index.html', {'year': datetime.today().year})
+    return render(request, 'users/index.html', {
+        'year': datetime.today().year,
+        'homepage': True,
+    })
 
 def tos(request):
     return render(request, 'users/tos.html', {'year': datetime.today().year})
