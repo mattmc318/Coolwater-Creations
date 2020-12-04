@@ -26,29 +26,9 @@ function getCookie(name) {
 }
 
 $(() => {
-  // Update background and blurred container
-  const landscape = true;
-  const portrait = false;
-  let currentBackground = landscape;
-  const changeBackground = () => {
-    $('.bg').toggleClass('landscape').toggleClass('portrait');
-    currentBackground = !currentBackground;
-  };
-
-  // GDPR banner
-  let gdpr = getCookie('gdpr');
-
-  if (gdpr === '') {
-    setCookie('gdpr', 'false');
-    gdpr = getCookie('gdpr');
-    $('.banner').show();
-  } else if (gdpr === 'false') {
-    $('.banner').show();
-  } else if (gdpr === 'true') {
-    $('.banner').hide();
-  }
-
   // Define useful DOM elements and constants
+  const $banner = $('.banner');
+  const $bg = $('.bg');
   const $logo = $('.logo');
   const $content = $('.content');
   const $container = $content.children('.content-container');
@@ -60,23 +40,50 @@ $(() => {
   const $label = $anchors.children('label');
   const $footer = $('footer');
 
-  // const containerPadding = 16;
   const initButtonDiameter = 150;
   const aGap = 16;
   const initButtonBorderWidth = 4;
 
+  // GDPR banner
+  switch (getCookie('gdpr')) {
+    case '':
+      setCookie('gdpr', 'false');
+    case 'false':
+      $banner.show();
+      break;
+    case 'true':
+      $banner.hide();
+      break;
+  }
+
+  // Dismiss banner and remember clicked state for next visit
+  $banner.on('click', '.close', function (event) {
+    event.preventDefault();
+    $banner.hide();
+    setCookie('gdpr', 'true');
+  });
+
+  // Update background and blurred container
+  const landscape = true;
+  const portrait = false;
+  let currentBackground = landscape;
+  const changeBackground = () => {
+    $bg.toggleClass('landscape').toggleClass('portrait');
+    currentBackground = !currentBackground;
+  };
+
+  // Define window dimensions
   let windowDims = {
     width: $(window).width(),
     height: $(window).height(),
   };
 
   // Click-to-scroll logo
-  const logoCallback = () => {
-    // console.log($content.outerHeight(), $footer.outerHeight());
-    const scrollTo = Math.ceil(windowDims.height - $logo.outerHeight());
-
-    $('.bg').animate({ scrollTop: scrollTo }, 1000);
-  };
+  const logoCallback = () =>
+    $bg.animate(
+      { scrollTop: Math.ceil(windowDims.height - $logo.outerHeight()) },
+      1000,
+    );
 
   $logo.on('click', (event) => {
     event.preventDefault();
@@ -139,7 +146,7 @@ $(() => {
       $li.first().height() - aGap - labelHeight - 2 * initButtonBorderWidth,
     );
 
-    const scale = 4 * diameter / initButtonDiameter;
+    const scale = (4 * diameter) / initButtonDiameter;
     if (scale < 1) {
       $buttons.hide();
     } else {
@@ -157,12 +164,4 @@ $(() => {
 
   $(window).on('resize orientationchange', update);
   update();
-
-  // Dismiss banner and remember clicked state for next visit
-  const $banner = $('.banner');
-  $banner.on('click', '.close', function (event) {
-    event.preventDefault();
-    $banner.hide();
-    setCookie('gdpr', 'true');
-  });
 });
