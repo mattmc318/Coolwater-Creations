@@ -10566,7 +10566,7 @@ nav .nav-link:hover {
   font-size: 0.5em;
 }
 .footer-list {
-  max-width: 17rem;
+  width: 284px;
   position: relative;
   margin: auto;
   overflow: hidden;
@@ -10588,10 +10588,17 @@ nav .nav-link:hover {
   text-align: center;
   border-left: 1px solid rgb(68, 68, 68, var(--alpha));
 }
-
-@media (min-width: 442px) {
+.footer-list ul li:first-child span, .footer-list ul li:nth-child(2) span {
+  display: none;
+}
+@media screen and (min-width: 406px) {
+  .footer-list ul li:first-child span, .footer-list ul li:nth-child(2) span {
+    display: inline;
+  }
+}
+@media screen and (min-width: 406px) {
   .footer-list {
-    max-width: 27rem;
+    width: 376px;
   }
 }
 

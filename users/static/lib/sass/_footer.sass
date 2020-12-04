@@ -1,11 +1,11 @@
 .footer
-  &.translucent
-    --alpha: .9
-
   --alpha: 1
   padding: 12px 0 9px 0
   background-color: rgba(32, 32, 32, var(--alpha))
   color: white
+
+  &.translucent
+    --alpha: .9
 
   p
     margin-top: 1px
@@ -24,7 +24,7 @@
     font-size: .5em
 
   &-list
-    max-width: 17rem
+    width: 284px
     position: relative
     margin: auto
     overflow: hidden
@@ -46,6 +46,14 @@
         text-align: center
         border-left: 1px solid rgb(68, 68, 68, var(--alpha))
 
-@media (min-width: 442px)
-  .footer-list
-    max-width: 27rem
+        &:first-child, &:nth-child(2)
+          span
+            display: none
+
+        @media screen and (min-width: 406px)
+          &:first-child, &:nth-child(2)
+            span
+              display: inline
+
+    @media screen and (min-width: 406px)
+      width: 376px
