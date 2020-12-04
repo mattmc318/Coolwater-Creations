@@ -25,30 +25,15 @@ function getCookie(name) {
   return '';
 }
 
+// Asynchronous sleep function
+const sleep = (milliseconds) => {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
+
 $(() => {
-  // Update background and blurred container
-  const landscape = true;
-  const portrait = false;
-  let currentBackground = landscape;
-  const changeBackground = () => {
-    $('.bg').toggleClass('landscape').toggleClass('portrait');
-    currentBackground = !currentBackground;
-  };
-
-  // GDPR banner
-  let gdpr = getCookie('gdpr');
-
-  if (gdpr === '') {
-    setCookie('gdpr', 'false');
-    gdpr = getCookie('gdpr');
-    $('.banner').show();
-  } else if (gdpr === 'false') {
-    $('.banner').show();
-  } else if (gdpr === 'true') {
-    $('.banner').hide();
-  }
-
   // Define useful DOM elements and constants
+  const $banner = $('.banner');
+  const $bg = $('.bg');
   const $logo = $('.logo');
   const $content = $('.content');
   const $container = $content.children('.content-container');
@@ -60,23 +45,50 @@ $(() => {
   const $label = $anchors.children('label');
   const $footer = $('footer');
 
-  // const containerPadding = 16;
   const initButtonDiameter = 150;
   const aGap = 16;
   const initButtonBorderWidth = 4;
 
+  // GDPR banner
+  switch (getCookie('gdpr')) {
+    case '':
+      setCookie('gdpr', 'false');
+    case 'false':
+      $banner.show();
+      break;
+    case 'true':
+      $banner.hide();
+      break;
+  }
+
+  // Dismiss banner and remember clicked state for next visit
+  $banner.on('click', '.close', function (event) {
+    event.preventDefault();
+    $banner.hide();
+    setCookie('gdpr', 'true');
+  });
+
+  // Update background and blurred container
+  const landscape = true;
+  const portrait = false;
+  let currentBackground = landscape;
+  const changeBackground = () => {
+    $bg.toggleClass('landscape').toggleClass('portrait');
+    currentBackground = !currentBackground;
+  };
+
+  // Define window dimensions
   let windowDims = {
     width: $(window).width(),
     height: $(window).height(),
   };
 
   // Click-to-scroll logo
-  const logoCallback = () => {
-    // console.log($content.outerHeight(), $footer.outerHeight());
-    const scrollTo = Math.ceil(windowDims.height - $logo.outerHeight());
-
-    $('.bg').animate({ scrollTop: scrollTo }, 1000);
-  };
+  const logoCallback = () =>
+    $bg.animate(
+      { scrollTop: Math.ceil(windowDims.height - $logo.outerHeight()) },
+      1000,
+    );
 
   $logo.on('click', (event) => {
     event.preventDefault();
@@ -84,7 +96,7 @@ $(() => {
   });
 
   // Calculate size and layout of various elements when page dimensions change
-  const update = () => {
+  const update = async () => {
     // Window dimensions
     windowDims = {
       width: $(window).width(),
@@ -103,66 +115,71 @@ $(() => {
       $h1.css({ 'letter-spacing': '6px', 'font-size': '2.5rem' });
     }
 
-    // .content
-    const logoHeight = $logo.outerHeight();
-    const footerHeight = $footer.outerHeight();
-    const contentHeight = 2 * windowDims.height - logoHeight - footerHeight;
-    const contentPaddingBottom = logoHeight - footerHeight;
+    let logoHeight = $logo.outerHeight();
+    let footerHeight = $footer.outerHeight();
+    let contentHeight = 2 * windowDims.height - logoHeight - footerHeight;
+    let contentPaddingBottom = Math.max(logoHeight - footerHeight, 16);
 
-    const labelHeight = Math.max(
-      ...$label.map(function () {
-        return $(this).outerHeight();
-      }),
-    );
+    const updateContent = () => {
+      logoHeight = $logo.outerHeight();
+      footerHeight = $footer.outerHeight();
+      contentHeight = 2 * windowDims.height - logoHeight - footerHeight;
+      contentPaddingBottom = Math.max(logoHeight - footerHeight, 16);
 
-    if (windowDims.width > windowDims.height) {
-      $ul.css({ 'flex-direction': 'row' });
-      if (currentBackground === portrait) {
-        changeBackground();
+      const labelHeight = Math.max(
+        ...$label.map(function () {
+          return $(this).outerHeight();
+        }),
+      );
+
+      if (windowDims.width > windowDims.height) {
+        $ul.css({ 'flex-direction': 'row' });
+        if (currentBackground === portrait) {
+          changeBackground();
+        }
+      } else {
+        $ul.css({ 'flex-direction': 'column' });
+        if (currentBackground === landscape) {
+          changeBackground();
+        }
       }
-    } else {
-      $ul.css({ 'flex-direction': 'column' });
-      if (currentBackground === landscape) {
-        changeBackground();
+
+      $content.css({
+        height: `${contentHeight}px`,
+        'padding-bottom': `${contentPaddingBottom}px`,
+      });
+      $buttons.hide();
+
+      const diameter = Math.min(
+        initButtonDiameter,
+        $li.first().width() - 2 * initButtonBorderWidth,
+        $li.first().height() - aGap - labelHeight - 2 * initButtonBorderWidth,
+      );
+
+      const scale = (4 * diameter) / initButtonDiameter;
+      if (scale < 1) {
+        $buttons.hide();
+      } else {
+        $buttons.show();
+
+        $buttons.css({
+          height: `${diameter}px`,
+          width: `${diameter}px`,
+          'border-width': `${Math.ceil(scale)}px`,
+        });
+
+        $icons.css({ 'font-size': `${scale}em` });
       }
     }
 
-    $content.css({
-      height: `${contentHeight}px`,
-      'padding-bottom': `${contentPaddingBottom}px`,
-    });
-    $buttons.hide();
+    updateContent();
 
-    const diameter = Math.min(
-      initButtonDiameter,
-      $li.first().width() - 2 * initButtonBorderWidth,
-      $li.first().height() - aGap - labelHeight - 2 * initButtonBorderWidth,
-    );
-
-    const scale = 4 * diameter / initButtonDiameter;
-    if (scale < 1) {
-      $buttons.hide();
-    } else {
-      $buttons.show();
-
-      $buttons.css({
-        height: `${diameter}px`,
-        width: `${diameter}px`,
-        'border-width': `${Math.ceil(scale)}px`,
-      });
-
-      $icons.css({ 'font-size': `${scale}em` });
+    while (logoHeight < 100) {
+      updateContent();
+      await sleep(50);
     }
   };
 
   $(window).on('resize orientationchange', update);
   update();
-
-  // Dismiss banner and remember clicked state for next visit
-  const $banner = $('.banner');
-  $banner.on('click', '.close', function (event) {
-    event.preventDefault();
-    $banner.hide();
-    setCookie('gdpr', 'true');
-  });
 });
