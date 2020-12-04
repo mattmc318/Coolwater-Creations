@@ -9924,18 +9924,21 @@ h3, h4, h5 {
 }
 
 .bg {
-  z-index: -3;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 .bg, .bg::before, .bg::after {
   width: 100vw;
   height: 100vh;
   position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 .bg::before, .bg::after {
   content: "";
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
+  pointer-events: none;
 }
 .bg::before {
   z-index: -2;

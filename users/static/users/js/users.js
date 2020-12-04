@@ -75,7 +75,7 @@ $(() => {
     // console.log($content.outerHeight(), $footer.outerHeight());
     const scrollTo = Math.ceil(windowDims.height - $logo.outerHeight());
 
-    $('html').animate({ scrollTop: scrollTo }, 1000);
+    $('.bg').animate({ scrollTop: scrollTo }, 1000);
   };
 
   $logo.on('click', (event) => {

@@ -1,53 +1,53 @@
 {% extends 'users/base.html' %} {% block content %}
-<div class="bg landscape"></div>
-<a href="javascript:void(0);" class="logo" tabindex="1">
-  <h1 class="text-center">Coolwater Creations</h1>
-  <p class="text-center">
-    <i class="fas fa-chevron-down"></i>
-  </p>
-</a>
-<!-- <div class="cover"></div> -->
-<section class="content">
-  <div class="content-container">
-    <ul>
-      <li>
-        <a href="{% url 'gallery:index' %}">
-          <button tabindex="-1">
-            <i class="fas fa-shopping-cart fa-4x"></i>
-          </button>
-          <label>Gallery</label>
-        </a>
-      </li>
-      <li>
-        <a href="{% url 'about:index' %}">
-          <button tabindex="-1">
-            <i class="fas fa-info fa-4x"></i>
-          </button>
-          <label>About</label>
-        </a>
-      </li>
-      <li>
-        <a href="{% url 'about:index' %}#contact">
-          <button tabindex="-1">
-            <i class="fas fa-mobile-alt fa-4x"></i>
-          </button>
-          <label>Contact</label>
-        </a>
-      </li>
-    </ul>
-  </div>
-</section>
-{% include 'users/footer.html' %}
-<div class="banner">
-  <div class="banner-relative">
-    <div class="container">
-      <a class="close">&times;</a>
-      <p>
-        This site uses cookies for essential functions, such as tracking items
-        in your shopping cart. By continuing, you agree to our
-        <a href="{% url 'users:privacy' %}">Privacy Policy</a>.
-      </p>
+<section class="bg landscape">
+  <a href="javascript:void(0);" class="logo" tabindex="1">
+    <h1 class="text-center">Coolwater Creations</h1>
+    <p class="text-center">
+      <i class="fas fa-chevron-down"></i>
+    </p>
+  </a>
+  <section class="content">
+    <div class="content-container">
+      <ul>
+        <li>
+          <a href="{% url 'gallery:index' %}">
+            <button tabindex="-1">
+              <i class="fas fa-shopping-cart fa-4x"></i>
+            </button>
+            <label>Gallery</label>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'about:index' %}">
+            <button tabindex="-1">
+              <i class="fas fa-info fa-4x"></i>
+            </button>
+            <label>About</label>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'about:index' %}#contact">
+            <button tabindex="-1">
+              <i class="fas fa-mobile-alt fa-4x"></i>
+            </button>
+            <label>Contact</label>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+  {% include 'users/footer.html' %}
+  <div class="banner">
+    <div class="banner-relative">
+      <div class="container">
+        <a class="close">&times;</a>
+        <p>
+          This site uses cookies for essential functions, such as tracking items
+          in your shopping cart. By continuing, you agree to our
+          <a href="{% url 'users:privacy' %}">Privacy Policy</a>.
+        </p>
+      </div>
     </div>
   </div>
-</div>
+</section>
 {% endblock %}

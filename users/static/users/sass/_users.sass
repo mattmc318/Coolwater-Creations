@@ -8,18 +8,21 @@ h3, h4, h5
   text-align: center
 
 .bg
-  z-index: -3
+  overflow-y: scroll
+  -webkit-overflow-scrolling: touch
 
   &, &::before, &::after
     width: 100vw
     height: 100vh
     position: fixed
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
 
   &::before, &::after
     content: ''
-    width: 100vw
-    height: 100vh
-    position: fixed
+    pointer-events: none
 
   &::before
     z-index: -2
