@@ -25,6 +25,11 @@ function getCookie(name) {
   return '';
 }
 
+// Asynchronous sleep function
+const sleep = (milliseconds) => {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
+
 $(() => {
   // Define useful DOM elements and constants
   const $banner = $('.banner');
@@ -91,7 +96,7 @@ $(() => {
   });
 
   // Calculate size and layout of various elements when page dimensions change
-  const update = () => {
+  const update = async () => {
     // Window dimensions
     windowDims = {
       width: $(window).width(),
@@ -111,54 +116,58 @@ $(() => {
     }
 
     // .content
-    const logoHeight = $logo.outerHeight();
-    const footerHeight = $footer.outerHeight();
-    const contentHeight = 2 * windowDims.height - logoHeight - footerHeight;
-    const contentPaddingBottom = logoHeight - footerHeight;
+    for (let i = 0; i < 6; i++) {
+      const logoHeight = $logo.outerHeight();
+      const footerHeight = $footer.outerHeight();
+      const contentHeight = 2 * windowDims.height - logoHeight - footerHeight;
+      const contentPaddingBottom = logoHeight - footerHeight;
 
-    const labelHeight = Math.max(
-      ...$label.map(function () {
-        return $(this).outerHeight();
-      }),
-    );
+      const labelHeight = Math.max(
+        ...$label.map(function () {
+          return $(this).outerHeight();
+        }),
+      );
 
-    if (windowDims.width > windowDims.height) {
-      $ul.css({ 'flex-direction': 'row' });
-      if (currentBackground === portrait) {
-        changeBackground();
+      if (windowDims.width > windowDims.height) {
+        $ul.css({ 'flex-direction': 'row' });
+        if (currentBackground === portrait) {
+          changeBackground();
+        }
+      } else {
+        $ul.css({ 'flex-direction': 'column' });
+        if (currentBackground === landscape) {
+          changeBackground();
+        }
       }
-    } else {
-      $ul.css({ 'flex-direction': 'column' });
-      if (currentBackground === landscape) {
-        changeBackground();
-      }
-    }
 
-    $content.css({
-      height: `${contentHeight}px`,
-      'padding-bottom': `${contentPaddingBottom}px`,
-    });
-    $buttons.hide();
-
-    const diameter = Math.min(
-      initButtonDiameter,
-      $li.first().width() - 2 * initButtonBorderWidth,
-      $li.first().height() - aGap - labelHeight - 2 * initButtonBorderWidth,
-    );
-
-    const scale = (4 * diameter) / initButtonDiameter;
-    if (scale < 1) {
-      $buttons.hide();
-    } else {
-      $buttons.show();
-
-      $buttons.css({
-        height: `${diameter}px`,
-        width: `${diameter}px`,
-        'border-width': `${Math.ceil(scale)}px`,
+      $content.css({
+        height: `${contentHeight}px`,
+        'padding-bottom': `${contentPaddingBottom}px`,
       });
+      $buttons.hide();
 
-      $icons.css({ 'font-size': `${scale}em` });
+      const diameter = Math.min(
+        initButtonDiameter,
+        $li.first().width() - 2 * initButtonBorderWidth,
+        $li.first().height() - aGap - labelHeight - 2 * initButtonBorderWidth,
+      );
+
+      const scale = (4 * diameter) / initButtonDiameter;
+      if (scale < 1) {
+        $buttons.hide();
+      } else {
+        $buttons.show();
+
+        $buttons.css({
+          height: `${diameter}px`,
+          width: `${diameter}px`,
+          'border-width': `${Math.ceil(scale)}px`,
+        });
+
+        $icons.css({ 'font-size': `${scale}em` });
+      }
+
+      await sleep(500);
     }
   };
 
