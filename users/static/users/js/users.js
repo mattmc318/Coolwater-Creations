@@ -115,23 +115,6 @@ $(() => {
       $h1.css({ 'letter-spacing': '6px', 'font-size': '2.5rem' });
     }
 
-    // .content
-    // $('#debug').remove();
-    // const $debug = $('<div id="debug">').css({
-    //   position: 'absolute',
-    //   top: 0,
-    //   right: 0,
-    //   left: 0,
-    //   'font-size': '.75em',
-    //   'background-color': 'white',
-    //   color: 'black',
-    //   'font-family': 'monospace',
-    //   padding: '.25rem',
-    //   'overflow-y': 'scroll',
-    //   height: '300px',
-    //   'z-index': 10,
-    // }).appendTo($bg);
-
     let logoHeight = $logo.outerHeight();
     let footerHeight = $footer.outerHeight();
     let contentHeight = 2 * windowDims.height - logoHeight - footerHeight;
@@ -187,10 +170,6 @@ $(() => {
 
         $icons.css({ 'font-size': `${scale}em` });
       }
-
-      // $debug.append(
-      //   `i: ${i}, windowDims: ${JSON.stringify(windowDims)}, logoHeight: ${logoHeight}, footerHeight: ${footerHeight}, contentHeight: ${contentHeight}, contentPaddingBottom: ${contentPaddingBottom}, labelHeight: ${labelHeight}, diameter: ${diameter}, scale: ${scale}<br/><br/>`,
-      // );
     }
 
     updateContent();
