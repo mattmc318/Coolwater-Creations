@@ -116,6 +116,22 @@ $(() => {
     }
 
     // .content
+    $('#debug').remove();
+    const $debug = $('<div id="debug">').css({
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      left: 0,
+      'font-size': '.75em',
+      'background-color': 'white',
+      color: 'black',
+      'font-family': 'monospace',
+      padding: '.25rem',
+      'overflow-y': 'scroll',
+      height: '300px',
+      'z-index': 10,
+    }).appendTo($bg);
+
     for (let i = 0; i < 6; i++) {
       const logoHeight = $logo.outerHeight();
       const footerHeight = $footer.outerHeight();
@@ -167,8 +183,13 @@ $(() => {
         $icons.css({ 'font-size': `${scale}em` });
       }
 
+      $debug.append(
+        `i: ${i}, windowDims: ${JSON.stringify(windowDims)}, logoHeight: ${logoHeight}, footerHeight: ${footerHeight}, contentHeight: ${contentHeight}, contentPaddingBottom: ${contentPaddingBottom}, labelHeight: ${labelHeight}, diameter: ${diameter}, scale: ${scale}<br/><br/>`,
+      );
       await sleep(500);
     }
+
+    // $debug.remove();
   };
 
   $(window).on('resize orientationchange', update);
