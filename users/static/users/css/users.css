@@ -10158,7 +10158,8 @@ nav .nav-link:hover {
 }
 .footer {
   --alpha: 1;
-  padding: 12px 0 9px 0;
+  height: 56px;
+  padding: 0.5rem 0;
   background-color: rgba(32, 32, 32, var(--alpha));
   color: white;
 }
@@ -10166,7 +10167,7 @@ nav .nav-link:hover {
   --alpha: .9;
 }
 .footer p {
-  margin-top: 1px;
+  height: 1rem;
   margin-bottom: 0;
   text-align: center;
   font-family: Helvetica, Arial, sans-serif;
@@ -10192,14 +10193,14 @@ nav .nav-link:hover {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 0 0 0.5em -1px;
+  margin: 0 0 0 -1px;
   list-style: none;
   padding-left: 0;
 }
 .footer-list ul li {
-  line-height: 0.75em;
+  line-height: 13px;
   flex: 1 0 auto;
-  margin: 0.25em 0;
+  margin: 0 0 0.5rem 0;
   padding: 0 0.5rem;
   text-align: center;
   border-left: 1px solid rgb(68, 68, 68, var(--alpha));
