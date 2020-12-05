@@ -116,27 +116,32 @@ $(() => {
     }
 
     // .content
-    $('#debug').remove();
-    const $debug = $('<div id="debug">').css({
-      position: 'absolute',
-      top: 0,
-      right: 0,
-      left: 0,
-      'font-size': '.75em',
-      'background-color': 'white',
-      color: 'black',
-      'font-family': 'monospace',
-      padding: '.25rem',
-      'overflow-y': 'scroll',
-      height: '300px',
-      'z-index': 10,
-    }).appendTo($bg);
+    // $('#debug').remove();
+    // const $debug = $('<div id="debug">').css({
+    //   position: 'absolute',
+    //   top: 0,
+    //   right: 0,
+    //   left: 0,
+    //   'font-size': '.75em',
+    //   'background-color': 'white',
+    //   color: 'black',
+    //   'font-family': 'monospace',
+    //   padding: '.25rem',
+    //   'overflow-y': 'scroll',
+    //   height: '300px',
+    //   'z-index': 10,
+    // }).appendTo($bg);
 
-    for (let i = 0; i < 6; i++) {
-      const logoHeight = $logo.outerHeight();
-      const footerHeight = $footer.outerHeight();
-      const contentHeight = 2 * windowDims.height - logoHeight - footerHeight;
-      const contentPaddingBottom = logoHeight - footerHeight;
+    let logoHeight = $logo.outerHeight();
+    let footerHeight = $footer.outerHeight();
+    let contentHeight = 2 * windowDims.height - logoHeight - footerHeight;
+    let contentPaddingBottom = Math.max(logoHeight - footerHeight, 16);
+
+    const updateContent = () => {
+      logoHeight = $logo.outerHeight();
+      footerHeight = $footer.outerHeight();
+      contentHeight = 2 * windowDims.height - logoHeight - footerHeight;
+      contentPaddingBottom = Math.max(logoHeight - footerHeight, 16);
 
       const labelHeight = Math.max(
         ...$label.map(function () {
@@ -183,13 +188,17 @@ $(() => {
         $icons.css({ 'font-size': `${scale}em` });
       }
 
-      $debug.append(
-        `i: ${i}, windowDims: ${JSON.stringify(windowDims)}, logoHeight: ${logoHeight}, footerHeight: ${footerHeight}, contentHeight: ${contentHeight}, contentPaddingBottom: ${contentPaddingBottom}, labelHeight: ${labelHeight}, diameter: ${diameter}, scale: ${scale}<br/><br/>`,
-      );
-      await sleep(500);
+      // $debug.append(
+      //   `i: ${i}, windowDims: ${JSON.stringify(windowDims)}, logoHeight: ${logoHeight}, footerHeight: ${footerHeight}, contentHeight: ${contentHeight}, contentPaddingBottom: ${contentPaddingBottom}, labelHeight: ${labelHeight}, diameter: ${diameter}, scale: ${scale}<br/><br/>`,
+      // );
     }
 
-    // $debug.remove();
+    updateContent();
+
+    while (logoHeight < 100) {
+      updateContent();
+      await sleep(50);
+    }
   };
 
   $(window).on('resize orientationchange', update);
