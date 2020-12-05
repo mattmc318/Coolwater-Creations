@@ -26,7 +26,7 @@ function getCookie(name) {
 }
 
 // Asynchronous sleep function
-const sleep = (milliseconds) => {
+const sleep = (milliseconds = 50) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
 
@@ -103,6 +103,9 @@ $(() => {
       height: $(window).height(),
     };
 
+    // Some browsers require 100vh to be defined in pixels
+    $('.bg, .bg::before, .bg::after').css({ height: `${windowDims.height}px` });
+
     // .logo
     const $h1 = $logo.children('h1');
     if (windowDims.width < 358) {
@@ -115,23 +118,21 @@ $(() => {
       $h1.css({ 'letter-spacing': '6px', 'font-size': '2.5rem' });
     }
 
-    let logoHeight = $logo.outerHeight();
-    let footerHeight = $footer.outerHeight();
-    let contentHeight = 2 * windowDims.height - logoHeight - footerHeight;
-    let contentPaddingBottom = Math.max(logoHeight - footerHeight, 16);
-
+    // .content
+    let logoHeight;
     const updateContent = () => {
+      // Define useful variable and constants
       logoHeight = $logo.outerHeight();
-      footerHeight = $footer.outerHeight();
-      contentHeight = 2 * windowDims.height - logoHeight - footerHeight;
-      contentPaddingBottom = Math.max(logoHeight - footerHeight, 16);
-
+      const footerHeight = $footer.outerHeight();
+      const contentHeight = 2 * windowDims.height - logoHeight - footerHeight;
+      const contentPaddingBottom = Math.max(logoHeight - footerHeight, 16);
       const labelHeight = Math.max(
         ...$label.map(function () {
           return $(this).outerHeight();
         }),
       );
 
+      // Switch orientation modes based on values of windowDims
       if (windowDims.width > windowDims.height) {
         $ul.css({ 'flex-direction': 'row' });
         if (currentBackground === portrait) {
@@ -144,25 +145,30 @@ $(() => {
         }
       }
 
+      // Prepare styling for rending next two constants
       $content.css({
         height: `${contentHeight}px`,
+        'padding-top': `${windowDims.height}px`,
         'padding-bottom': `${contentPaddingBottom}px`,
       });
       $buttons.hide();
 
+      // Define three more constants that have to come after orientation change
+      const liDims = {
+        width: Math.max(...$li.map((index, li) => $(li).width())),
+        height: Math.max(...$li.map((index, li) => $(li).height())),
+      };
       const diameter = Math.min(
         initButtonDiameter,
-        $li.first().width() - 2 * initButtonBorderWidth,
-        $li.first().height() - aGap - labelHeight - 2 * initButtonBorderWidth,
+        liDims.width - 2 * initButtonBorderWidth,
+        liDims.height - aGap - labelHeight - 2 * initButtonBorderWidth,
       );
-
       const scale = (4 * diameter) / initButtonDiameter;
-      if (scale < 1) {
-        $buttons.hide();
-      } else {
-        $buttons.show();
 
+      // Show and scale buttons if scale value is large enough
+      if (scale >= 1) {
         $buttons.css({
+          display: 'block',
           height: `${diameter}px`,
           width: `${diameter}px`,
           'border-width': `${Math.ceil(scale)}px`,
@@ -170,16 +176,18 @@ $(() => {
 
         $icons.css({ 'font-size': `${scale}em` });
       }
-    }
+    };
 
+    // Keep updating content in 50ms intervals until logo updates with a max.
+    // timeout of three seconds
     updateContent();
-
-    while (logoHeight < 100) {
+    for (let i = 0; logoHeight < 100 && i < 60; i++) {
+      await sleep();
       updateContent();
-      await sleep(50);
     }
   };
 
+  // Set update listener and call initially
   $(window).on('resize orientationchange', update);
   update();
 });

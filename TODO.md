@@ -3,12 +3,13 @@
 ## High Priorities
 
 - FancyBox (image product page)
+- Momentum scrolling on Gallery page
 - Form margins
   - About > Updates
-- Add typeface to Terms/Privacy nav
 
 ## Low Priorities
 
+- Safari background positioning bug
 - Add transitions to DataTables
 - Cache libraries
 - Convert includes to blocks
