@@ -97,6 +97,22 @@ ul
   background-color: #007bff
   color: white
 
+#scroll
+  height: calc(100vh - 47px)
+  position: fixed
+  top: 47px
+  right: 0
+  bottom: 0
+  left: 0
+  padding-top: 2rem
+  overflow-y: scroll
+  -webkit-overflow-scrolling: touch
+
+  @media screen and (min-width: 768px)
+    height: calc(100vh - 56px)
+    top: 56px
+
+
 #gallery > ul h3, #archive > ul h3
   font-family: 'Open Sans', Helvetica, Arial, sans-serif
   font-weight: bold

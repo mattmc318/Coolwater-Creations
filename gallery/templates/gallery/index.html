@@ -1,99 +1,128 @@
-{% extends 'gallery/base.html' %}
-
-{% block head %}{% load static %}
+{% extends 'gallery/base.html' %} {% block head %}{% load static %}
 <script src="{% static 'gallery/js/index.min.js' %}"></script>
 <!-- <script src="{% static 'gallery/js/index.js' %}"></script> -->
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block content %}
 <div class="scroll-to-top">
   <span class="fa-stack">
     <i class="fas fa-circle fa-stack-2x"></i>
     <i class="fas fa-arrow-up fa-stack-1x fa-inverse"></i>
   </span>
 </div>
-<div class="container">
-  {% if messages %}
-  {% for message in messages %}
-  {% if message.tags == 'error' %}
-  <div class="alert alert-danger" role="alert">
-    <a href="#" class="close float-right" data-dismiss="alert" aria-label="close" title="close">&times;</a>
-    <p>{{ message }}</p>
-  </div>
-  {% elif message.tags == 'success' %}
-  <div class="alert alert-success" role="alert">
-    <a href="#" class="close float-right" data-dismiss="alert" aria-label="close" title="close">&times;</a>
-    <p>{{ message }}</p>
-  </div>
-  {% endif %}
-  {% endfor %}
-  {% endif %}
-  <h1>Gallery</h1>
-  {% if person %}
-  {% if person.is_superuser == True %}
-  <div class="btn-container">
-    <a class="btn btn-light" href="{% url 'gallery:new_product' %}">Add a New Product</a>
-    <a class="btn btn-light" href="{% url 'gallery:orders' %}">View Orders</a>
-  </div>
-  {% endif %}
-  {% endif %}
-  <ul class="tabs tabs-2">
-    <li class="text-center" id="tabs-gallery" data-href="#gallery">For Sale</li>
-    <li class="text-center" id="tabs-archive" data-href="#archive">Archive</li>
-  </ul>
-  <div class="filters-dropdown">
-    <ul class="filters">
-      {% for filter in filters %}
-      <li data-name="{{ filter.name }}" data-gallery-count="{{ filter.gallery }}" data-archive-count="{{ filter.archive }}">{{ filter.name }}</li>
-      {% endfor %}
-    </ul>
-    <ul class="filter-control">
-      <li class="active">Select All</li>
-      <li>Select None</li>
-    </ul>
-  </div>
-  <div class="filters-button">Show Filters <i class="fas fa-chevron-down"></i></div>
-  <div id="gallery">
-    {% if not products %}
-    <p>Sorry! There are no products currently available. Please check again later.</p>
-    {% else %}
-    <ul>
-      {% for product in products %}
-      <li class="gallery-item">
-        <div class="gallery-content">
-          <a href="{% url 'gallery:product_page' %}?id={{ product.id }}">
-            <img src="{{ product.image.url }}.gallery.jpg" alt="product">
-          </a>
-          <a href="{% url 'gallery:product_page' %}?id={{ product.id }}">
-            <h3>{{ product.name }}</h3>
-            <h5>${{ product.price_per_unit }}</h5>
-          </a>
-        </div>
+<section id="scroll">
+  <div class="container">
+    {% if messages %} {% for message in messages %}
+    {% if message.tags == 'error' %}
+    <div class="alert alert-danger" role="alert">
+      <a
+        href="#"
+        class="close float-right"
+        data-dismiss="alert"
+        aria-label="close"
+        title="close"
+      >
+        &times;
+      </a>
+      <p>{{ message }}</p>
+    </div>
+    {% elif message.tags == 'success' %}
+    <div class="alert alert-success" role="alert">
+      <a
+        href="#"
+        class="close float-right"
+        data-dismiss="alert"
+        aria-label="close"
+        title="close"
+      >
+        &times;
+      </a>
+      <p>{{ message }}</p>
+    </div>
+    {% endif %} {% endfor %} {% endif %}
+    <h1>Gallery</h1>
+    {% if person %} {% if person.is_superuser == True %}
+    <div class="btn-container">
+      <a class="btn btn-light" href="{% url 'gallery:new_product' %}">
+        Add a New Product
+      </a>
+      <a class="btn btn-light" href="{% url 'gallery:orders' %}">View Orders</a>
+    </div>
+    {% endif %} {% endif %}
+    <ul class="tabs tabs-2">
+      <li class="text-center" id="tabs-gallery" data-href="#gallery">
+        For Sale
       </li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-  </div>
-  <div id="archive">
-    {% if not archive %}
-    <p>Sorry! There are no products currently in the archive. Please check again later.</p>
-    {% else %}
-    <ul>
-      {% for product in archive %}
-      <li class="gallery-item">
-        <div class="gallery-content">
-          <a href="{% url 'gallery:product_page' %}?id={{ product.id }}">
-            <img src="{{ product.image.url }}.gallery.jpg" alt="product">
-          </a>
-          <a href="{% url 'gallery:product_page' %}?id={{ product.id }}">
-            <h3>{{ product.name }}</h3>
-            <h5>${{ product.price_per_unit }}</h5>
-          </a>
-        </div>
+      <li class="text-center" id="tabs-archive" data-href="#archive">
+        Archive
       </li>
-      {% endfor %}
     </ul>
-    {% endif %}
+    <div class="filters-dropdown">
+      <ul class="filters">
+        {% for filter in filters %}
+        <li
+          data-name="{{ filter.name }}"
+          data-gallery-count="{{ filter.gallery }}"
+          data-archive-count="{{ filter.archive }}"
+        >
+          {{ filter.name }}
+        </li>
+        {% endfor %}
+      </ul>
+      <ul class="filter-control">
+        <li class="active">Select All</li>
+        <li>Select None</li>
+      </ul>
+    </div>
+    <div class="filters-button">
+      Show Filters <i class="fas fa-chevron-down"></i>
+    </div>
+    <div id="gallery">
+      {% if not products %}
+      <p>
+        Sorry! There are no products currently available. Please check again
+        later.
+      </p>
+      {% else %}
+      <ul>
+        {% for product in products %}
+        <li class="gallery-item">
+          <div class="gallery-content">
+            <a href="{% url 'gallery:product_page' %}?id={{ product.id }}">
+              <img src="{{ product.image.url }}.gallery.jpg" alt="product" />
+            </a>
+            <a href="{% url 'gallery:product_page' %}?id={{ product.id }}">
+              <h3>{{ product.name }}</h3>
+              <h5>${{ product.price_per_unit }}</h5>
+            </a>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+    <div id="archive">
+      {% if not archive %}
+      <p>
+        Sorry! There are no products currently in the archive. Please check
+        again later.
+      </p>
+      {% else %}
+      <ul>
+        {% for product in archive %}
+        <li class="gallery-item">
+          <div class="gallery-content">
+            <a href="{% url 'gallery:product_page' %}?id={{ product.id }}">
+              <img src="{{ product.image.url }}.gallery.jpg" alt="product" />
+            </a>
+            <a href="{% url 'gallery:product_page' %}?id={{ product.id }}">
+              <h3>{{ product.name }}</h3>
+              <h5>${{ product.price_per_unit }}</h5>
+            </a>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
   </div>
-</div>
+</section>
 {% endblock %}
