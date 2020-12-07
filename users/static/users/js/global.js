@@ -4,6 +4,7 @@ $(() => {
   console.log('https://mccarthycode.com/');
 
   // external link icon
-  $('a.external-link')
-    .after('<i class="fas fa-external-link-alt" title="External Link"></i>');
+  $('a.external-link').after(
+    ' <i class="fas fa-external-link-alt" title="External Link"></i>',
+  );
 });

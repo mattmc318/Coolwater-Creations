@@ -2,14 +2,13 @@
 
 ## High Priorities
 
-- Scroll to top
+- Momentum scrolling on and scroll to top button
   - Gallery
   - About
 
 ## Medium Priorities
 
 - FancyBox (image product page)
-- Momentum scrolling on About page
 - Form margins
   - About > Updates
 - Messages

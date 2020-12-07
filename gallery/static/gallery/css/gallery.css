@@ -9908,7 +9908,6 @@ body:not(.homepage) {
 
 .fa-external-link-alt {
   vertical-align: baseline;
-  margin-left: 0.5em;
 }
 
 h1, h3, .navbar-brand {
@@ -10538,7 +10537,7 @@ nav .nav-link:hover {
   font-size: 0.5em;
 }
 .footer-list {
-  width: 284px;
+  width: 285px;
   position: relative;
   margin: auto;
   overflow: hidden;
@@ -10570,7 +10569,7 @@ nav .nav-link:hover {
 }
 @media screen and (min-width: 406px) {
   .footer-list {
-    width: 376px;
+    width: 377px;
   }
 }
 
