@@ -2,10 +2,18 @@
 
 ## High Priorities
 
+- Scroll to top
+  - Gallery
+  - About
+
+## Medium Priorities
+
 - FancyBox (image product page)
-- Momentum scrolling on Gallery page
+- Momentum scrolling on About page
 - Form margins
   - About > Updates
+- Messages
+  - Make items flex-aligned
 
 ## Low Priorities
 
@@ -16,5 +24,3 @@
   - DataTables code
   - Global head
 - Manifest
-- Messages
-  - Make items flex-aligned
