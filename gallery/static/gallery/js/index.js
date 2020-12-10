@@ -1,5 +1,26 @@
-$(document).ready(function () {
-    // update filters' text
+$(() => {
+    // Hide scrollbar and nav placeholder
+    $('html').css({ 'scrollbar-width': 'none' });
+    $('.nav-placeholder').remove();
+
+    // Update page below nav on page load, resize, or orientation change
+    const $scroll = $('#scroll');
+
+    const update = () => {
+        const windowDims = {
+            width: $(window).width(),
+            height: $(window).height(),
+        };
+        const navHeight = windowDims.width < 768 ? 47 : 56;
+
+        $('html').css({ height: `${windowDims.height}px` });
+        $scroll.css({ height: `${windowDims.height - navHeight}px` });
+    };
+
+    update();
+    $(window).on('resize orientationchange', update);
+
+    // Update filters' text
     let $filters = $('ul.filters > li');
 
     function updateGalleryFilters() {
@@ -20,16 +41,18 @@ $(document).ready(function () {
         });
     }
 
-    // show appropriate view based on document hash
+    // Show appropriate view based on document hash
     if (document.location.hash) {
         setTimeout(function () {
             window.scrollTo(0, 0);
         }, 1);
     }
 
-    if (document.location.hash === '' ||
+    if (
+        document.location.hash === '' ||
         document.location.hash === '#' ||
-        document.location.hash === '#gallery') {
+        document.location.hash === '#gallery'
+    ) {
         $('#gallery').show();
         $('#tabs-gallery').addClass('active');
         updateGalleryFilters();
@@ -39,7 +62,7 @@ $(document).ready(function () {
         updateArchiveFilters();
     }
 
-    // determine if element is in viewport
+    // Determine if element is in viewport
     $.fn.isInViewport = function () {
         if (!$(this).is(':visible')) {
             return false;
@@ -53,33 +76,43 @@ $(document).ready(function () {
         return elementBottom >= viewportTop && elementTop <= viewportBottom;
     };
 
-    // infinite scrolling and scroll to top
-    let galleryPage = archivePage = 2;
-    let galleryEmpty = archiveEmpty = false;
-    let $scrollToTop = $('.scroll-to-top');
+    // Infinite scrolling and scroll to top
+    const $scrollToTop = $('.scroll-to-top');
+
+    let galleryPage = (archivePage = 2);
+    let galleryEmpty = (archiveEmpty = false);
     let $lastGallery;
     let $lastArchive;
+    let cooldown = false;
 
-    $(window).on('resize scroll', function () {
-        // infinite scrolling
-        $lastGallery = $('#gallery ul').find('li:last-of-type');
-        $lastArchive = $('#archive ul').find('li:last-of-type');
+    $scroll.on('resize scroll', function () {
+        $lastGallery = $('#gallery > ul > li:last-of-type');
+        $lastArchive = $('#archive > ul > li:last-of-type');
 
-        if (!galleryEmpty && $lastGallery.isInViewport()) {
-            getGalleryFiltered();
-        } else if (!archiveEmpty && $lastArchive.isInViewport()) {
-            getArchiveFiltered();
-        }
+        if (!cooldown) {
+            cooldown = true;
 
-        // scroll to top display
-        if ($(window).scrollTop() >= 180) {
-            $scrollToTop.slideDown();
-        } else {
-            $scrollToTop.slideUp();
+            // Infinite scrolling
+            if (!galleryEmpty && $lastGallery.isInViewport()) {
+                getGalleryFiltered();
+            } else if (!archiveEmpty && $lastArchive.isInViewport()) {
+                getArchiveFiltered();
+            }
+
+            // Scroll to top display
+            if ($(this).scrollTop() >= 180) {
+                $scrollToTop.slideDown();
+            } else {
+                $scrollToTop.slideUp();
+            }
+
+            setTimeout(() => {
+                cooldown = false;
+            }, 1000);
         }
     });
 
-    // retrieve filtered data
+    // Retrieve filtered data
     let beforeAjaxPosition;
     function getGalleryFiltered() {
         let data = {
@@ -151,21 +184,20 @@ $(document).ready(function () {
         }
     }
 
-    // prevent tab, filter, filter control, and scroll to top behavior on scroll
-    $(document).on('touchstart', function () {
-        startPosition = $(window).scrollTop();
-    });
+    // Scroll to top event handling
+    $(document)
+        .on('touchstart', function () {
+            // Prevent tab, filter, filter control, and scroll to top behavior on
+            // scroll
+            startPosition = $(window).scrollTop();
+        })
+        .on('click touchend', '.scroll-to-top', function (event) {
+            $scroll.animate({ scrollTop: 0 }, 1000);
+        });
 
-    // scroll to top event handling
-    $(document).on('click touchstart', '.scroll-to-top', function (event) {
-        $("html, body").animate({
-            scrollTop: 0,
-        }, 1000);
-    });
-
-    // define tabs behavior
-    let $tabs = $('ul.tabs');
-    let $tabsChildren = $('ul.tabs > li');
+    // Define tabs behavior
+    const $tabs = $('ul.tabs');
+    const $tabsChildren = $('ul.tabs > li');
     let $activeTab = $('ul.tabs > li.active');
 
     $($activeTab.data('href')).show();
@@ -177,7 +209,7 @@ $(document).ready(function () {
 
         $tabsChildren.each(function () {
             $($(this).data('href')).hide();
-            $(this).removeClass('active')
+            $(this).removeClass('active');
         });
 
         let view = $tab.data('href');
@@ -214,16 +246,16 @@ $(document).ready(function () {
 
     $tabsChildren.on('touchend', function (event) {
         let changes = event.changedTouches[0];
-        let $endElement = $(document.elementFromPoint(changes.pageX, changes.pageY));
+        let $endElement = $(
+            document.elementFromPoint(changes.pageX, changes.pageY),
+        );
 
         if ($endElement.parent('.tabs').length) {
             tabsChildrenClick($(this));
 
-            $tabsChildren
-                .removeClass('active')
-                .each(function () {
-                    $($(this).data('href')).hide();
-                });
+            $tabsChildren.removeClass('active').each(function () {
+                $($(this).data('href')).hide();
+            });
 
             $activeTab = $endElement;
             $endElement.addClass('active');
@@ -247,24 +279,28 @@ $(document).ready(function () {
         $activeTab.addClass('active');
     });
 
-    // define filters behavior
+    // Define filters behavior
     let visible = false;
-    let $filtersButton = $('div.filters-button');
-    let $dropdown = $('div.filters-dropdown');
+    const $filtersButton = $('div.filters-button');
+    const $dropdown = $('div.filters-dropdown');
 
     $filtersButton.on('click touchend', function (event) {
         event.preventDefault();
         event.stopPropagation();
 
-        let endPosition = $(window).scrollTop();
+        const endPosition = $(window).scrollTop();
 
-        if (event.type === 'click' ||
-            (event.type === 'touchend' && startPosition === endPosition)) {
+        if (
+            event.type === 'click' ||
+            (event.type === 'touchend' && startPosition === endPosition)
+        ) {
             if (visible) {
                 $dropdown.slideUp(500);
 
                 setTimeout(function () {
-                    $filtersButton.html('Show Filters <i class="fas fa-chevron-down"></i>');
+                    $filtersButton.html(
+                        'Show Filters <i class="fas fa-chevron-down"></i>',
+                    );
                 }, 500);
             } else {
                 $dropdown.slideDown(500);
@@ -282,12 +318,14 @@ $(document).ready(function () {
         event.preventDefault();
         event.stopPropagation();
 
-        let endPosition = $(window).scrollTop();
+        const endPosition = $(window).scrollTop();
         galleryPage = archivePage = 1;
         galleryEmpty = archiveEmpty = false;
 
-        if (event.type === 'click' ||
-            (event.type === 'touchend' && startPosition === endPosition)) {
+        if (
+            event.type === 'click' ||
+            (event.type === 'touchend' && startPosition === endPosition)
+        ) {
             $(this).toggleClass('active');
             getFiltered($('ul.tabs > li.active'));
         }
@@ -300,7 +338,7 @@ $(document).ready(function () {
         $(this).removeClass('hover');
     });
 
-    // define select all/none behavior
+    // Define select all/none behavior
     let $filterControl = $('ul.filter-control > li');
 
     function filterControlClick($filterControl) {
@@ -326,10 +364,11 @@ $(document).ready(function () {
 
         let endPosition = $(window).scrollTop();
 
-        if (event.type === 'click' ||
-            (event.type === 'touchend' && startPosition === endPosition)) {
+        if (
+            event.type === 'click' ||
+            (event.type === 'touchend' && startPosition === endPosition)
+        ) {
             filterControlClick($(this));
         }
     });
 });
-

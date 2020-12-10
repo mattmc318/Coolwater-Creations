@@ -3,22 +3,6 @@ $(() => {
     var table = $('.orders').DataTable();
   }
 
-  $('html').css({ 'scrollbar-width': 'none' });
-  $('.nav-placeholder').remove();
-
-  const update = () => {
-    const windowDims = {
-      width: $(window).width(),
-      height: $(window).height(),
-    };
-    const navHeight = windowDims.width < 768 ? 47 : 56;
-
-    $('html').css({ height: `${windowDims.height}px` });
-    $('#scroll').css({ height: `${windowDims.height - navHeight}px` });
-  };
-  update();
-  $(window).on('resize orientationchange', update);
-
   $('.orders tbody tr').on('click', function (e) {
     if (e.target.type == 'checkbox') {
       e.stopPropagation();
