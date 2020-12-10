@@ -2,7 +2,7 @@
 
 ## High Priorities
 
-- Momentum scrolling on and scroll to top button
+- Momentum scrolling, infinite scrolling, and scroll to top button
   - Gallery
   - About
 
