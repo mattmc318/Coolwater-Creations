@@ -9905,6 +9905,23 @@ html, body {
 body:not(.homepage) {
   background-color: #e1f4fc;
 }
+body:not(.homepage) #page {
+  display: grid;
+  grid-template-rows: [top] 47px [content-top] auto [bottom];
+  height: 100%;
+}
+@media (min-width: 768px) {
+  body:not(.homepage) #page {
+    grid-template-rows: [top] 3.5rem [content-top] auto [bottom];
+  }
+}
+body:not(.homepage) #page #content {
+  grid-row-start: content-top;
+  grid-row-end: bottom;
+  padding-top: 2rem;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
 
 .fa-external-link-alt {
   vertical-align: baseline;
@@ -10493,6 +10510,10 @@ input[type=checkbox] + p {
     grid-template-columns: calc((1140px - 6rem + 3px)/5) calc((1140px - 6rem + 3px)/5) calc((1140px - 6rem + 3px)/5) calc((1140px - 6rem + 3px)/5) calc((1140px - 6rem + 3px)/5);
   }
 }
+nav {
+  grid-row-start: top;
+  grid-row-end: content-top;
+}
 nav .navbar {
   margin-bottom: 2rem;
   box-shadow: 0px 4px 8px grey;
@@ -10507,10 +10528,6 @@ nav .nav-link:hover {
   color: white !important;
 }
 
-.nav-placeholder {
-  height: 5.5rem;
-}
-
 @media (max-width: 767.98px) {
   nav .navbar-brand {
     font-size: 0.9em;
@@ -10520,10 +10537,6 @@ nav .nav-link:hover {
     border-radius: 4px;
     margin-top: 0.5rem;
     color: white !important;
-  }
-
-  .nav-placeholder {
-    height: 79px;
   }
 }
 .tabs {

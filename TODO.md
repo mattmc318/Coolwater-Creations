@@ -2,7 +2,9 @@
 
 ## High Priorities
 
-- Momentum scrolling, infinite scrolling, and scroll to top button on About page
+- Scrolling on About page
+  - Infinite scrolling
+  - Scroll to top button
 - Fix Home page bugs
   - Icons
   - Background

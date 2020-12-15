@@ -2,6 +2,9 @@
 
 set -e
 
+CYAN="\033[0;36m"
+NC="\033[0m"
+
 closure_compiler="bin/closure-compiler-v20200504.jar"
 
 declare -a path=(
@@ -21,7 +24,7 @@ while true; do
       cmd="java -jar $closure_compiler --language_in=STABLE --js $input --js_output_file $output"
 
       if [ $input -nt $output ]; then
-        echo "[$(date -Iseconds)] $cmd" >&2
+        printf "${CYAN}[$(date -Iseconds)]${NC} $cmd\n" >&2
         $cmd
       fi
     done
