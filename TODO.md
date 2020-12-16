@@ -2,13 +2,7 @@
 
 ## High Priorities
 
-- Scrolling on About page
-  - Infinite scrolling
-  - Scroll to top button
-- Fix Home page bugs
-  - Icons
-  - Background
-  - Footer
+- Fix Home page background image positioning bug
 - Gallery page
   - Change layout to grid
 

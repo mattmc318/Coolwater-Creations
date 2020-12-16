@@ -9940,13 +9940,16 @@ h3, h4, h5 {
 }
 
 .bg {
+  --bg-height: 100vh;
+  --logo-height: 101px;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  display: grid;
+  grid-template-rows: [top] var(--logo-height) [content-top] auto [bottom];
 }
 .bg, .bg::before, .bg::after {
-  width: 100vw;
-  height: 100vh;
+  height: var(--bg-height);
   position: fixed;
   top: 0;
   right: 0;
@@ -9983,11 +9986,40 @@ h3, h4, h5 {
 .bg.landscape::before, .bg.landscape::after {
   background-image: url("/static/users/img/dragon_landscape.jpg");
 }
+@media screen and (min-height: 300px) {
+  .bg.landscape .content button {
+    display: flex;
+  }
+}
+@media screen and (min-width: 500px) and (min-height: 350px) {
+  .bg.landscape .content button {
+    --size: 2;
+  }
+}
+@media screen and (min-width: 675px) and (min-height: 400px) {
+  .bg.landscape .content button {
+    --size: 3;
+  }
+}
 .bg.portrait::before, .bg.portrait::after {
   background-image: url("/static/users/img/dragon_portrait.jpg");
 }
-
-.logo {
+@media screen and (min-height: 550px) {
+  .bg.portrait .content button {
+    display: flex;
+  }
+}
+@media screen and (min-height: 700px) {
+  .bg.portrait .content button {
+    --size: 2;
+  }
+}
+@media screen and (min-height: 850px) {
+  .bg.portrait .content button {
+    --size: 3;
+  }
+}
+.bg .logo {
   position: fixed;
   top: 0;
   left: 0;
@@ -9995,82 +10027,110 @@ h3, h4, h5 {
   z-index: 1;
   text-shadow: 2px 2px 8px black;
   padding: 1rem 1rem 7px 1rem;
-  letter-spacing: 6px;
   cursor: pointer;
 }
-.logo, .logo:hover {
+.bg .logo h1 {
+  font-size: 1.75rem;
+}
+@media screen and (min-width: 358px) {
+  .bg .logo h1 {
+    font-size: 2rem;
+  }
+}
+@media screen and (min-width: 439px) {
+  .bg .logo h1 {
+    font-size: 2.5rem;
+  }
+}
+@media screen and (min-width: 553px) {
+  .bg .logo h1 {
+    letter-spacing: 6px;
+  }
+}
+.bg .logo, .bg .logo:hover {
   color: white;
 }
-.logo h1 {
+.bg .logo h1 {
   font-family: "Merienda One", Helvetica, Arial, sans-serif;
 }
-.logo p {
+.bg .logo p {
   margin: 0;
 }
-.logo p svg {
+.bg .logo p svg {
   font-size: 35px;
   -webkit-filter: drop-shadow(2px 2px 8px #000);
   filter: drop-shadow(2px 2px 8px #000);
 }
-
-#about, #contact {
-  padding: 2rem 0;
-}
-
-.content {
-  display: flex;
-  align-content: center;
-  padding-top: 100vh;
-}
-.content-container {
-  display: flex;
-  align-content: center;
-  justify-content: center;
+.bg .content {
+  grid-row-start: content-top;
+  grid-row-end: bottom;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   padding: 0 1rem;
+  width: 100%;
+  margin: 0 auto;
+}
+.bg .content > * {
   flex: 0 0 auto;
+}
+.bg .content .test {
+  grid-row-start: top;
+  grid-row-end: ul-top;
+}
+.bg .content-container {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 720px;
   margin: 0 auto;
 }
-.content-container ul {
+.bg .content-container > * {
+  flex: 0 0 auto;
+}
+.bg .content-container ul {
   display: flex;
   justify-content: space-evenly;
   align-content: center;
   gap: 1rem;
   width: 100%;
-  margin: 0;
+  height: calc(var(--bg-height) - var(--logo-height) - 56px);
+  margin: calc(var(--bg-height) - var(--logo-height)) 0 0 0;
+  padding-bottom: 1rem;
 }
-.content-container ul li {
+.bg .content-container ul li {
   display: flex;
   justify-content: center;
   align-items: center;
   flex: 1 1 150px;
 }
-.content-container ul li a {
+.bg .content-container ul li a {
   color: #f19883;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 1rem;
 }
-.content-container ul li a * {
+.bg .content-container ul li a, .bg .content-container ul li a * {
   cursor: pointer;
 }
-.content-container ul li a:hover button, .content-container ul li a:focus button {
+.bg .content-container ul li a:hover button, .bg .content-container ul li a:focus button {
   background-color: #8bd4f3;
 }
-.content-container ul li a:hover label, .content-container ul li a:focus label {
+.bg .content-container ul li a:hover label, .bg .content-container ul li a:focus label {
   text-decoration: underline;
   background-color: #99a878;
 }
-.content-container ul li a button {
+.bg .content-container ul li a button {
+  --size: 1;
+  display: none;
   position: relative;
-  display: flex;
   justify-content: center;
   align-items: center;
-  border: 0.25rem solid white;
+  width: calc(var(--size) * 50px);
+  height: calc(var(--size) * 50px);
+  margin-bottom: 1rem;
+  border: calc(var(--size) * 1px + 1px) solid white;
   border-radius: 100%;
   padding: 0;
   background-color: rgba(139, 212, 243, 0.75);
@@ -10079,10 +10139,11 @@ h3, h4, h5 {
   -o-transition: background-color 0.3s ease-in-out;
   transition: background-color 0.3s ease-in-out;
 }
-.content-container ul li a button i, .content-container ul li a button svg {
+.bg .content-container ul li a button i, .bg .content-container ul li a button svg {
   color: white;
+  font-size: calc(var(--size) * 1rem);
 }
-.content-container ul li a label {
+.bg .content-container ul li a label {
   font-family: "Merienda One", Helvetica, Arial, sans-serif;
   font-size: 1.5rem;
   color: white;
@@ -10102,6 +10163,10 @@ h3, h4, h5 {
 
 #about {
   background: #f8f9fa7f;
+}
+
+#about, #contact {
+  padding: 2rem 0;
 }
 
 .banner {
@@ -10171,6 +10236,7 @@ nav .nav-link:hover {
 .footer {
   --alpha: 1;
   height: 56px;
+  margin: 0 -1rem;
   padding: 0.5rem 0;
   background-color: rgba(32, 32, 32, var(--alpha));
   color: white;
