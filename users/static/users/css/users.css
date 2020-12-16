@@ -9935,32 +9935,25 @@ h3, h4, h5 {
   font-family: "Merienda One", Helvetica, Arial, sans-serif;
 }
 
-.center {
-  text-align: center;
+body {
+  --page-height: 100vh;
+  --logo-height: 121px;
 }
 
-.bg {
-  --bg-height: 100vh;
-  --logo-height: 101px;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  display: grid;
-  grid-template-rows: [top] var(--logo-height) [content-top] auto [bottom];
-}
-.bg, .bg::before, .bg::after {
-  height: var(--bg-height);
+#bg, #bg::before, #bg::after, #page {
+  height: var(--page-height);
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
 }
-.bg::before, .bg::after {
+
+#bg::before, #bg::after {
   content: "";
   pointer-events: none;
 }
-.bg::before {
+#bg::before {
   z-index: -2;
   transform: scale(1.2);
   -webkit-filter: blur(4px);
@@ -9973,7 +9966,7 @@ h3, h4, h5 {
   -o-background-size: cover;
   background-size: cover;
 }
-.bg::after {
+#bg::after {
   z-index: -1;
   background-attachment: fixed;
   background-position: center;
@@ -9983,43 +9976,56 @@ h3, h4, h5 {
   -o-background-size: contain;
   background-size: contain;
 }
-.bg.landscape::before, .bg.landscape::after {
+#bg.landscape::before, #bg.landscape::after {
   background-image: url("/static/users/img/dragon_landscape.jpg");
 }
-@media screen and (min-height: 300px) {
-  .bg.landscape .content button {
-    display: flex;
-  }
-}
-@media screen and (min-width: 500px) and (min-height: 350px) {
-  .bg.landscape .content button {
-    --size: 2;
-  }
-}
-@media screen and (min-width: 675px) and (min-height: 400px) {
-  .bg.landscape .content button {
-    --size: 3;
-  }
-}
-.bg.portrait::before, .bg.portrait::after {
+#bg.portrait::before, #bg.portrait::after {
   background-image: url("/static/users/img/dragon_portrait.jpg");
 }
+
+#page {
+  display: grid;
+  grid-template-rows: [top] var(--logo-height) [content-top] auto [bottom];
+}
+#page.portrait .content-container ul {
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
 @media screen and (min-height: 550px) {
-  .bg.portrait .content button {
+  #page.portrait .content-container ul button {
     display: flex;
   }
 }
 @media screen and (min-height: 700px) {
-  .bg.portrait .content button {
+  #page.portrait .content-container ul button {
     --size: 2;
   }
 }
 @media screen and (min-height: 850px) {
-  .bg.portrait .content button {
+  #page.portrait .content-container ul button {
     --size: 3;
   }
 }
-.bg .logo {
+#page.landscape .content-container ul {
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+@media screen and (min-height: 300px) {
+  #page.landscape .content-container ul button {
+    display: flex;
+  }
+}
+@media screen and (min-width: 500px) and (min-height: 350px) {
+  #page.landscape .content-container ul button {
+    --size: 2;
+  }
+}
+@media screen and (min-width: 675px) and (min-height: 400px) {
+  #page.landscape .content-container ul button {
+    --size: 3;
+  }
+}
+#page .logo {
   position: fixed;
   top: 0;
   left: 0;
@@ -10029,81 +10035,86 @@ h3, h4, h5 {
   padding: 1rem 1rem 7px 1rem;
   cursor: pointer;
 }
-.bg .logo h1 {
+#page .logo h1 {
   font-size: 1.75rem;
 }
 @media screen and (min-width: 358px) {
-  .bg .logo h1 {
+  #page .logo h1 {
     font-size: 2rem;
   }
 }
 @media screen and (min-width: 439px) {
-  .bg .logo h1 {
+  #page .logo h1 {
     font-size: 2.5rem;
   }
 }
 @media screen and (min-width: 553px) {
-  .bg .logo h1 {
+  #page .logo h1 {
     letter-spacing: 6px;
   }
 }
-.bg .logo, .bg .logo:hover {
+#page .logo, #page .logo:hover {
   color: white;
 }
-.bg .logo h1 {
+#page .logo h1 {
   font-family: "Merienda One", Helvetica, Arial, sans-serif;
 }
-.bg .logo p {
+#page .logo p {
   margin: 0;
 }
-.bg .logo p svg {
+#page .logo p svg {
   font-size: 35px;
   -webkit-filter: drop-shadow(2px 2px 8px #000);
   filter: drop-shadow(2px 2px 8px #000);
 }
-.bg .content {
+#page .content {
   grid-row-start: content-top;
   grid-row-end: bottom;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   padding: 0 1rem;
   width: 100%;
   margin: 0 auto;
 }
-.bg .content > * {
+#page .content::-webkit-scrollbar {
+  display: none;
+}
+#page .content > * {
   flex: 0 0 auto;
 }
-.bg .content .test {
+#page .content .test {
   grid-row-start: top;
   grid-row-end: ul-top;
 }
-.bg .content-container {
+#page .content-container {
   display: flex;
   flex-direction: column;
   width: 100%;
   max-width: 720px;
   margin: 0 auto;
 }
-.bg .content-container > * {
+#page .content-container > * {
   flex: 0 0 auto;
 }
-.bg .content-container ul {
+#page .content-container ul {
   display: flex;
   justify-content: space-evenly;
   align-content: center;
   gap: 1rem;
   width: 100%;
-  height: calc(var(--bg-height) - var(--logo-height) - 56px);
-  margin: calc(var(--bg-height) - var(--logo-height)) 0 0 0;
+  height: calc(var(--page-height) - var(--logo-height) - 56px);
+  margin: calc(var(--page-height) - var(--logo-height)) 0 0 0;
   padding-bottom: 1rem;
 }
-.bg .content-container ul li {
+#page .content-container ul li {
   display: flex;
   justify-content: center;
   align-items: center;
   flex: 1 1 150px;
 }
-.bg .content-container ul li a {
+#page .content-container ul li a {
   color: #f19883;
   color: white;
   display: flex;
@@ -10111,17 +10122,17 @@ h3, h4, h5 {
   align-items: center;
   flex-direction: column;
 }
-.bg .content-container ul li a, .bg .content-container ul li a * {
+#page .content-container ul li a, #page .content-container ul li a * {
   cursor: pointer;
 }
-.bg .content-container ul li a:hover button, .bg .content-container ul li a:focus button {
+#page .content-container ul li a:hover button, #page .content-container ul li a:focus button {
   background-color: #8bd4f3;
 }
-.bg .content-container ul li a:hover label, .bg .content-container ul li a:focus label {
+#page .content-container ul li a:hover label, #page .content-container ul li a:focus label {
   text-decoration: underline;
   background-color: #99a878;
 }
-.bg .content-container ul li a button {
+#page .content-container ul li a button {
   --size: 1;
   display: none;
   position: relative;
@@ -10139,11 +10150,11 @@ h3, h4, h5 {
   -o-transition: background-color 0.3s ease-in-out;
   transition: background-color 0.3s ease-in-out;
 }
-.bg .content-container ul li a button i, .bg .content-container ul li a button svg {
+#page .content-container ul li a button i, #page .content-container ul li a button svg {
   color: white;
   font-size: calc(var(--size) * 1rem);
 }
-.bg .content-container ul li a label {
+#page .content-container ul li a label {
   font-family: "Merienda One", Helvetica, Arial, sans-serif;
   font-size: 1.5rem;
   color: white;
