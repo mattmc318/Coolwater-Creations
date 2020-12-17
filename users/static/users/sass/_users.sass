@@ -129,9 +129,14 @@ h3, h4, h5
 
   &-container
     --logo-height: 101px
+    display: flex
+    flex-direction: column
     width: 100%
     max-width: 720px
     margin: 0 auto
+
+    & > *
+      flex: 0 0 auto
 
     @media screen and (min-width: 358px)
       --logo-height: 112px

@@ -9943,6 +9943,19 @@ h3, h4, h5 {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: [top] 101px [content-top] auto [bottom];
+}
+@media screen and (min-width: 358px) {
+  .bg {
+    grid-template-rows: [top] 112px [content-top] auto [bottom];
+  }
+}
+@media screen and (min-width: 553px) {
+  .bg {
+    grid-template-rows: [top] 121px [content-top] auto [bottom];
+  }
 }
 .bg, .bg::before, .bg::after {
   width: 100vw;
@@ -9983,8 +9996,38 @@ h3, h4, h5 {
 .bg.landscape::before, .bg.landscape::after {
   background-image: url("/static/users/img/dragon_landscape.jpg");
 }
+@media screen and (min-height: 300px) {
+  .bg.landscape .content button {
+    display: flex;
+  }
+}
+@media screen and (min-width: 500px) and (min-height: 350px) {
+  .bg.landscape .content button {
+    --size: 2;
+  }
+}
+@media screen and (min-width: 675px) and (min-height: 400px) {
+  .bg.landscape .content button {
+    --size: 3;
+  }
+}
 .bg.portrait::before, .bg.portrait::after {
   background-image: url("/static/users/img/dragon_portrait.jpg");
+}
+@media screen and (min-height: 550px) {
+  .bg.portrait .content button {
+    display: flex;
+  }
+}
+@media screen and (min-height: 700px) {
+  .bg.portrait .content button {
+    --size: 2;
+  }
+}
+@media screen and (min-height: 850px) {
+  .bg.portrait .content button {
+    --size: 3;
+  }
 }
 
 .logo {
@@ -9995,8 +10038,25 @@ h3, h4, h5 {
   z-index: 1;
   text-shadow: 2px 2px 8px black;
   padding: 1rem 1rem 7px 1rem;
-  letter-spacing: 6px;
   cursor: pointer;
+}
+.logo h1 {
+  font-size: 1.75rem;
+}
+@media screen and (min-width: 358px) {
+  .logo h1 {
+    font-size: 2rem;
+  }
+}
+@media screen and (min-width: 439px) {
+  .logo h1 {
+    font-size: 2.5rem;
+  }
+}
+@media screen and (min-width: 553px) {
+  .logo h1 {
+    letter-spacing: 6px;
+  }
 }
 .logo, .logo:hover {
   color: white;
@@ -10018,19 +10078,41 @@ h3, h4, h5 {
 }
 
 .content {
-  display: flex;
-  align-content: center;
-  padding-top: 100vh;
+  grid-row-start: content-top;
+  grid-row-end: bottom;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 1rem;
+  width: 100%;
+  margin: 0 auto;
+}
+.content > * {
+  flex: 0 0 auto;
+}
+.content .test {
+  grid-row-start: top;
+  grid-row-end: ul-top;
 }
 .content-container {
+  --logo-height: 101px;
   display: flex;
-  align-content: center;
-  justify-content: center;
-  padding: 0 1rem;
-  flex: 0 0 auto;
+  flex-direction: column;
   width: 100%;
   max-width: 720px;
   margin: 0 auto;
+}
+.content-container > * {
+  flex: 0 0 auto;
+}
+@media screen and (min-width: 358px) {
+  .content-container {
+    --logo-height: 112px;
+  }
+}
+@media screen and (min-width: 553px) {
+  .content-container {
+    --logo-height: 121px;
+  }
 }
 .content-container ul {
   display: flex;
@@ -10038,7 +10120,8 @@ h3, h4, h5 {
   align-content: center;
   gap: 1rem;
   width: 100%;
-  margin: 0;
+  height: calc(100vh - var(--logo-height) - 56px);
+  margin: calc(100vh - var(--logo-height)) 0 0 0;
 }
 .content-container ul li {
   display: flex;
@@ -10055,7 +10138,7 @@ h3, h4, h5 {
   flex-direction: column;
   gap: 1rem;
 }
-.content-container ul li a * {
+.content-container ul li a, .content-container ul li a * {
   cursor: pointer;
 }
 .content-container ul li a:hover button, .content-container ul li a:focus button {
@@ -10066,11 +10149,14 @@ h3, h4, h5 {
   background-color: #99a878;
 }
 .content-container ul li a button {
+  --size: 1;
+  display: none;
   position: relative;
-  display: flex;
   justify-content: center;
   align-items: center;
-  border: 0.25rem solid white;
+  width: calc(var(--size) * 50px);
+  height: calc(var(--size) * 50px);
+  border: calc(var(--size) * 1px + 1px) solid white;
   border-radius: 100%;
   padding: 0;
   background-color: rgba(139, 212, 243, 0.75);
@@ -10081,6 +10167,7 @@ h3, h4, h5 {
 }
 .content-container ul li a button i, .content-container ul li a button svg {
   color: white;
+  font-size: calc(var(--size) * 1rem);
 }
 .content-container ul li a label {
   font-family: "Merienda One", Helvetica, Arial, sans-serif;
@@ -10171,6 +10258,7 @@ nav .nav-link:hover {
 .footer {
   --alpha: 1;
   height: 56px;
+  margin: 0 -1rem;
   padding: 0.5rem 0;
   background-color: rgba(32, 32, 32, var(--alpha));
   color: white;
