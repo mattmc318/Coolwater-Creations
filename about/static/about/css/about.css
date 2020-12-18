@@ -10120,6 +10120,7 @@ ul li img {
   display: grid;
   grid-template-columns: 100%;
   gap: 1rem;
+  grid-gap: 1rem;
 }
 
 #gallery > p, #archive > p {
@@ -10542,6 +10543,7 @@ nav .nav-link:hover {
 .tabs {
   display: grid;
   gap: 0.25rem;
+  grid-gap: 0.25rem;
   margin-bottom: 0.25rem;
   color: black;
   -webkit-touch-callout: none;
