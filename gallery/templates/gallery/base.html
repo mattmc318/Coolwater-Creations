@@ -1,22 +1,24 @@
 <!DOCTYPE html>{% load static %}
 <html lang="en">
+  <head>
+    {% include 'users/global_head.html' %}
 
-<head>
-{% include 'users/global_head.html' %}
+    <!-- Local Static Files -->
+    <link rel="stylesheet" href="{% static 'gallery/css/gallery.min.css' %}" />
+    <!-- <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}"> -->
+    <script src="{% static 'users/js/global.min.js' %}"></script>
+    <!-- <script src="{% static 'users/js/global.js' %}"></script> -->
+    <script src="{% static 'gallery/js/gallery.min.js' %}"></script>
+    <!-- <script src="{% static 'gallery/js/gallery.js' %}"></script> -->
 
-  <!-- Local Static Files -->
-  <link rel="stylesheet" href="{% static 'gallery/css/gallery.min.css' %}">
-  <!-- <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}"> -->
-  <script src="{% static 'users/js/global.min.js' %}"></script>
-  <!-- <script src="{% static 'users/js/global.js' %}"></script> -->
-  <script src="{% static 'gallery/js/gallery.min.js' %}"></script>
-  <!-- <script src="{% static 'gallery/js/gallery.js' %}"></script> -->
+    <!-- Page-Specific Libraries/Files -->
+    {% block head %}{% endblock %}
+  </head>
 
-  <!-- Page-Specific Libraries/Files -->
-  {% block head %}{% endblock %}
-</head>
-
-<body>
-{% include 'users/navbar_fixed_top.html' %}{% block content %}{% endblock %}</body>
-
+  <body>
+    <section id="page">
+      {% include 'users/navbar.html' %}
+      <section id="content">{% block content %}{% endblock %}</section>
+    </section>
+  </body>
 </html>
