@@ -3,14 +3,13 @@
 ## High Priorities
 
 - Fix Home page background image positioning bug
-- Gallery page
-  - Change layout to grid
-
-## Medium Priorities
-
 - FancyBox (image product page)
 - Form margins
   - About > Updates
+  - New Product
+
+## Medium Priorities
+
 - Messages
   - Make items flex-aligned
 - Gallery page
