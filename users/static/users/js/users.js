@@ -25,11 +25,6 @@ function getCookie(name) {
   return '';
 }
 
-// Asynchronous sleep function
-const sleep = (milliseconds = 50) => {
-  return new Promise((resolve) => setTimeout(resolve, milliseconds));
-};
-
 $(() => {
   // Define useful DOM elements
   const $window = $(window);
@@ -84,7 +79,7 @@ $(() => {
   });
 
   // Calculate size and layout of various elements when page dimensions change
-  const update = async () => {
+  const update = () => {
     // Window dimensions
     windowDims = {
       width: $window.width(),
@@ -92,31 +87,25 @@ $(() => {
     };
 
     // Some browsers require 100vh to be defined in pixels
-    $('.bg, .bg::before, .bg::after').css({ height: `${windowDims.height}px` });
+    console.log(`${$('.logo').height()}px`);
+    document
+      .querySelector('.bg')
+      .style.setProperty('--bg-height', `${windowDims.height}px`);
+    document
+      .querySelector('.bg')
+      .style.setProperty('--logo-height', `${$('.logo').outerHeight()}px`);
 
-    // .content
-    let logoHeight;
-    const updateContent = () => {
-      // Switch orientation modes based on values of windowDims
-      if (windowDims.width > windowDims.height) {
-        $ul.css({ 'flex-direction': 'row' });
-        if (currentBackground === portrait) {
-          changeBackground();
-        }
-      } else {
-        $ul.css({ 'flex-direction': 'column' });
-        if (currentBackground === landscape) {
-          changeBackground();
-        }
+    // Switch orientation modes based on values of windowDims
+    if (windowDims.width > windowDims.height) {
+      $ul.css({ 'flex-direction': 'row' });
+      if (currentBackground === portrait) {
+        changeBackground();
       }
-    };
-
-    // Keep updating content in 50ms intervals until logo updates with a max.
-    // timeout of three seconds
-    updateContent();
-    for (let i = 0; logoHeight < 100 && i < 60; i++) {
-      await sleep();
-      updateContent();
+    } else {
+      $ul.css({ 'flex-direction': 'column' });
+      if (currentBackground === landscape) {
+        changeBackground();
+      }
     }
   };
 

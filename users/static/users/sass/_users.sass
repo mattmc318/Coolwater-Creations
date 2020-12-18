@@ -8,22 +8,16 @@ h3, h4, h5
   text-align: center
 
 .bg
+  --bg-height: 100vh
+  --logo-height: 101px
   overflow-y: scroll
   -webkit-overflow-scrolling: touch
   scrollbar-width: none
-  height: 100vh
   display: grid
-  grid-template-rows: [top] 101px [content-top] auto [bottom]
-
-  @media screen and (min-width: 358px)
-    grid-template-rows: [top] 112px [content-top] auto [bottom]
-
-  @media screen and (min-width: 553px)
-    grid-template-rows: [top] 121px [content-top] auto [bottom]
+  grid-template-rows: [top] var(--logo-height) [content-top] auto [bottom]
 
   &, &::before, &::after
-    width: 100vw
-    height: 100vh
+    height: var(--bg-height)
     position: fixed
     top: 0
     right: 0
@@ -73,145 +67,139 @@ h3, h4, h5
       @media screen and (min-height: 850px)
         --size: 3
 
-.logo
-  position: fixed
-  top: 0
-  left: 0
-  right: 0
-  z-index: 1
-  text-shadow: 2px 2px 8px black
-  padding: 1rem 1rem 7px 1rem
-  cursor: pointer
+  .logo
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    z-index: 1
+    text-shadow: 2px 2px 8px black
+    padding: 1rem 1rem 7px 1rem
+    cursor: pointer
 
-  h1
-    font-size: 1.75rem
+    h1
+      font-size: 1.75rem
 
-    @media screen and (min-width: 358px)
-      font-size: 2.0rem
+      @media screen and (min-width: 358px)
+        font-size: 2.0rem
 
-    @media screen and (min-width: 439px)
-      font-size: 2.5rem
+      @media screen and (min-width: 439px)
+        font-size: 2.5rem
 
-    @media screen and (min-width: 553px)
-      letter-spacing: 6px
+      @media screen and (min-width: 553px)
+        letter-spacing: 6px
 
-  &, &:hover
-    color: white
+    &, &:hover
+      color: white
 
-  h1
-    font-family: 'Merienda One', Helvetica, Arial, sans-serif
+    h1
+      font-family: 'Merienda One', Helvetica, Arial, sans-serif
 
-  p
-    margin: 0
+    p
+      margin: 0
 
-    svg
-      font-size: 35px
-      @include filter(drop-shadow(2px 2px 8px $black))
+      svg
+        font-size: 35px
+        @include filter(drop-shadow(2px 2px 8px $black))
 
-#about, #contact
-  padding: 2rem 0
-
-.content
-  grid-row-start: content-top
-  grid-row-end: bottom
-  overflow-y: scroll
-  -webkit-overflow-scrolling: touch
-  padding: 0 1rem
-  width: 100%
-  margin: 0 auto
-
-  & > *
-    flex: 0 0 auto
-
-  .test
-    grid-row-start: top
-    grid-row-end: ul-top
-
-  &-container
-    --logo-height: 101px
-    display: flex
-    flex-direction: column
+  .content
+    grid-row-start: content-top
+    grid-row-end: bottom
+    overflow-y: scroll
+    -webkit-overflow-scrolling: touch
+    padding: 0 1rem
     width: 100%
-    max-width: 720px
     margin: 0 auto
 
     & > *
       flex: 0 0 auto
 
-    @media screen and (min-width: 358px)
-      --logo-height: 112px
+    .test
+      grid-row-start: top
+      grid-row-end: ul-top
 
-    @media screen and (min-width: 553px)
-      --logo-height: 121px
-
-    ul
+    &-container
       display: flex
-      justify-content: space-evenly
-      align-content: center
-      gap: 1rem
+      flex-direction: column
       width: 100%
-      height: calc(100vh - var(--logo-height) - 56px)
-      margin: calc(100vh - var(--logo-height)) 0 0 0
+      max-width: 720px
+      margin: 0 auto
 
-      li
+      & > *
+        flex: 0 0 auto
+
+      ul
         display: flex
-        justify-content: center
-        align-items: center
-        flex: 1 1 150px
+        justify-content: space-evenly
+        align-content: center
+        gap: 1rem
+        width: 100%
+        height: calc(var(--bg-height) - var(--logo-height) - 56px)
+        margin: calc(var(--bg-height) - var(--logo-height)) 0 0 0
+        padding-bottom: 1rem
 
-        a
-          color: rgb(241, 152, 131)
-          color: white
+        li
           display: flex
           justify-content: center
           align-items: center
-          flex-direction: column
-          gap: 1rem
+          flex: 1 1 150px
 
-          &, & *
-            cursor: pointer
-
-          &:hover, &:focus
-            button
-              background-color: hsla(198, 81.8, 75, 1)
-
-            label
-              text-decoration: underline
-              background-color: rgba(153, 168, 120, 1)
-
-          button
-            --size: 1
-            display: none
-            position: relative
+          a
+            color: rgb(241, 152, 131)
+            color: white
+            display: flex
             justify-content: center
             align-items: center
-            width: calc(var(--size) * 50px)
-            height: calc(var(--size) * 50px)
-            border: calc(var(--size) * 1px + 1px) solid white
-            border-radius: 100%
-            padding: 0
-            background-color: hsla(198, 81.8, 75, .75)
-            @include transition(background-color, .3s)
+            flex-direction: column
 
-            i, svg
+            &, & *
+              cursor: pointer
+
+            &:hover, &:focus
+              button
+                background-color: hsla(198, 81.8, 75, 1)
+
+              label
+                text-decoration: underline
+                background-color: rgba(153, 168, 120, 1)
+
+            button
+              --size: 1
+              display: none
+              position: relative
+              justify-content: center
+              align-items: center
+              width: calc(var(--size) * 50px)
+              height: calc(var(--size) * 50px)
+              margin-bottom: 1rem
+              border: calc(var(--size) * 1px + 1px) solid white
+              border-radius: 100%
+              padding: 0
+              background-color: hsla(198, 81.8, 75, .75)
+              @include transition(background-color, .3s)
+
+              i, svg
+                color: white
+                font-size: calc(var(--size) * 1rem)
+
+            label
+              font-family: 'Merienda One', Helvetica, Arial, sans-serif
+              font-size: 1.5rem
               color: white
-              font-size: calc(var(--size) * 1rem)
-
-          label
-            font-family: 'Merienda One', Helvetica, Arial, sans-serif
-            font-size: 1.5rem
-            color: white
-            margin: 0
-            padding: 0 .5rem
-            background-color: rgba(153, 168, 120, .75)
-            border-radius: .5rem
-            @include transition(background-color, .3s)
+              margin: 0
+              padding: 0 .5rem
+              background-color: rgba(153, 168, 120, .75)
+              border-radius: .5rem
+              @include transition(background-color, .3s)
 
 #contact
   text-align: center
 
 #about
   background: #f8f9fa7f
+
+#about, #contact
+  padding: 2rem 0
 
 .banner
   display: none
