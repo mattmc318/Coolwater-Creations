@@ -25,6 +25,11 @@ function getCookie(name) {
   return '';
 }
 
+// Asynchronous sleep function
+const sleep = (milliseconds = 50) => {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
+
 $(() => {
   // Define useful DOM elements
   const $window = $(window);
@@ -79,33 +84,47 @@ $(() => {
   });
 
   // Calculate size and layout of various elements when page dimensions change
-  const update = () => {
+  const update = async () => {
     // Window dimensions
     windowDims = {
       width: $window.width(),
       height: $window.height(),
     };
 
-    // Some browsers require 100vh to be defined in pixels
-    console.log(`${$('.logo').height()}px`);
-    document
-      .querySelector('.bg')
-      .style.setProperty('--bg-height', `${windowDims.height}px`);
-    document
-      .querySelector('.bg')
-      .style.setProperty('--logo-height', `${$('.logo').outerHeight()}px`);
+    // Some browsers (like Safari) require 100vh to be defined in pixels
+    $bg.css({
+      '--bg-height': `${windowDims.height}px`,
+    });
 
-    // Switch orientation modes based on values of windowDims
-    if (windowDims.width > windowDims.height) {
-      $ul.css({ 'flex-direction': 'row' });
-      if (currentBackground === portrait) {
-        changeBackground();
+    // .content
+    let logoHeight = 0;
+    const updateContent = () => {
+      // get and set height of .logo
+      logoHeight = $logo.outerHeight();
+      $bg.css({
+        '--logo-height': `${logoHeight}px`,
+      });
+
+      // Switch orientation modes based on values of windowDims
+      if (windowDims.width > windowDims.height) {
+        $ul.css({ 'flex-direction': 'row' });
+        if (currentBackground === portrait) {
+          changeBackground();
+        }
+      } else {
+        $ul.css({ 'flex-direction': 'column' });
+        if (currentBackground === landscape) {
+          changeBackground();
+        }
       }
-    } else {
-      $ul.css({ 'flex-direction': 'column' });
-      if (currentBackground === landscape) {
-        changeBackground();
-      }
+    };
+
+    // Keep updating content in 50ms intervals until logo updates with a max.
+    // timeout of three seconds
+    updateContent();
+    for (let i = 0; logoHeight < 100 && i < 60; i++) {
+      await sleep();
+      updateContent();
     }
   };
 
