@@ -33,12 +33,11 @@ const sleep = (milliseconds = 50) => {
 $(() => {
   // Define useful DOM elements
   const $window = $(window);
+  const $body = $('body');
   const $banner = $('.banner');
-  const $bg = $('.bg');
-  const $logo = $('.logo');
-  const $content = $('.content');
-  const $container = $content.children('.content-container');
-  const $ul = $container.children('ul');
+  const $page = $('#page');
+  const $logo = $page.children('.logo');
+  const $content = $page.children('.content');
 
   // GDPR banner
   switch (getCookie('gdpr')) {
@@ -64,7 +63,7 @@ $(() => {
   const portrait = false;
   let currentBackground = landscape;
   const changeBackground = () => {
-    $bg.toggleClass('landscape').toggleClass('portrait');
+    $('#bg, #page').toggleClass('landscape').toggleClass('portrait');
     currentBackground = !currentBackground;
   };
 
@@ -92,8 +91,8 @@ $(() => {
     };
 
     // Some browsers (like Safari) require 100vh to be defined in pixels
-    $bg.css({
-      '--bg-height': `${windowDims.height}px`,
+    $body.css({
+      '--page-height': `${windowDims.height}px`,
     });
 
     // .content
@@ -101,21 +100,18 @@ $(() => {
     const updateContent = () => {
       // get and set height of .logo
       logoHeight = $logo.outerHeight();
-      $bg.css({
+      $body.css({
         '--logo-height': `${logoHeight}px`,
       });
 
       // Switch orientation modes based on values of windowDims
-      if (windowDims.width > windowDims.height) {
-        $ul.css({ 'flex-direction': 'row' });
-        if (currentBackground === portrait) {
-          changeBackground();
-        }
-      } else {
-        $ul.css({ 'flex-direction': 'column' });
-        if (currentBackground === landscape) {
-          changeBackground();
-        }
+      if (
+        (windowDims.width > windowDims.height &&
+          currentBackground === portrait) ||
+        (windowDims.width <= windowDims.height &&
+          currentBackground === landscape)
+      ) {
+        changeBackground();
       }
     };
 

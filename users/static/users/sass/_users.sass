@@ -4,26 +4,19 @@ h1, h2, p
 h3, h4, h5
   font-family: 'Merienda One', Helvetica, Arial, sans-serif
 
-.center
-  text-align: center
+body
+  --page-height: 100vh
+  --logo-height: 121px
 
-.bg
-  --bg-height: 100vh
-  --logo-height: 101px
-  overflow-y: scroll
-  -webkit-overflow-scrolling: touch
-  scrollbar-width: none
-  display: grid
-  grid-template-rows: [top] var(--logo-height) [content-top] auto [bottom]
+#bg, #bg::before, #bg::after, #page
+  height: var(--page-height)
+  position: fixed
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
 
-  &, &::before, &::after
-    height: var(--bg-height)
-    position: fixed
-    top: 0
-    right: 0
-    bottom: 0
-    left: 0
-
+#bg
   &::before, &::after
     content: ''
     pointer-events: none
@@ -43,21 +36,19 @@ h3, h4, h5
     &::before, &::after
       background-image: url('/static/users/img/dragon_landscape.jpg')
 
-    .content button
-      @media screen and (min-height: 300px)
-        display: flex
-
-      @media screen and (min-width: 500px) and (min-height: 350px)
-        --size: 2
-
-      @media screen and (min-width: 675px) and (min-height: 400px)
-        --size: 3
-
   &.portrait
     &::before, &::after
       background-image: url('/static/users/img/dragon_portrait.jpg')
 
-    .content button
+#page
+  display: grid
+  grid-template-rows: [top] var(--logo-height) [content-top] auto [bottom]
+
+  &.portrait .content-container ul
+    -ms-flex-direction: column
+    flex-direction: column
+
+    button
       @media screen and (min-height: 550px)
         display: flex
 
@@ -65,6 +56,20 @@ h3, h4, h5
         --size: 2
 
       @media screen and (min-height: 850px)
+        --size: 3
+
+  &.landscape .content-container ul
+    -ms-flex-direction: row
+    flex-direction: row
+
+    button
+      @media screen and (min-height: 300px)
+        display: flex
+
+      @media screen and (min-width: 500px) and (min-height: 350px)
+        --size: 2
+
+      @media screen and (min-width: 675px) and (min-height: 400px)
         --size: 3
 
   .logo
@@ -107,9 +112,14 @@ h3, h4, h5
     grid-row-end: bottom
     overflow-y: scroll
     -webkit-overflow-scrolling: touch
+    scrollbar-width: none
+    -ms-overflow-style: none
     padding: 0 1rem
     width: 100%
     margin: 0 auto
+
+    &::-webkit-scrollbar
+      display: none
 
     & > *
       flex: 0 0 auto
@@ -134,8 +144,8 @@ h3, h4, h5
         align-content: center
         gap: 1rem
         width: 100%
-        height: calc(var(--bg-height) - var(--logo-height) - 56px)
-        margin: calc(var(--bg-height) - var(--logo-height)) 0 0 0
+        height: calc(var(--page-height) - var(--logo-height) - 56px)
+        margin: calc(var(--page-height) - var(--logo-height)) 0 0 0
         padding-bottom: 1rem
 
         li
