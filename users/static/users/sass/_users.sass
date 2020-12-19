@@ -24,7 +24,7 @@ body
   &::before
     z-index: -2
     $blur-radius: 4px
-    transform: scale(1.2)
+    @include transform(scale(1.2))
     @include filter(blur($blur-radius))
     @include bg(cover)
 

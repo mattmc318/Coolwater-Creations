@@ -439,7 +439,7 @@ input[type="checkbox"] + p
     position: absolute
     top: 50%
     left: 50%
-    transform: translate(-50%, -50%)
+    @include transform(translate(-50%, -50%))
 
 @include media-breakpoint-down(sm)
   html, body
