@@ -16,8 +16,8 @@
   </head>
 
   <body>
+    {% include 'users/navbar.html' %}
     <section id="page">
-      {% include 'users/navbar.html' %}
       <section id="content">{% block content %}{% endblock %}</section>
     </section>
   </body>
