@@ -1,9 +1,12 @@
 {% extends 'gallery/base.html' %}
 
-{% block head %}{% include 'gallery/data_tables.html' %}{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+{% endblock %}
 
 {% block content %}
-<div class="container">
+<div id="product" class="container">
   {% if messages %}
   {% for message in messages %}
   {% if message.tags == 'error' %}
@@ -21,8 +24,8 @@
   {% endif %}
   <div class="row">
     <div class="img col-lg-6 col-md-12">
-      <a href="{{ product.image.url }}">
-        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+      <a data-fancybox="gallery" href="{{ product.image.url }}" alt="{{ product.name }}">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
       </a>
       <p><i class="fa fa-search-plus"></i> Click image to enlarge.</p>
     </div>
@@ -36,30 +39,34 @@
       {% if product.description %}
       {{ product.description|linebreaks }}
       {% endif %}
-      {% if product.in_stock > 0 %}
-      {% if product.id in request.session.cart %}
-      <form method="POST" action="{% url 'gallery:remove_cart' %}">
-        {% csrf_token %}
-        <input type="hidden" name="id" value="{{ product.id }}">
-        <input type="submit" class="btn btn-light" value="Remove from Cart">
-      </form>
-      {% else %}
-      <form method="POST" action="{% url 'gallery:add_cart' %}">
-        {% csrf_token %}
-        <input type="hidden" name="id" value="{{ product.id }}">
-        <input type="submit" class="btn btn-light" value="Add to Cart">
-      </form>
-      {% endif %}
-      <a class="btn btn-light" href="{% url 'gallery:index' %}">Back to Gallery</a>
-      {% else %}
-      <a class="btn btn-light" href="{% url 'gallery:index' %}#archive">Back to Gallery</a>
-      {% endif %}
+      <div class="btn-container">
+        {% if product.in_stock > 0 %}
+        {% if product.id in request.session.cart %}
+        <form method="POST" action="{% url 'gallery:remove_cart' %}">
+          {% csrf_token %}
+          <input type="hidden" name="id" value="{{ product.id }}">
+          <input type="submit" class="btn btn-light" value="Remove from Cart">
+        </form>
+        {% else %}
+        <form method="POST" action="{% url 'gallery:add_cart' %}">
+          {% csrf_token %}
+          <input type="hidden" name="id" value="{{ product.id }}">
+          <input type="submit" class="btn btn-light" value="Add to Cart">
+        </form>
+        {% endif %}
+        <a class="btn btn-light" href="{% url 'gallery:index' %}">Back to Gallery</a>
+        {% else %}
+        <a class="btn btn-light" href="{% url 'gallery:index' %}#archive">Back to Gallery</a>
+        {% endif %}
+        {% if person.is_superuser == True %}
+        <form method="POST" action="{% url 'gallery:delete_product' %}">
+          {% csrf_token %}
+          <input type="hidden" name="id" value="{{ product.id }}">
+          <input type="submit" class="btn btn-danger" value="Delete">
+        </form>
+        {% endif %}
+      </div>
       {% if person.is_superuser == True %}
-      <form method="POST" action="{% url 'gallery:delete_product' %}">
-        {% csrf_token %}
-        <input type="hidden" name="id" value="{{ product.id }}">
-        <input type="submit" class="btn btn-danger" value="Delete">
-      </form>
       <form method="POST" enctype="multipart/form-data" action="{% url 'gallery:edit_product' %}">
         {% csrf_token %}
         <input type="hidden" name="id" value="{{ product.id }}">
