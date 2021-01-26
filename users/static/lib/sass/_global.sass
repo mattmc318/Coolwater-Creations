@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Merienda+One|Open+Sans')
 @import 'bootstrap'
+@import 'mixins'
 
 *
   font-family: 'Open Sans', Helvetica, Arial, sans-serif
@@ -9,6 +10,21 @@ html, body
 
 body:not(.homepage)
   background-color: #e1f4fc
+
+  #page
+    display: grid
+    grid-template-rows: [top] 47px [content-top] auto [bottom]
+    height: 100%
+
+    @include media-breakpoint-up(md)
+      grid-template-rows: [top] 3.5rem [content-top] auto [bottom]
+
+    #content
+      grid-row-start: content-top
+      grid-row-end: bottom
+      padding-top: 2rem
+      overflow-y: scroll
+      -webkit-overflow-scrolling: touch
 
 .fa-external-link-alt
   vertical-align: baseline

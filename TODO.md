@@ -2,24 +2,27 @@
 
 ## High Priorities
 
-- Momentum scrolling on and scroll to top button
-  - Gallery
-  - About
+- Fix Home page background image positioning bug
+- Gallery page
+  - Change layout to grid
 
 ## Medium Priorities
 
 - FancyBox (image product page)
 - Form margins
   - About > Updates
+  - New Product
+
+## Medium Priorities
+
 - Messages
   - Make items flex-aligned
+- Gallery page
+  - Hide filters of zero value
+  - Resize cards on mobile landscape
 
 ## Low Priorities
 
-- Safari background positioning bug
 - Add transitions to DataTables
 - Cache libraries
-- Convert includes to blocks
-  - DataTables code
-  - Global head
 - Manifest

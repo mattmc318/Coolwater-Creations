@@ -9905,6 +9905,23 @@ html, body {
 body:not(.homepage) {
   background-color: #e1f4fc;
 }
+body:not(.homepage) #page {
+  display: grid;
+  grid-template-rows: [top] 47px [content-top] auto [bottom];
+  height: 100%;
+}
+@media (min-width: 768px) {
+  body:not(.homepage) #page {
+    grid-template-rows: [top] 3.5rem [content-top] auto [bottom];
+  }
+}
+body:not(.homepage) #page #content {
+  grid-row-start: content-top;
+  grid-row-end: bottom;
+  padding-top: 2rem;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
 
 .fa-external-link-alt {
   vertical-align: baseline;
@@ -9918,30 +9935,29 @@ h3, h4, h5 {
   font-family: "Merienda One", Helvetica, Arial, sans-serif;
 }
 
-.center {
-  text-align: center;
+body {
+  --page-height: 100vh;
+  --logo-height: 121px;
 }
 
-.bg {
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-.bg, .bg::before, .bg::after {
-  width: 100vw;
-  height: 100vh;
+#bg, #bg::before, #bg::after, #page {
+  height: var(--page-height);
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
 }
-.bg::before, .bg::after {
+
+#bg::before, #bg::after {
   content: "";
   pointer-events: none;
 }
-.bg::before {
+#bg::before {
   z-index: -2;
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -o-transform: scale(1.2);
   transform: scale(1.2);
   -webkit-filter: blur(4px);
   filter: blur(4px);
@@ -9953,7 +9969,7 @@ h3, h4, h5 {
   -o-background-size: cover;
   background-size: cover;
 }
-.bg::after {
+#bg::after {
   z-index: -1;
   background-attachment: fixed;
   background-position: center;
@@ -9963,14 +9979,56 @@ h3, h4, h5 {
   -o-background-size: contain;
   background-size: contain;
 }
-.bg.landscape::before, .bg.landscape::after {
+#bg.landscape::before, #bg.landscape::after {
   background-image: url("/static/users/img/dragon_landscape.jpg");
 }
-.bg.portrait::before, .bg.portrait::after {
+#bg.portrait::before, #bg.portrait::after {
   background-image: url("/static/users/img/dragon_portrait.jpg");
 }
 
-.logo {
+#page {
+  display: grid;
+  grid-template-rows: [top] var(--logo-height) [content-top] auto [bottom];
+}
+#page.portrait .content-container ul {
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+@media screen and (min-height: 550px) {
+  #page.portrait .content-container ul button {
+    display: flex;
+  }
+}
+@media screen and (min-height: 700px) {
+  #page.portrait .content-container ul button {
+    --size: 2;
+  }
+}
+@media screen and (min-height: 850px) {
+  #page.portrait .content-container ul button {
+    --size: 3;
+  }
+}
+#page.landscape .content-container ul {
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+@media screen and (min-height: 300px) {
+  #page.landscape .content-container ul button {
+    display: flex;
+  }
+}
+@media screen and (min-width: 500px) and (min-height: 350px) {
+  #page.landscape .content-container ul button {
+    --size: 2;
+  }
+}
+@media screen and (min-width: 675px) and (min-height: 400px) {
+  #page.landscape .content-container ul button {
+    --size: 3;
+  }
+}
+#page .logo {
   position: fixed;
   top: 0;
   left: 0;
@@ -9978,82 +10036,116 @@ h3, h4, h5 {
   z-index: 1;
   text-shadow: 2px 2px 8px black;
   padding: 1rem 1rem 7px 1rem;
-  letter-spacing: 6px;
   cursor: pointer;
 }
-.logo, .logo:hover {
+#page .logo h1 {
+  font-size: 1.75rem;
+}
+@media screen and (min-width: 358px) {
+  #page .logo h1 {
+    font-size: 2rem;
+  }
+}
+@media screen and (min-width: 439px) {
+  #page .logo h1 {
+    font-size: 2.5rem;
+  }
+}
+@media screen and (min-width: 553px) {
+  #page .logo h1 {
+    letter-spacing: 6px;
+  }
+}
+#page .logo, #page .logo:hover {
   color: white;
 }
-.logo h1 {
+#page .logo h1 {
   font-family: "Merienda One", Helvetica, Arial, sans-serif;
 }
-.logo p {
+#page .logo p {
   margin: 0;
 }
-.logo p svg {
+#page .logo p svg {
   font-size: 35px;
   -webkit-filter: drop-shadow(2px 2px 8px #000);
   filter: drop-shadow(2px 2px 8px #000);
 }
-
-#about, #contact {
-  padding: 2rem 0;
-}
-
-.content {
-  display: flex;
-  align-content: center;
-  padding-top: 100vh;
-}
-.content-container {
-  display: flex;
-  align-content: center;
-  justify-content: center;
+#page .content {
+  grid-row-start: content-top;
+  grid-row-end: bottom;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   padding: 0 1rem;
+  width: 100%;
+  margin: 0 auto;
+}
+#page .content::-webkit-scrollbar {
+  display: none;
+}
+#page .content > * {
   flex: 0 0 auto;
+}
+#page .content .test {
+  grid-row-start: top;
+  grid-row-end: ul-top;
+}
+#page .content-container {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 720px;
   margin: 0 auto;
 }
-.content-container ul {
+#page .content-container > * {
+  flex: 0 0 auto;
+}
+#page .content-container ul {
   display: flex;
   justify-content: space-evenly;
   align-content: center;
   gap: 1rem;
+  grid-gap: 1rem;
   width: 100%;
-  margin: 0;
+  height: calc(var(--page-height) - var(--logo-height) - 56px);
+  margin: calc(var(--page-height) - var(--logo-height)) 0 0 0;
+  padding-bottom: 1rem;
 }
-.content-container ul li {
+#page .content-container ul li {
   display: flex;
   justify-content: center;
   align-items: center;
   flex: 1 1 150px;
 }
-.content-container ul li a {
+#page .content-container ul li a {
   color: #f19883;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 1rem;
 }
-.content-container ul li a * {
+#page .content-container ul li a, #page .content-container ul li a * {
   cursor: pointer;
 }
-.content-container ul li a:hover button, .content-container ul li a:focus button {
+#page .content-container ul li a:hover button, #page .content-container ul li a:focus button {
   background-color: #8bd4f3;
 }
-.content-container ul li a:hover label, .content-container ul li a:focus label {
+#page .content-container ul li a:hover label, #page .content-container ul li a:focus label {
   text-decoration: underline;
   background-color: #99a878;
 }
-.content-container ul li a button {
+#page .content-container ul li a button {
+  --size: 1;
+  display: none;
   position: relative;
-  display: flex;
   justify-content: center;
   align-items: center;
-  border: 0.25rem solid white;
+  width: calc(var(--size) * 50px);
+  height: calc(var(--size) * 50px);
+  margin-bottom: 1rem;
+  border: calc(var(--size) * 1px + 1px) solid white;
   border-radius: 100%;
   padding: 0;
   background-color: rgba(139, 212, 243, 0.75);
@@ -10062,10 +10154,11 @@ h3, h4, h5 {
   -o-transition: background-color 0.3s ease-in-out;
   transition: background-color 0.3s ease-in-out;
 }
-.content-container ul li a button i, .content-container ul li a button svg {
+#page .content-container ul li a button i, #page .content-container ul li a button svg {
   color: white;
+  font-size: calc(var(--size) * 1rem);
 }
-.content-container ul li a label {
+#page .content-container ul li a label {
   font-family: "Merienda One", Helvetica, Arial, sans-serif;
   font-size: 1.5rem;
   color: white;
@@ -10085,6 +10178,10 @@ h3, h4, h5 {
 
 #about {
   background: #f8f9fa7f;
+}
+
+#about, #contact {
+  padding: 2rem 0;
 }
 
 .banner {
@@ -10122,6 +10219,11 @@ h3, h4, h5 {
   cursor: pointer;
 }
 
+nav {
+  grid-row-start: top;
+  grid-row-end: content-top;
+  z-index: 1;
+}
 nav .navbar {
   margin-bottom: 2rem;
   box-shadow: 0px 4px 8px grey;
@@ -10136,10 +10238,6 @@ nav .nav-link:hover {
   color: white !important;
 }
 
-.nav-placeholder {
-  height: 5.5rem;
-}
-
 @media (max-width: 767.98px) {
   nav .navbar-brand {
     font-size: 0.9em;
@@ -10150,14 +10248,11 @@ nav .nav-link:hover {
     margin-top: 0.5rem;
     color: white !important;
   }
-
-  .nav-placeholder {
-    height: 79px;
-  }
 }
 .footer {
   --alpha: 1;
   height: 56px;
+  margin: 0 -1rem;
   padding: 0.5rem 0;
   background-color: rgba(32, 32, 32, var(--alpha));
   color: white;

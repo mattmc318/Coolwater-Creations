@@ -1,5 +1,6 @@
 {% extends 'users/base.html' %} {% block content %}
-<section class="bg landscape">
+<section id="bg" class="landscape"></section>
+<section id="page" class="landscape">
   <a href="javascript:void(0);" class="logo" tabindex="1">
     <h1 class="text-center">Coolwater Creations</h1>
     <p class="text-center">
@@ -35,8 +36,8 @@
         </li>
       </ul>
     </div>
+    {% include 'users/footer.html' %}
   </section>
-  {% include 'users/footer.html' %}
   <div class="banner">
     <div class="banner-relative">
       <div class="container">

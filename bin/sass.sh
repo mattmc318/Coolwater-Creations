@@ -1,5 +1,8 @@
 #!/bin/bash
 
+CYAN="\033[0;36m"
+NC="\033[0m"
+
 project_dir="$HOME/Repositories/Coolwater-Creations"
 
 sass_input_users="$project_dir/users/static/users/sass/base.sass"
@@ -37,10 +40,10 @@ includes=${includes:1}
 cd $project_dir
 
 for i in "${args[@]}"; do
-  cmd="sass --watch $includes $i"
+  cmd="sass $includes $i"
 
-  echo $cmd >&2
-  $cmd &
+  printf "${CYAN}[$(date -Iseconds)]${NC} $cmd\n" >&2
+  $cmd
 done
 
 trap 'echo -e "\nExiting…" >&2; pkill $$' SIGINT

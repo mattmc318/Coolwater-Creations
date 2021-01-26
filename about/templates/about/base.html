@@ -1,19 +1,21 @@
 <!DOCTYPE html>{% load static %}
 <html lang="en">
+  <head>
+    {% include 'users/global_head.html' %}
 
-<head>
-{% include 'users/global_head.html' %}
+    <!-- Local Static Files -->
+    <link rel="stylesheet" href="{% static 'about/css/about.min.css' %}" />
+    <!-- <link rel="stylesheet" href="{% static 'about/css/about.css' %}"> -->
+    <script src="{% static 'users/js/global.min.js' %}"></script>
+    <!-- <script src="{% static 'users/js/global.js' %}"></script> -->
+    <script src="{% static 'about/js/about.min.js' %}"></script>
+    <!-- <script src="{% static 'about/js/about.js' %}"></script> -->
+  </head>
 
-  <!-- Local Static Files -->
-  <link rel="stylesheet" href="{% static 'about/css/about.min.css' %}">
-  <!-- <link rel="stylesheet" href="{% static 'about/css/about.css' %}"> -->
-  <script src="{% static 'users/js/global.min.js' %}"></script>
-  <!-- <script src="{% static 'users/js/global.js' %}"></script> -->
-  <script src="{% static 'about/js/about.min.js' %}"></script>
-  <!-- <script src="{% static 'about/js/about.js' %}"></script> -->
-</head>
-
-<body>
-{% include 'users/navbar_fixed_top.html' %}{% block content %}{% endblock %}</body>
-
+  <body>
+    <section id="page">
+      {% include 'users/navbar.html' %}
+      <section id="content">{% block content %}{% endblock %}</section>
+    </section>
+  </body>
 </html>
