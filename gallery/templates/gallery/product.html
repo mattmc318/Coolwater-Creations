@@ -21,8 +21,8 @@
   {% endif %}
   <div class="row">
     <div class="img col-lg-6 col-md-12">
-      <a href="{{ product.image.url }}">
-        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+      <a data-fancybox="gallery" href="{{ product.image.url }}">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
       </a>
       <p><i class="fa fa-search-plus"></i> Click image to enlarge.</p>
     </div>

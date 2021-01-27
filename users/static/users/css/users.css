@@ -9930,6 +9930,10 @@ body:not(.homepage) #page #content {
   vertical-align: baseline;
 }
 
+a[data-fancybox=gallery] {
+  cursor: zoom-in;
+}
+
 h1, h2, p {
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
 }

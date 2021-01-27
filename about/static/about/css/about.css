@@ -9930,6 +9930,10 @@ body:not(.homepage) #page #content {
   vertical-align: baseline;
 }
 
+a[data-fancybox=gallery] {
+  cursor: zoom-in;
+}
+
 .scroll-to-top {
   display: none;
   position: fixed;
@@ -10165,11 +10169,6 @@ ul li img {
   margin-top: 1rem;
 }
 
-.product-image {
-  margin-bottom: 1rem;
-  box-shadow: 0px 4px 8px grey;
-}
-
 form {
   display: inline;
 }
@@ -10183,10 +10182,21 @@ form {
   border: 1px solid #ced4da;
 }
 
-.img img {
-  width: 100%;
+.img {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.img p {
+.img img {
+  max-width: 300px;
+  max-height: 275px;
+  width: auto;
+  height: auto;
+  display: block;
+  margin-bottom: 1rem;
+  box-shadow: 0px 4px 8px grey;
+}
+.img p, .img a {
   text-align: center;
 }
 
