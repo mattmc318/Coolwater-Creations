@@ -113,18 +113,34 @@ WSGI_APPLICATION = 'cwc.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-with open(os.path.join(BASE_DIR, 'auth/.pgpass'), 'r', encoding='utf8') as f:
-    content = f.readline()
-PGPASSWORD = content[12:-1]
+class CredentialsNotFound(Exception):
+    pass
+
+PGPASSWORD_FILE = os.path.join(BASE_DIR, 'auth/.pgpass')
+PGNAME = 'cwc'
+with open(PGPASSWORD_FILE, 'r', encoding='utf8') as f:
+    found = False
+    for line in f.readlines():
+        hostname, port, db_name, username, password = line.split(':')
+        if db_name == PGNAME:
+            PGHOST = 'localhost' if hostname == '*' else hostname
+            PGPORT = '' if port == '*' else port
+            PGPASSWORD = password
+            PGUSER = username
+            found = True
+            break
+
+    if not found:
+        raise CredentialsNotFound('The credentials for database \'%s\' were not found in \'%s\'.' % (PGNAME, PGPASSWORD_FILE))
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'cwc',
-        'USER': 'cwc',
+        'HOST': PGHOST,
+        'PORT': PGPORT,
+        'NAME': PGNAME,
+        'USER': PGUSER,
         'PASSWORD': PGPASSWORD,
-        'HOST': 'localhost',
-        'PORT': '',
     }
 }
 
