@@ -40,10 +40,10 @@ includes=${includes:1}
 cd $project_dir
 
 for i in "${args[@]}"; do
-  cmd="sass $includes $i"
+  cmd="sass --watch $includes $i"
 
   printf "${CYAN}[$(date -Iseconds)]${NC} $cmd\n" >&2
-  $cmd
+  $cmd &
 done
 
 trap 'echo -e "\nExiting…" >&2; pkill $$' SIGINT
