@@ -10547,6 +10547,9 @@ nav .nav-link:hover {
 }
 
 @media (max-width: 767.98px) {
+  nav {
+    min-height: 50px;
+  }
   nav .navbar-brand {
     font-size: 0.9em;
   }
@@ -10555,6 +10558,11 @@ nav .nav-link:hover {
     border-radius: 4px;
     margin-top: 0.5rem;
     color: white !important;
+  }
+  nav .navbar-toggler {
+    border: none;
+    padding: 0 0.5rem;
+    font-size: 2rem;
   }
 }
 .tabs {

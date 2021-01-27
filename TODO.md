@@ -2,7 +2,7 @@
 
 ## High Priorities
 
-- Enlarge hamburger icon
+*None at this time.*
 
 ## Medium Priorities
 
