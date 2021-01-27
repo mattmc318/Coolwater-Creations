@@ -71,7 +71,7 @@
           <input class="form-control col-4" type="text" value="{{ product.height }}" placeholder="Height" name="height">
         </div>
         <textarea class="form-control" placeholder="Description" name="description" rows="5">{{ product.description }}</textarea>
-        <input class="form-control" type="file" name="image" accept="image/*">
+        <input type="file" name="image" accept="image/*">
         <div class="form-control">
           {% if product.in_stock == 0 %}
           <input type="checkbox" name="archive" value="True" checked>

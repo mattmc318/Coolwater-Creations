@@ -2,14 +2,11 @@
 
 ## High Priorities
 
-- Form margins
-  - About > Updates
-  - New Product
 - Enlarge hamburger icon
-- Add icons to alert messages
 
 ## Medium Priorities
 
+- Add icons to alert messages
 - Fix Home page background image positioning bug (iOS)
 - Gallery page
   - Change layout to grid

@@ -9968,9 +9968,6 @@ a[data-fancybox=gallery] {
 #updates br {
   line-height: 2em;
 }
-#updates .btn-secondary {
-  margin: 0;
-}
 
 .scroll-to-top-placeholder {
   height: 5rem;
@@ -10169,12 +10166,12 @@ ul li img {
   margin-top: 1rem;
 }
 
-form {
-  display: inline;
+form > *, form > .row {
+  margin-bottom: 0.5rem;
 }
 
 .btn {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .btn-light {
