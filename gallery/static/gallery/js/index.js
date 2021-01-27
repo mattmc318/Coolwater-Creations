@@ -21,9 +21,11 @@ $(() => {
   $(window).on('resize orientationchange', update);
 
   // Update filters' text
-  let $filters = $('ul.filters > li');
+  let $filtersList = $('ul.filters');
+  let $filters = $filtersList.children('li');
 
   function updateGalleryFilters() {
+    $filtersList.addClass('gallery').removeClass('archive');
     $filters.each(function () {
       let name = $(this).data('name');
       let galleryCount = $(this).data('gallery-count');
@@ -33,6 +35,7 @@ $(() => {
   }
 
   function updateArchiveFilters() {
+    $filtersList.removeClass('gallery').addClass('archive');
     $filters.each(function () {
       let name = $(this).data('name');
       let archiveCount = $(this).data('archive-count');

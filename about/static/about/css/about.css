@@ -10044,6 +10044,9 @@ ul li img {
 .filters {
   margin-bottom: 0;
 }
+.filters.gallery li[data-gallery-count="0"], .filters.archive li[data-archive-count="0"] {
+  display: none;
+}
 
 .filter-control {
   margin-bottom: 0.5rem;
