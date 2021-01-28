@@ -2,10 +2,11 @@
 
 ## High Priorities
 
-*None at this time.*
+- Fix PayPal bug
 
 ## Medium Priorities
 
+- Fix infinite scroll bug
 - Add icons to alert messages
 - Fix Home page background image positioning bug (iOS)
 - Gallery page
