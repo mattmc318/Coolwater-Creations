@@ -121,7 +121,8 @@ PGNAME = 'cwc'
 with open(PGPASSWORD_FILE, 'r', encoding='utf8') as f:
     found = False
     for line in f.readlines():
-        hostname, port, db_name, username, password = line.split(':')
+        hostname, port, db_name, username, password = \
+            line.strip('\n').split(':')
         if db_name == PGNAME:
             PGHOST = 'localhost' if hostname == '*' else hostname
             PGPORT = '' if port == '*' else port
@@ -201,7 +202,7 @@ with open(ACCESS_TOKEN_FILE, 'r', encoding='utf8') as f:
     content = f.readline()
     BRAINTREE_ACCESS_TOKEN_PRODUCTION = content[:-1]
 
-MAILGUN_API_KEY_FILE = '%s/auth/mailgun.txt' % BASE_DIR
+MAILGUN_API_KEY_FILE = os.path.join(BASE_DIR, 'auth/mailgun.txt')
 with open(MAILGUN_API_KEY_FILE, 'r', encoding='utf8') as f:
     content = f.readline()
 MAILGUN_API_KEY = content[:-1]
