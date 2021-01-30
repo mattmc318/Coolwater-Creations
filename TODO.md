@@ -2,7 +2,6 @@
 
 ## High Priorities
 
-- Update GitHub URL in footer
 - Fix Orders page
 - Add DEBUG URLs
 
