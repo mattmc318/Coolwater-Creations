@@ -3,7 +3,6 @@
 ## High Priorities
 
 - Fix Orders page
-- Add DEBUG URLs
 
 ## Medium Priorities
 

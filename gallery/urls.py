@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
 from . import views
+from cwc.settings import STAGE
 
 app_name = 'gallery'
 
@@ -23,7 +24,15 @@ urlpatterns = [
     url(r'^mark_shipped$', views.mark_shipped, name='mark_shipped'),
     url(r'^delete_sales$', views.delete_sales, name='mark_shipped'),
     url(r'^unsubscribe$', views.unsubscribe, name='unsubscribe'),
-    # url(r'^create_gallery_pics$', views.create_gallery_pics, name='create_gallery_pics'),
-    # url(r'^clear_all_sessions$', views.clear_all_sessions, name='clear_all_sessions'),
-    # url(r'^clear_all_carts$', views.clear_all_carts, name='clear_all_carts'),
 ]
+
+######################
+# FOR DEBUG USE ONLY #
+######################
+
+if STAGE != 'production':
+    urlpatterns += [
+        url(r'^create_gallery_pics$', views.create_gallery_pics, name='create_gallery_pics'),
+        url(r'^clear_all_sessions$', views.clear_all_sessions, name='clear_all_sessions'),
+        url(r'^clear_all_carts$', views.clear_all_carts, name='clear_all_carts'),
+    ]
