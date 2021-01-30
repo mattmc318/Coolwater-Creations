@@ -10441,6 +10441,11 @@ input[type=checkbox] + p {
   text-align: center;
 }
 
+#paypal-button-container {
+  display: flex;
+  justify-content: center;
+}
+
 #wait {
   display: none;
   position: absolute;

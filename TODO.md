@@ -2,12 +2,17 @@
 
 ## High Priorities
 
-- Fix PayPal bug
+- Update GitHub URL in footer
+- Fix Orders page
+- Add DEBUG URLs
 
 ## Medium Priorities
 
 - Fix infinite scroll bug
-- Add icons to alert messages
+- Update alerts
+  - Migrate to its own HTML file
+  - Replace existing implementations with includes
+  - Add icons
 - Fix Home page background image positioning bug (iOS)
 - Gallery page
   - Change layout to grid
@@ -19,4 +24,4 @@
 - Cache libraries
 - Manifest
 - Modularize Sass
-- Redesign in Angular/Django REST Framework
+- Redesign in Ionic/Angular/Django REST Framework
