@@ -2,7 +2,6 @@
 
 ## High Priorities
 
-- Direct navbar title to Gallery page
 - Fix infinite scroll bug
 
 ## Medium Priorities
