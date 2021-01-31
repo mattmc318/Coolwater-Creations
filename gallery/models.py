@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 import os
 import re
+import json
 
 import cwc.settings
 
@@ -396,18 +397,17 @@ class SaleManager(models.Manager):
         return (False, errors)
 
     def mark_shipped(self, request):
-        orders = request.POST.getlist('orders')
-        for pk in orders:
+        for pk in json.loads(request.POST.get('orders')):
             order = Sale.objects.get(pk=pk)
             order.shipped = True
             order.date_shipped = timezone.now()
             order.save()
-            self.__shipping_confirm(order.shipping_address.email)
-        return True
 
     def delete_sales(self, request):
-        SaleItem.objects.filter(sale__in=request.POST['orders']).delete()
-        Sale.objects.filter(pk__in=request.POST['orders']).delete()
+        orders = json.loads(request.POST.get('orders'))
+
+        SaleItem.objects.filter(sale__in=orders).delete()
+        Sale.objects.filter(pk__in=orders).delete()
 
 class Address(models.Model):
     recipientName = models.CharField(max_length=255)

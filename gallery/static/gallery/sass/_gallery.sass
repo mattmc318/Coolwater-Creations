@@ -414,20 +414,21 @@ input[type="checkbox"] + p
       font-style: italic
 
 .orders
-  width: 100%
-  background-color: white
+  &.table-striped tbody tr:nth-of-type(2n+1)
+    background-color: rgba(0, 0, 0, 10%)
 
-  .right
-    text-align: right
+  &-row:hover
+    background-color: #007bff !important
+    color: white
+    cursor: pointer
 
-.orders-row:hover
-  background-color: #007bff !important
-  color: white
-  cursor: pointer
+  tr
+    border: 1px solid #ced4da
+    background-color: white
 
-.orders td:last-of-type
-  width: 50px
-  text-align: center
+    td:last-of-type
+      width: 50px
+      text-align: center
 
 #paypal-button-container
   display: flex

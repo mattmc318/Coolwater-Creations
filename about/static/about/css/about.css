@@ -10422,21 +10422,19 @@ input[type=checkbox] + p {
   font-style: italic;
 }
 
-.orders {
-  width: 100%;
-  background-color: white;
+.orders.table-striped tbody tr:nth-of-type(2n+1) {
+  background-color: rgba(0, 0, 0, 0.1);
 }
-.orders .right {
-  text-align: right;
-}
-
 .orders-row:hover {
   background-color: #007bff !important;
   color: white;
   cursor: pointer;
 }
-
-.orders td:last-of-type {
+.orders tr {
+  border: 1px solid #ced4da;
+  background-color: white;
+}
+.orders tr td:last-of-type {
   width: 50px;
   text-align: center;
 }

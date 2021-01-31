@@ -2,11 +2,11 @@
 
 ## High Priorities
 
-- Fix Orders page
+- Direct navbar title to Gallery page
+- Fix infinite scroll bug
 
 ## Medium Priorities
 
-- Fix infinite scroll bug
 - Update alerts
   - Migrate to its own HTML file
   - Replace existing implementations with includes

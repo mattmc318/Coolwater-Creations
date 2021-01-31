@@ -52,7 +52,8 @@
                       value: '{{ product.price_per_unit }}',
                     },
                     quantity: 1,
-                    description: '{{ product.description|truncatechars:127 }}',
+                    {% load spaces %}
+                    description: '{{ product.description|spaces|truncatechars:127 }}',
                     sku: '{{ product.id }}',
                   },{% endfor %}
                 ]

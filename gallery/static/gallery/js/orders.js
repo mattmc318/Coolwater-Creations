@@ -1,3 +1,9 @@
+const errorCallback = () =>
+  alert(
+    'There was an error processing your request. ' +
+      'Please contact your webmaster.',
+  );
+
 $(() => {
   if (typeof DataTable !== 'undefined') {
     var table = $('.orders').DataTable();
@@ -7,71 +13,73 @@ $(() => {
     if (e.target.type == 'checkbox') {
       e.stopPropagation();
     } else {
-      window.location = '/gallery/order?id=' + $(this).data('id');
+      const id = $(this).data('id');
+      if (id !== undefined) {
+        window.location = '/gallery/order?id=' + id;
+      }
     }
   });
 
   $('#pending-shipped').on('click', function () {
-    let orders = [];
-    $('#pending input:checked').each(function () {
-      orders.push($(this).parent().parent().data('id'));
-    });
+    let orders = $('#pending input:checked')
+      .map(function () {
+        return $(this).parents('tr').data('id');
+      })
+      .toArray();
 
     $.ajax({
       url: '/gallery/mark_shipped',
-      traditional: true,
       data: {
         csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-        orders: orders,
+        orders: JSON.stringify(orders),
       },
       type: 'POST',
       success: function (data) {
-        if (data.success) {
-          location.reload();
-        } else {
-          console.log('There was an error.');
-        }
+        location.reload();
       },
+      error: errorCallback,
     });
   });
 
   $('#pending-delete').on('click', function () {
-    let orders = [];
-    $('#pending input:checked').each(function () {
-      orders.push($(this).parent().parent().data('id'));
-    });
+    let orders = $('#pending input:checked')
+      .map(function () {
+        return $(this).parents('tr').data('id');
+      })
+      .toArray();
 
     $.ajax({
       url: '/gallery/delete_sales',
-      traditional: true,
       data: {
         csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-        orders: orders,
+        orders: JSON.stringify(orders),
       },
       type: 'POST',
       success: function () {
         location.reload();
       },
+      error: errorCallback,
     });
   });
 
   $('#shipped-delete').on('click', function () {
-    let orders = [];
-    $('#shipped input:checked').each(function () {
-      orders.push($(this).parent().parent().data('id'));
-    });
+    let orders = $('#shipped input:checked')
+      .map(function () {
+        return $(this).parents('tr').data('id');
+      })
+      .toArray();
 
     $.ajax({
       url: '/gallery/delete_sales',
-      traditional: true,
       data: {
         csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-        orders: orders,
+        orders: JSON.stringify(orders),
       },
       type: 'POST',
       success: function () {
         location.reload();
       },
+      error: errorCallback,
     });
   });
 });

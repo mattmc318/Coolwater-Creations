@@ -206,12 +206,14 @@ def orders(request):
     })
 
 def mark_shipped(request):
-    return JsonResponse({'success': Sale.objects.mark_shipped(request)})
+    Sale.objects.mark_shipped(request)
+
+    return HttpResponse()
 
 def delete_sales(request):
     Sale.objects.delete_sales(request)
 
-    return JsonResponse({'success': True})
+    return HttpResponse()
 
 def unsubscribe(request):
     return HttpResponse('You have successfully unsubscribed. (but not really)')
