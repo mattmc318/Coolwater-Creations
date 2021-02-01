@@ -267,10 +267,10 @@ $(() => {
     }
   });
 
-  $tabs.mouseenter(function () {
+  $tabs.on('mouseenter', function () {
     $activeTab.removeClass('active');
   });
-  $tabs.mouseleave(function () {
+  $tabs.on('mouseleave', function () {
     $activeTab.addClass('active');
   });
 
@@ -334,10 +334,10 @@ $(() => {
     }
   });
 
-  $filters.mouseenter(function () {
+  $filters.on('mouseenter', function () {
     $(this).addClass('hover');
   });
-  $filters.mouseleave(function () {
+  $filters.on('mouseleave', function () {
     $(this).removeClass('hover');
   });
 
