@@ -179,14 +179,16 @@ form
   flex-direction: column
   align-items: center
 
-  img
-    max-width: 300px
-    max-height: 275px
-    width: auto
-    height: auto
-    display: block
+  a
     margin-bottom: 1rem
-    box-shadow: 0px 4px 8px grey
+
+    img
+      max-width: 300px
+      max-height: 275px
+      width: auto
+      height: auto
+      display: block
+      box-shadow: 0px 4px 8px grey
 
   p, a
     text-align: center
@@ -501,6 +503,10 @@ input[type="checkbox"] + p
   #gallery > ul, #archive > ul
     grid-template-columns: 299.67px 299.67px 299.67px
     grid-template-columns: calc((960px - 4rem)/3 + 1px) calc((960px - 4rem)/3 + 1px) calc((960px - 4rem)/3 + 1px)
+
+  .img a img
+    max-width: 460px
+    max-height: 500px
 
 @include media-breakpoint-up(xl)
   #gallery > ul, #archive > ul

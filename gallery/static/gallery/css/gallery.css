@@ -10140,13 +10140,15 @@ form > *, form > .row {
   flex-direction: column;
   align-items: center;
 }
-.img img {
+.img a {
+  margin-bottom: 1rem;
+}
+.img a img {
   max-width: 300px;
   max-height: 275px;
   width: auto;
   height: auto;
   display: block;
-  margin-bottom: 1rem;
   box-shadow: 0px 4px 8px grey;
 }
 .img p, .img a {
@@ -10478,6 +10480,11 @@ input[type=checkbox] + p {
   #gallery > ul, #archive > ul {
     grid-template-columns: 299.67px 299.67px 299.67px;
     grid-template-columns: calc((960px - 4rem)/3 + 1px) calc((960px - 4rem)/3 + 1px) calc((960px - 4rem)/3 + 1px);
+  }
+
+  .img a img {
+    max-width: 460px;
+    max-height: 500px;
   }
 }
 @media (min-width: 1200px) {
