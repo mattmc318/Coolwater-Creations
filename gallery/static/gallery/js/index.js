@@ -123,7 +123,6 @@ $(() => {
   // Retrieve filtered data
   let beforeAjaxPosition;
   function getGalleryFiltered() {
-    console.log('getGalleryFiltered');
     let data = {
       page: galleryPage++,
     };
