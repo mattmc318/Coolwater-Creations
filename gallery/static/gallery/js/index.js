@@ -71,12 +71,11 @@ $(() => {
       return false;
     }
 
-    let elementTop = $(this).offset().top;
-    let elementBottom = elementTop + $(this).outerHeight();
-    let viewportTop = $(window).scrollTop();
-    let viewportBottom = viewportTop + $(window).height();
+    const elementTop = $(this).offset().top;
+    const viewportTop = $(window).scrollTop();
+    const viewportBottom = viewportTop + $(window).height();
 
-    return elementBottom >= viewportTop && elementTop <= viewportBottom;
+    return elementTop <= viewportBottom;
   };
 
   // Infinite scrolling and scroll to top
@@ -86,38 +85,45 @@ $(() => {
   let galleryEmpty = (archiveEmpty = false);
   let $lastGallery;
   let $lastArchive;
-  let cooldown = false;
+  let pendingInfiniteScroll = (pendingScrollToTop = false);
 
   $scroll.on('resize scroll', function () {
     $lastGallery = $('#gallery > ul > li:last-of-type');
     $lastArchive = $('#archive > ul > li:last-of-type');
 
-    if (!cooldown) {
-      cooldown = true;
+    // Infinite scrolling
+    if (!pendingInfiniteScroll) {
+      pendingInfiniteScroll = true;
 
-      // Infinite scrolling
       if (!galleryEmpty && $lastGallery.isInViewport()) {
         getGalleryFiltered();
       } else if (!archiveEmpty && $lastArchive.isInViewport()) {
         getArchiveFiltered();
-      }
-
-      // Scroll to top display
-      if ($(this).scrollTop() >= 180) {
-        $scrollToTop.slideDown();
       } else {
-        $scrollToTop.slideUp();
+        pendingInfiniteScroll = false;
       }
+    }
 
-      setTimeout(() => {
-        cooldown = false;
-      }, 1000);
+    // Scroll to top display
+    if (!pendingScrollToTop) {
+      pendingScrollToTop = true;
+
+      if ($(this).scrollTop() >= 180) {
+        $scrollToTop.slideDown(() => {
+          pendingScrollToTop = false;
+        });
+      } else {
+        $scrollToTop.slideUp(() => {
+          pendingScrollToTop = false;
+        });
+      }
     }
   });
 
   // Retrieve filtered data
   let beforeAjaxPosition;
   function getGalleryFiltered() {
+    console.log('getGalleryFiltered');
     let data = {
       page: galleryPage++,
     };
@@ -142,7 +148,8 @@ $(() => {
       $('#gallery ul').append(response);
       $('#gallery').show();
       $(window).scrollTop(beforeAjaxPosition);
-      $lastGallery = $('#gallery ul').find('li:last-of-type');
+      $lastGallery = $('#gallery ul li:last-child')[0];
+      pendingInfiniteScroll = false;
     });
   }
 
@@ -171,7 +178,8 @@ $(() => {
       $('#archive ul').append(response);
       $('#archive').show();
       $(window).scrollTop(beforeAjaxPosition);
-      $lastArchive = $('#archive ul').find('li:last-of-type');
+      $lastArchive = $('#archive ul li:last-child')[0];
+      pendingInfiniteScroll = false;
     });
   }
 

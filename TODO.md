@@ -2,7 +2,7 @@
 
 ## High Priorities
 
-- Fix infinite scroll bug
+*Nothing at this time*
 
 ## Medium Priorities
 
