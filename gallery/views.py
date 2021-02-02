@@ -68,8 +68,8 @@ def upload(request):
 def product_page(request):
     id = int(request.GET['id'])
     product = Product.objects.get(pk=id)
-    person = Person.objects.get(
-        pk=request.session['id']) if 'id' in request.session else None
+    person = Person.objects.get(pk=request.session['id']) \
+        if 'id' in request.session else None
 
     context = {
         'product': product,
@@ -138,7 +138,6 @@ def checkout(request):
         subtotal += product.price_per_unit
 
     shipping = Decimal(8.00)
-    # tax = (subtotal + shipping) * Decimal(0.060000)
     tax = 0
     total = subtotal + shipping + tax
 
@@ -153,352 +152,45 @@ def checkout(request):
 
     return render(request, 'gallery/checkout.html', context)
 
-def shipping(request):
-    valid, response = Address.objects.store_address(request)
+def on_approve(request):
+    details = json.loads(request.POST.get('details'))
+    email = details['payer']['email_address']
 
-    if not valid:
-        for error in response:
-            messages.error(request, error)
-        return redirect('gallery:checkout')
+    sales = []
+    for purchase in details['purchase_units']:
+        address = purchase['shipping']['address']
+        name = purchase['shipping']['name']['full_name']
 
-    return redirect('gallery:review')
-
-def review(request):
-    shipping_address = request.session['shipping_address']
-    products = Product.objects.get_cart(request)
-    subtotal = Decimal(0.00)
-
-    tax_rate = 0
-
-    for product in products:
-        subtotal += product.price_per_unit
-
-    shipping = Decimal(8.00)
-    tax = (subtotal + shipping) * Decimal(tax_rate)
-    total = subtotal + shipping + tax
-
-    context = {
-        'shipping_address': shipping_address,
-        'products': products,
-        'subtotal': subtotal,
-        'shipping': '{:0.2f}'.format(shipping),
-        'tax_rate': '{:0.3f}'.format(tax_rate * 100),
-        'tax': '{:0.2f}'.format(tax),
-        'total': '{:0.2f}'.format(total),
-        'sandbox_token': SANDBOX_GATEWAY.client_token.generate(),
-        'production_token': PRODUCTION_GATEWAY.client_token.generate(),
-    }
-
-    return render(request, 'gallery/review.html', context)
-
-def order_confirm(
-    shipping_address,
-    sale_items,
-    subtotal,
-    shipping,
-    tax,
-    total
-    ):
-    html = '<!DOCTYPE html>\
-<html lang="en">\
-<head>\
-    <meta charset="UTF-8">\
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">\
-    <title>Coolwater Creations</title>\
-    <style>\
-    @import url("https://fonts.googleapis.com/css?family=Open+Sans");\
-    * {\
-        font-family: "Open Sans", Helvetica, Arial, sans-serif;\
-    }\
-    .background {\
-        background-color: #e6ebf0;\
-    }\
-    .container {\
-        margin: 0 auto;\
-        max-width: 700px;\
-    }\
-    .shipping-confirm {\
-        position: relative;\
-        width: 100%;\
-        margin-bottom: 1rem;\
-        padding: 1rem;\
-        background-color: white;\
-        border: 1px solid #ced4da;\
-        border-radius: 4px;\
-    }\
-    .shipping-confirm table {\
-        width: 100%;\
-    }\
-    .shipping-confirm td {\
-        width: 50%;\
-        white-space: nowrap; \
-        overflow: hidden;\
-        text-overflow: ellipsis;\
-    }\
-    .shipping-confirm td:first-child {\
-        text-align: right;\
-        padding-right: 1rem;\
-        font-style: italic;\
-    }\
-    ul {\
-        padding-left: 0;\
-    }\
-    ul li {\
-        list-style: none;\
-    }\
-        ul li img {\
-        width: 100%;\
-    }\
-    .product {\
-        display: flex;\
-    }\
-    .product,\
-    .total {\
-        margin-top: 0.5rem;\
-        padding: 1rem;\
-        background-color: white;\
-        border: 1px solid #ced4da;\
-        border-radius: 4px;\
-    }\
-    .total h5 {\
-        margin: 0;\
-    }\
-    .total table {\
-        width: 100%;\
-    }\
-    .total tr:nth-last-child(n+3) {\
-        border-bottom: 1px solid #ced4da;\
-    }\
-    .total tr:last-child {\
-        border-top: 3px double #ced4da;\
-    }\
-    .total td {\
-        margin: 0.5rem 0;\
-    }\
-    .total td:last-child {\
-        float: right;\
-    }\
-    .product .img-container {\
-        background-color: #343a40;\
-        border: 1px solid #343a40;\
-        box-sizing: unset;\
-        height: 128px;\
-        width: 128px;\
-        flex: 0 0 auto;\
-    }\
-    .product .img-container img {\
-        display: block;\
-        max-height: 128px;\
-        max-width: 128px;\
-        width: auto;\
-        height: auto;\
-    }\
-    .name-price-container {\
-        margin: 0 1rem;\
-        display: flex;\
-        flex: 1 1 auto;\
-        flex-direction: column;\
-        justify-content: center;\
-        min-width: 0;\
-    }\
-    .name-price-container span {\
-        display: block;\
-    }\
-    .name-price-container a {\
-        display: block;\
-        white-space: nowrap;\
-        overflow: hidden;\
-        text-overflow: ellipsis;\
-    }\
-    .name-price-container a,\
-    .name-price-container a:hover {\
-        color: #212529;\
-    }\
-    .name-price-container-checkout span {\
-        margin: 0;\
-        height: 1em;\
-        line-height: 1em;\
-        white-space: nowrap;\
-    }\
-    .name-price-container-checkout span:first-of-type {\
-        float: left;\
-    }\
-    .name-price-container-checkout span:last-of-type {\
-        float: right;\
-    }\
-    </style>\
-</head>\
-'
-    html += '<body>\
-    <div class="background">\
-        <div class="container">\
-            <a href="https://coolwatercreations.com/">\
-                <h1>Coolwater Creations</h1>\
-            </a>\
-            <h5>Shipping Address</h5>\
-            <div class="shipping-confirm">\
-                <table>\
-                    <tbody>\
-                        <tr>\
-                            <td>Name</td>\
-                            <td>{}</td>\
-                        </tr>\
-                        <tr>\
-                            <td>Address</td>\
-                            <td>{}</td>\
-                        </tr>\
-'.format(shipping_address.recipientName, shipping_address.line1)
-    if shipping_address.line2:
-        html += '                        <tr>\
-                            <td></td>\
-                            <td>{}</td>\
-                        </tr>\
-'.format(shipping_address.line2)
-    html += '                        <tr>\
-                            <td>City</td>\
-                            <td>{}</td>\
-                        </tr>\
-'.format(shipping_address.city)
-    if shipping_address.state:
-        html += '                        <tr>\
-                            <td>State/Province</td>\
-                            <td>{}</td>\
-                        </tr>\
-'.format(shipping_address.state)
-    if shipping_address.postalCode:
-        html += '                        <tr>\
-                            <td>Zip Code</td>\
-                            <td>{}</td>\
-                        </tr>\
-'.format(shipping_address.postalCode)
-    html += '                        <tr>\
-                            <td>Country Code</td>\
-                            <td>{}</td>\
-                        </tr>\
-                        <tr>\
-                            <td>Phone</td>\
-                            <td>{}</td>\
-                        </tr>\
-                        <tr>\
-                            <td>Email</td>\
-                            <td>{}</td>\
-                        </tr>\
-                    </tbody>\
-                </table>\
-            </div>\
-'.format(shipping_address.countryCode, shipping_address.phone, shipping_address.email)
-    html += '            <h5>Products Ordered</h5>\
-            <ul>\
-'
-    for sale_item in sale_items:
-        html += '            <li class="row product">\
-                <div class="name-price-container-checkout">\
-                    <span>{}</span>\
-                    <span>${}</span>\
-                </div>\
-            </li>\
-'.format(sale_item.product.name, sale_item.product.price_per_unit)
-    html += '                <li class="row total">\
-                    <table>\
-                        <tbody>\
-                            <tr>\
-                                <td>\
-                                    <span>Subtotal</span>\
-                                </td>\
-                                <td>\
-                                    <span>${}</span>\
-                                </td>\
-                            </tr>\
-                            <tr>\
-                                <td>\
-                                    <span>Shipping</span>\
-                                </td>\
-                                <td>\
-                                    <span>${}</span>\
-                                </td>\
-                            </tr>\
-                            <tr>\
-                                <td>\
-                                    <span>Tax</span>\
-                                </td>\
-                                <td>\
-                                    <span>${}</span>\
-                                </td>\
-                            </tr>\
-                            <tr>\
-                                <td>\
-                                    <span>Total</span>\
-                                </td>\
-                                <td>\
-                                    <span>${}</span>\
-                                </td>\
-                            </tr>\
-                        </tbody>\
-                    </table>\
-                </li>\
-            </ul>\
-        </div>\
-    </div>\
-</body>\
-</html>\
-'.format(subtotal, shipping, tax, total)
-
-    return requests.post(
-        "https://api.mailgun.net/v3/mg.coolwatercreations.com/messages",
-        auth=("api", MAILGUN_API_KEY),
-        data={
-            "from": "Coolwater Creations <donotreply@coolwatercreations.com>",
-            "to": [shipping_address.email],
-            "subject": "Coolwater Creations - Order Confirmation",
-            "text": "Enable HTML to view order confirmation.",
-            "html": html,
-        }
-    )
-
-def on_authorize(request):
-    if cwc.settings.STAGE == 'development':
-        result = SANDBOX_GATEWAY.transaction.sale({
-            "amount": request.POST["sale_amount"],
-            "payment_method_nonce": request.POST["payment_method_nonce"],
-            "options": {
-                "submit_for_settlement": True,
-                "store_in_vault_on_success": True,
-            }
-        })
-    else:
-        result = PRODUCTION_GATEWAY.transaction.sale({
-            "amount": request.POST["sale_amount"],
-            "payment_method_nonce": request.POST["payment_method_nonce"],
-            "options": {
-                "submit_for_settlement": True,
-                "store_in_vault_on_success": True,
-            }
-        })
-
-    if result.is_success:
-        valid, response = Sale.objects.create_sale(request)
-
-        if not valid:
-            return JsonResponse({'success': False})
-
-        total = request.POST["sale_amount"]
-        tax = request.POST["tax_amount"]
-        shipping = Decimal(8.00)
-        subtotal = Decimal(total) - Decimal(tax) - shipping
-
-        order_confirm(
-            response.shipping_address,
-            SaleItem.objects.filter(sale=response),
-            subtotal,
-            '{:0.2f}'.format(shipping),
-            tax,
-            total
+        sale = Sale.objects.create(
+            sale_amount=Decimal(purchase['amount']['value']),
+            tax_amount=0,
+            shipping_address=Address.objects.create(
+                recipientName=name,
+                line1=address['address_line_1'],
+                line2=address.get('address_line_2', ''),
+                city=address['admin_area_2'],
+                countryCode=address['country_code'],
+                postalCode=address['postal_code'],
+                state=address['admin_area_1'],
+                email=email,
+                subscribed=False,
+            )
         )
 
-        return JsonResponse({'success': True})
+        for product in Product.objects.get_cart(request):
+            SaleItem.objects.create(
+                quantity_sold=1,
+                price_per_unit=product.price_per_unit,
+                price=product.price_per_unit,
+                sale=sale,
+                product=product,
+            )
 
-    return JsonResponse({'success': False})
+            Product.objects.mark_product_sold(product.pk)
+
+    Product.objects.clear_cart(request)
+
+    return HttpResponse(status=200)
 
 def order(request):
     sale = Sale.objects.get(pk=request.GET['id'])
@@ -514,12 +206,14 @@ def orders(request):
     })
 
 def mark_shipped(request):
-    return JsonResponse({'success': Sale.objects.mark_shipped(request)})
+    Sale.objects.mark_shipped(request)
+
+    return HttpResponse()
 
 def delete_sales(request):
     Sale.objects.delete_sales(request)
 
-    return JsonResponse({'success': True})
+    return HttpResponse()
 
 def unsubscribe(request):
     return HttpResponse('You have successfully unsubscribed. (but not really)')

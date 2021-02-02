@@ -4,23 +4,19 @@ h1, h2, p
 h3, h4, h5
   font-family: 'Merienda One', Helvetica, Arial, sans-serif
 
-.center
-  text-align: center
+body
+  --page-height: 100vh
+  --logo-height: 121px
 
-.bg
-  overflow-y: scroll
-  -webkit-overflow-scrolling: touch
-  scrollbar-width: none
+#bg, #bg::before, #bg::after, #page
+  height: var(--page-height)
+  position: fixed
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
 
-  &, &::before, &::after
-    width: 100vw
-    height: 100vh
-    position: fixed
-    top: 0
-    right: 0
-    bottom: 0
-    left: 0
-
+#bg
   &::before, &::after
     content: ''
     pointer-events: none
@@ -28,7 +24,7 @@ h3, h4, h5
   &::before
     z-index: -2
     $blur-radius: 4px
-    transform: scale(1.2)
+    @include transform(scale(1.2))
     @include filter(blur($blur-radius))
     @include bg(cover)
 
@@ -44,111 +40,177 @@ h3, h4, h5
     &::before, &::after
       background-image: url('/static/users/img/dragon_portrait.jpg')
 
-.logo
-  position: fixed
-  top: 0
-  left: 0
-  right: 0
-  z-index: 1
-  text-shadow: 2px 2px 8px black
-  padding: 1rem 1rem 7px 1rem
-  letter-spacing: 6px
-  cursor: pointer
+#page
+  display: grid
+  grid-template-rows: [top] var(--logo-height) [content-top] auto [bottom]
 
-  &, &:hover
-    color: white
+  &.portrait .content-container ul
+    -ms-flex-direction: column
+    flex-direction: column
 
-  h1
-    font-family: 'Merienda One', Helvetica, Arial, sans-serif
+    button
+      @media screen and (min-height: 550px)
+        display: flex
 
-  p
-    margin: 0
+      @media screen and (min-height: 700px)
+        --size: 2
 
-    svg
-      font-size: 35px
-      @include filter(drop-shadow(2px 2px 8px $black))
+      @media screen and (min-height: 850px)
+        --size: 3
 
-#about, #contact
-  padding: 2rem 0
+  &.landscape .content-container ul
+    -ms-flex-direction: row
+    flex-direction: row
 
-.content
-  display: flex
-  align-content: center
-  padding-top: 100vh
+    button
+      @media screen and (min-height: 300px)
+        display: flex
 
-  &-container
-    display: flex
-    align-content: center
-    justify-content: center
-    padding: 0 1rem
-    flex: 0 0 auto
-    width: 100%
-    max-width: 720px
-    margin: 0 auto
+      @media screen and (min-width: 500px) and (min-height: 350px)
+        --size: 2
 
-    ul
-      display: flex
-      justify-content: space-evenly
-      align-content: center
-      gap: 1rem
-      width: 100%
+      @media screen and (min-width: 675px) and (min-height: 400px)
+        --size: 3
+
+  .logo
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    z-index: 1
+    text-shadow: 2px 2px 8px black
+    padding: 1rem 1rem 7px 1rem
+    cursor: pointer
+
+    h1
+      font-size: 1.75rem
+
+      @media screen and (min-width: 358px)
+        font-size: 2.0rem
+
+      @media screen and (min-width: 439px)
+        font-size: 2.5rem
+
+      @media screen and (min-width: 553px)
+        letter-spacing: 6px
+
+    &, &:hover
+      color: white
+
+    h1
+      font-family: 'Merienda One', Helvetica, Arial, sans-serif
+
+    p
       margin: 0
 
-      li
-        display: flex
-        justify-content: center
-        align-items: center
-        flex: 1 1 150px
+      svg
+        font-size: 35px
+        @include filter(drop-shadow(2px 2px 8px $black))
 
-        a
-          color: rgb(241, 152, 131)
-          color: white
+  .content
+    grid-row-start: content-top
+    grid-row-end: bottom
+    overflow-y: scroll
+    -webkit-overflow-scrolling: touch
+    scrollbar-width: none
+    -ms-overflow-style: none
+    padding: 0 1rem
+    width: 100%
+    margin: 0 auto
+
+    &::-webkit-scrollbar
+      display: none
+
+    & > *
+      flex: 0 0 auto
+
+    .test
+      grid-row-start: top
+      grid-row-end: ul-top
+
+    &-container
+      display: flex
+      flex-direction: column
+      width: 100%
+      max-width: 720px
+      margin: 0 auto
+
+      & > *
+        flex: 0 0 auto
+
+      ul
+        display: flex
+        justify-content: space-evenly
+        align-content: center
+        gap: 1rem
+        grid-gap: 1rem
+        width: 100%
+        height: calc(var(--page-height) - var(--logo-height) - 56px)
+        margin: calc(var(--page-height) - var(--logo-height)) 0 0 0
+        padding-bottom: 1rem
+
+        li
           display: flex
           justify-content: center
           align-items: center
-          flex-direction: column
-          gap: 1rem
+          flex: 1 1 150px
 
-          & *
-            cursor: pointer
-
-          &:hover, &:focus
-            button
-              background-color: hsla(198, 81.8, 75, 1)
-
-            label
-              text-decoration: underline
-              background-color: rgba(153, 168, 120, 1)
-
-          button
-            position: relative
+          a
+            color: rgb(241, 152, 131)
+            color: white
             display: flex
             justify-content: center
             align-items: center
-            border: .25rem solid white
-            border-radius: 100%
-            padding: 0
-            background-color: hsla(198, 81.8, 75, .75)
-            @include transition(background-color, .3s)
+            flex-direction: column
 
-            i, svg
+            &, & *
+              cursor: pointer
+
+            &:hover, &:focus
+              button
+                background-color: hsla(198, 81.8%, 75%, 100%)
+
+              label
+                text-decoration: underline
+                background-color: rgba(153, 168, 120, 1)
+
+            button
+              --size: 1
+              display: none
+              position: relative
+              justify-content: center
+              align-items: center
+              width: calc(var(--size) * 50px)
+              height: calc(var(--size) * 50px)
+              margin-bottom: 1rem
+              border: calc(var(--size) * 1px + 1px) solid white
+              border-radius: 100%
+              padding: 0
+              background-color: hsla(198, 81.8%, 75%, 75%)
+              @include transition(background-color, .3s)
+
+              i, svg
+                color: white
+                font-size: calc(var(--size) * 1rem)
+
+            label
+              font-family: 'Merienda One', Helvetica, Arial, sans-serif
+              font-size: 1.5rem
               color: white
-
-          label
-            font-family: 'Merienda One', Helvetica, Arial, sans-serif
-            font-size: 1.5rem
-            color: white
-            margin: 0
-            padding: 0 .5rem
-            background-color: rgba(153, 168, 120, .75)
-            border-radius: .5rem
-            @include transition(background-color, .3s)
+              margin: 0
+              padding: 0 .5rem
+              background-color: rgba(153, 168, 120, .75)
+              border-radius: .5rem
+              @include transition(background-color, .3s)
 
 #contact
   text-align: center
 
 #about
   background: #f8f9fa7f
+
+#about, #contact
+  padding: 2rem 0
 
 .banner
   display: none

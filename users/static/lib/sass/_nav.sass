@@ -1,4 +1,8 @@
 nav
+  grid-row-start: top
+  grid-row-end: content-top
+  z-index: 1
+
   .navbar
     margin-bottom: 2rem
     box-shadow: 0px 4px 8px grey
@@ -12,11 +16,10 @@ nav
     &:hover
       color: white !important
 
-.nav-placeholder
-  height: 5.5rem
-
 @include media-breakpoint-down(sm)
   nav
+    min-height: 50px
+
     .navbar
       &-brand
         font-size: 0.9em
@@ -27,5 +30,7 @@ nav
         margin-top: 0.5rem
         color: white !important
 
-  .nav-placeholder
-    height: 79px
+      &-toggler
+        border: none
+        padding: 0 .5rem
+        font-size: 2rem

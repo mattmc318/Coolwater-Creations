@@ -1,7 +1,5 @@
 {% extends 'gallery/base.html' %}
 
-{% block head %}{% include 'gallery/data_tables.html' %}{% endblock %}
-
 {% block content %}
 <div class="container">
   {% if messages %}
@@ -21,8 +19,8 @@
   {% endif %}
   <div class="row">
     <div class="img col-lg-6 col-md-12">
-      <a href="{{ product.image.url }}">
-        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+      <a data-fancybox="gallery" href="{{ product.image.url }}">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
       </a>
       <p><i class="fa fa-search-plus"></i> Click image to enlarge.</p>
     </div>
@@ -71,7 +69,7 @@
           <input class="form-control col-4" type="text" value="{{ product.height }}" placeholder="Height" name="height">
         </div>
         <textarea class="form-control" placeholder="Description" name="description" rows="5">{{ product.description }}</textarea>
-        <input class="form-control" type="file" name="image" accept="image/*">
+        <input type="file" name="image" accept="image/*">
         <div class="form-control">
           {% if product.in_stock == 0 %}
           <input type="checkbox" name="archive" value="True" checked>

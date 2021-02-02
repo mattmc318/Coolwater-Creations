@@ -1,5 +1,8 @@
 #!/bin/bash
 
+CYAN="\033[0;36m"
+NC="\033[0m"
+
 project_dir="$HOME/Repositories/Coolwater-Creations"
 
 sass_input_users="$project_dir/users/static/users/sass/base.sass"
@@ -39,7 +42,7 @@ cd $project_dir
 for i in "${args[@]}"; do
   cmd="sass --watch $includes $i"
 
-  echo $cmd >&2
+  printf "${CYAN}[$(date -Iseconds)]${NC} $cmd\n" >&2
   $cmd &
 done
 

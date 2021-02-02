@@ -113,29 +113,37 @@ WSGI_APPLICATION = 'cwc.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-if STAGE == 'development':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
-else:
-    PGPASSWORD_FILE = '%s/auth/.pgpass' % BASE_DIR
-    with open(PGPASSWORD_FILE, 'r', encoding='utf8') as f:
-        content = f.readline()
-    PGPASSWORD = content[12:-1]
+class CredentialsNotFound(Exception):
+    pass
 
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'cwc',
-            'USER': 'cwc',
-            'PASSWORD': PGPASSWORD,
-            'HOST': 'localhost',
-            'PORT': '',
-        }
+PGPASSWORD_FILE = os.path.join(BASE_DIR, 'auth/.pgpass')
+PGNAME = 'cwc'
+with open(PGPASSWORD_FILE, 'r', encoding='utf8') as f:
+    found = False
+    for line in f.readlines():
+        hostname, port, db_name, username, password = \
+            line.strip('\n').split(':')
+        if db_name == PGNAME:
+            PGHOST = 'localhost' if hostname == '*' else hostname
+            PGPORT = '' if port == '*' else port
+            PGPASSWORD = password
+            PGUSER = username
+            found = True
+            break
+
+    if not found:
+        raise CredentialsNotFound('The credentials for database \'%s\' were not found in \'%s\'.' % (PGNAME, PGPASSWORD_FILE))
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'HOST': PGHOST,
+        'PORT': PGPORT,
+        'NAME': PGNAME,
+        'USER': PGUSER,
+        'PASSWORD': PGPASSWORD,
     }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -186,7 +194,7 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 PRODUCTS_PER_PAGE = 15
 POSTS_PER_PAGE = 5
 
-ACCESS_TOKEN_FILE = '%s/auth/tokens.txt' % BASE_DIR
+ACCESS_TOKEN_FILE = os.path.join(BASE_DIR, 'auth/tokens.txt')
 BRAINTREE_ACCESS_TOKEN_SANDBOX = BRAINTREE_ACCESS_TOKEN_PRODUCTION = ''
 with open(ACCESS_TOKEN_FILE, 'r', encoding='utf8') as f:
     content = f.readline()
@@ -194,7 +202,7 @@ with open(ACCESS_TOKEN_FILE, 'r', encoding='utf8') as f:
     content = f.readline()
     BRAINTREE_ACCESS_TOKEN_PRODUCTION = content[:-1]
 
-MAILGUN_API_KEY_FILE = '%s/auth/mailgun.txt' % BASE_DIR
+MAILGUN_API_KEY_FILE = os.path.join(BASE_DIR, 'auth/mailgun.txt')
 with open(MAILGUN_API_KEY_FILE, 'r', encoding='utf8') as f:
     content = f.readline()
 MAILGUN_API_KEY = content[:-1]

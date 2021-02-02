@@ -1,20 +1,28 @@
-{% extends 'gallery/base.html' %}
-
-{% block head %}{% include 'gallery/data_tables.html' %}{% endblock %}
-
-{% block content %}
+{% extends 'gallery/base.html' %} {% load static %} {% block head %} {% include
+'gallery/data_tables.html' %}
+<script src="{% static 'gallery/js/orders.min.js' %}"></script>
+{% endblock %} {% block content %}
 <div class="container">
   <h1>Orders</h1>
   <div class="btn-container">
-    <a class="btn btn-light" href="{% url 'gallery:index' %}">Back to Gallery</a>
+    <a class="btn btn-light" href="{% url 'gallery:index' %}">
+      Back to Gallery
+    </a>
   </div>
-  <h5>Pending Orders</h5>
+  <h2>Pending Orders</h2>
   <div class="btn-container">
-    <button id="pending-shipped" class="btn btn-light">Mark Selection as Shipped</button>
-    <button id="pending-delete" class="btn btn-danger">Delete Selection (cannot be undone)</button>
+    <button id="pending-shipped" class="btn btn-light">
+      Mark Selection as Shipped
+    </button>
+    <button id="pending-delete" class="btn btn-danger">
+      Delete Selection (cannot be undone)
+    </button>
   </div>
   {% csrf_token %}
-  <table id="pending" class="orders table table-sm table-striped table-bordered table-responsive">
+  <table
+    id="pending"
+    class="orders table table-sm table-striped table-responsive"
+  >
     <thead>
       <tr>
         <th>ID</th>
@@ -29,53 +37,66 @@
       </tr>
     </thead>
     <tbody>
-    {% for sale in pending_sales %}
-    <tr class="orders-row" data-id="{{ sale.pk }}">
-      <td>{{ sale.pk }}</td>
-      <td>{{ sale.shipping_address.recipientName }}</td>
-      <td>{{ sale.date_created }}</td>
-      <td>{{ sale.date_updated }}</td>
-      <td class="right">{{ sale.sale_amount }}</td>
-      <td class="right">{{ sale.tax_amount }}</td>
-      <td>{{ sale.shipping_address.state }}</td>
-      <td>{{ sale.shipping_address.email }}</td>
-      <td><input name="{{ sale.pk }}" type="checkbox"></td>
-    </tr>
-    {% endfor %}
+      {% for sale in pending_sales %}
+      <tr class="orders-row" data-id="{{ sale.pk }}">
+        <td>{{ sale.pk }}</td>
+        <td>{{ sale.shipping_address.recipientName }}</td>
+        <td>{{ sale.date_created }}</td>
+        <td>{{ sale.date_updated }}</td>
+        <td class="text-right">{{ sale.sale_amount }}</td>
+        <td class="text-right">{{ sale.tax_amount }}</td>
+        <td>{{ sale.shipping_address.state }}</td>
+        <td>{{ sale.shipping_address.email }}</td>
+        <td><input name="{{ sale.pk }}" type="checkbox" /></td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="9"><em>There are currently no pending sales.</em></td>
+      </tr>
+      {% endfor %}
     </tbody>
   </table>
-  <h5>Shipped Orders</h5>
+  <h2>Shipped Orders</h2>
   <div class="btn-container">
-    <button id="shipped-delete" class="btn btn-danger">Delete Selection (cannot be undone)</button>
+    <button id="shipped-delete" class="btn btn-danger">
+      Delete Selection (cannot be undone)
+    </button>
   </div>
-  <table id="shipped" class="orders table table-sm table-striped table-bordered table-responsive">
+  <table
+    id="shipped"
+    class="orders table table-sm table-striped table-responsive"
+  >
     <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Date Created</th>
-      <th>Date Shipped</th>
-      <th>Sale Amount</th>
-      <th>Tax Amount</th>
-      <th>State</th>
-      <th>Email</th>
-      <th></th>
-    </tr>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Date Created</th>
+        <th>Date Shipped</th>
+        <th>Sale Amount</th>
+        <th>Tax Amount</th>
+        <th>State</th>
+        <th>Email</th>
+        <th></th>
+      </tr>
     </thead>
     <tbody>
-    {% for sale in shipped_sales %}
-    <tr class="orders-row" data-id="{{ sale.pk }}">
-      <td>{{ sale.pk }}</td>
-      <td>{{ sale.shipping_address.recipientName }}</td>
-      <td>{{ sale.date_created }}</td>
-      <td>{{ sale.date_shipped }}</td>
-      <td class="right">{{ sale.sale_amount }}</td>
-      <td class="right">{{ sale.tax_amount }}</td>
-      <td>{{ sale.shipping_address.state }}</td>
-      <td>{{ sale.shipping_address.email }}</td>
-      <td><input type="checkbox"></td>
-    </tr>
-    {% endfor %}
+      {% for sale in shipped_sales %}
+      <tr class="orders-row" data-id="{{ sale.pk }}">
+        <td>{{ sale.pk }}</td>
+        <td>{{ sale.shipping_address.recipientName }}</td>
+        <td>{{ sale.date_created }}</td>
+        <td>{{ sale.date_shipped }}</td>
+        <td class="text-right">{{ sale.sale_amount }}</td>
+        <td class="text-right">{{ sale.tax_amount }}</td>
+        <td>{{ sale.shipping_address.state }}</td>
+        <td>{{ sale.shipping_address.email }}</td>
+        <td><input type="checkbox" /></td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="9"><em>There are currently no shipped sales.</em></td>
+      </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>

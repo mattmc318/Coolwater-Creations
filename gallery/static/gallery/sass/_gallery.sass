@@ -34,6 +34,7 @@ ul
   color: #343a40
   cursor: pointer
   touch-action: none
+  z-index: 9999
 
 .filters-dropdown
   display: none
@@ -54,6 +55,10 @@ ul
 
 .filters
   margin-bottom: 0
+
+  &.gallery li[data-gallery-count="0"],
+  &.archive li[data-archive-count="0"]
+    display: none
 
 .filter-control
   margin-bottom: 0.5rem
@@ -112,7 +117,6 @@ ul
     height: calc(100vh - 56px)
     top: 56px
 
-
 #gallery > ul h3, #archive > ul h3
   font-family: 'Open Sans', Helvetica, Arial, sans-serif
   font-weight: bold
@@ -124,6 +128,7 @@ ul
   display: grid
   grid-template-columns: 100%
   gap: 1rem
+  grid-gap: 1rem
 
 #gallery > p, #archive > p
   text-align: center
@@ -158,25 +163,34 @@ ul
   h3
     margin-top: 1rem
 
-.product-image
-  margin-bottom: 1rem
-  box-shadow: 0px 4px 8px grey
-
 form
-  display: inline
+  & > *, & > .row
+    margin-bottom: .5rem
 
 .btn
-  margin-bottom: 1rem
+  margin-bottom: .5rem
 
 .btn-light
   background-color: white
   border: 1px solid #ced4da
 
 .img
-  img
-    width: 100%
+  display: flex
+  flex-direction: column
+  align-items: center
 
-  p
+  a
+    margin-bottom: 1rem
+
+    img
+      max-width: 300px
+      max-height: 275px
+      width: auto
+      height: auto
+      display: block
+      box-shadow: 0px 4px 8px grey
+
+  p, a
     text-align: center
 
 .row
@@ -402,20 +416,25 @@ input[type="checkbox"] + p
       font-style: italic
 
 .orders
-  width: 100%
-  background-color: white
+  &.table-striped tbody tr:nth-of-type(2n+1)
+    background-color: rgba(0, 0, 0, 10%)
 
-  .right
-    text-align: right
+  &-row:hover
+    background-color: #007bff !important
+    color: white
+    cursor: pointer
 
-.orders-row:hover
-  background-color: #007bff !important
-  color: white
-  cursor: pointer
+  tr
+    border: 1px solid #ced4da
+    background-color: white
 
-.orders td:last-of-type
-  width: 50px
-  text-align: center
+    td:last-of-type
+      width: 50px
+      text-align: center
+
+#paypal-button-container
+  display: flex
+  justify-content: center
 
 #wait
   display: none
@@ -437,7 +456,7 @@ input[type="checkbox"] + p
     position: absolute
     top: 50%
     left: 50%
-    transform: translate(-50%, -50%)
+    @include transform(translate(-50%, -50%))
 
 @include media-breakpoint-down(sm)
   html, body
@@ -484,6 +503,10 @@ input[type="checkbox"] + p
   #gallery > ul, #archive > ul
     grid-template-columns: 299.67px 299.67px 299.67px
     grid-template-columns: calc((960px - 4rem)/3 + 1px) calc((960px - 4rem)/3 + 1px) calc((960px - 4rem)/3 + 1px)
+
+  .img a img
+    max-width: 460px
+    max-height: 500px
 
 @include media-breakpoint-up(xl)
   #gallery > ul, #archive > ul

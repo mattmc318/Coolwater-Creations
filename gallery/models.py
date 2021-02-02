@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 import os
 import re
-import requests
+import json
 
 import cwc.settings
 
@@ -396,31 +396,18 @@ class SaleManager(models.Manager):
 
         return (False, errors)
 
-    def __shipping_confirm(self, email):
-        return requests.post(
-            "https://api.mailgun.net/v3/mg.coolwatercreations.com/messages",
-            auth=("api", MAILGUN_API_KEY),
-            data={
-                "from": "Coolwater Creations <donotreply@coolwatercreations.com>",
-                "to": [email],
-                "subject": "Coolwater Creations - Shipping Confirmation",
-                "text": "Your order has shipped. Thank you for ordering from Coolwater Creations.",
-            }
-        )
-
     def mark_shipped(self, request):
-        orders = request.POST.getlist('orders')
-        for pk in orders:
+        for pk in json.loads(request.POST.get('orders')):
             order = Sale.objects.get(pk=pk)
             order.shipped = True
             order.date_shipped = timezone.now()
             order.save()
-            self.__shipping_confirm(order.shipping_address.email)
-        return True
 
     def delete_sales(self, request):
-        SaleItem.objects.filter(sale__in=request.POST['orders']).delete()
-        Sale.objects.filter(pk__in=request.POST['orders']).delete()
+        orders = json.loads(request.POST.get('orders'))
+
+        SaleItem.objects.filter(sale__in=orders).delete()
+        Sale.objects.filter(pk__in=orders).delete()
 
 class Address(models.Model):
     recipientName = models.CharField(max_length=255)
@@ -428,10 +415,8 @@ class Address(models.Model):
     line2 = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     countryCode = models.CharField(max_length=2)
-    postalCode = models.CharField(max_length=30)
-    postalCodeExt = models.CharField(max_length=4)
+    postalCode = models.CharField(max_length=11)
     state = models.CharField(max_length=2)
-    phone = models.CharField(max_length=30)
     email = models.CharField(max_length=30)
     subscribed = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
@@ -469,7 +454,7 @@ class SaleItem(models.Model):
     quantity_sold = models.IntegerField()
     price_per_unit = models.DecimalField(max_digits=8, decimal_places=2)
     price = models.DecimalField(max_digits=8, decimal_places=2)
-    sale = models.OneToOneField(Sale, on_delete=models.SET_NULL, unique=False, default=None, blank=True, null=True)
+    sale = models.ForeignKey(Sale, on_delete=models.SET_NULL, unique=False, default=None, blank=True, null=True)
     product = models.OneToOneField(Product, on_delete=models.SET_NULL, default=None, blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
